@@ -11,6 +11,12 @@
 |
 */
 
+Route::get('protected', ['middleware' => ['auth', 'admin'], function() {
+    return "this page requires that you be logged in and an Admin";
+}]);
+
 Route::get('/', function () {
-    return view('welcome');
+    return view('main');
 });
+Route::auth();
+Auth::routes();
