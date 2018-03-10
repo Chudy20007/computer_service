@@ -12,7 +12,7 @@
   </div>
 
   <div class='container'>
-ddd
+ddd - Krystian test
     @yield('content')
   </div>
   </div>
