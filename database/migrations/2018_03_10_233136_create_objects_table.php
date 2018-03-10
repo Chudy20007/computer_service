@@ -15,7 +15,7 @@ class CreateObjectsTable extends Migration
     {
         Schema::create('objects', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('order_id')
+            $table->integer('order_id');
             $table->timestamps();
         });
     }
