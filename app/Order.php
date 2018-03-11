@@ -14,4 +14,14 @@ class Order extends Model
         'created_at',
         'updated_at'
     ];
+
+    public function customer()
+    {
+        $this->belongsTo('App\Invoice','customer_id');
+    }
+
+    public function employee()
+    {
+        $this->hasOne('App\Invoice','employee_id');
+    }
 }

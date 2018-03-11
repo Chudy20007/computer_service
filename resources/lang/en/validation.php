@@ -11,8 +11,7 @@ return [
     | the validator class. Some of these rules have multiple versions such
     | as the size rules. Feel free to tweak each of these messages here.
     |
-    */
-
+    */  
     'accepted'             => 'The :attribute must be accepted.',
     'active_url'           => 'The :attribute is not a valid URL.',
     'after'                => 'The :attribute must be a date after :date.',
@@ -67,7 +66,7 @@ return [
     'not_in'               => 'The selected :attribute is invalid.',
     'numeric'              => 'The :attribute must be a number.',
     'present'              => 'The :attribute field must be present.',
-    'regex'                => 'The :attribute format is invalid.',
+    'regex'                => 'The :attribute format is invalid. Please put correct data.',
     'required'             => 'The :attribute field is required.',
     'required_if'          => 'The :attribute field is required when :other is :value.',
     'required_unless'      => 'The :attribute field is required unless :other is in :values.',

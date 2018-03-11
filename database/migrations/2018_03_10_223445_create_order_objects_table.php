@@ -16,11 +16,12 @@ class CreateOrderObjectsTable extends Migration
         Schema::create('order_objects', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('order_id')->unsigned();
-            $table->integer('serial_number');
-            $table->string('problem_description');
-            $table->string('diagnosis');
+            $table->string('name',50);
+            $table->integer('serial_number')->default($value=0);
+            $table->string('diagnosis')->default($value="empty");
             $table->boolean('fixed')->default(false);
             $table->foreign('order_id')->references('id')->on('orders');
+            $table->timestamps();
         });
     }
 

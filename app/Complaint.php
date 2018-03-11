@@ -17,4 +17,9 @@ class Complaint extends Model
         'total_price',
         'invoice_id'
     ];
+
+    public function invoice()
+    {
+        $this->belongsTo('App\Invoice','invoice_id')->withTimestamps();
+    }
 }

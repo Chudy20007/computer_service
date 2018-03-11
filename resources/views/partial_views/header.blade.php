@@ -1,9 +1,9 @@
 <div class="topNav" id="mainNav">
   
-  <a class='logo' href="pictures">
+  <a class='logo' href="{{URL::asset('main')}}">
     <img src="{{URL::asset('css/img/logo.png')}}" alt="Image Soft" />
   </a>
-  <a class='menuOption' href="{{URL::asset('pictures')}}">Pictures</a>
+  <a class='menuOption' href="{{URL::asset('add_order')}}">Add order </a>
   <a class='menuOption' href="{{URL::asset('albums')}}">Albums</a>
   <a class='menuOption' href="{{URL::asset('contact')}}">Contact</a>
   <a class='menuOption ' href="{{URL::asset('about')}}">About</a>

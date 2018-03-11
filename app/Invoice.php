@@ -18,4 +18,14 @@ class Invoice extends Model
         'order_id',
         'employee_id'
     ];
+
+    public function employee()
+    {
+        $this->hasOne('App\User','employee_id');
+    }
+
+    public function order()
+    {
+        $this->belongsTo('App\Order','order_id')->withTimestamps();
+    }
 }

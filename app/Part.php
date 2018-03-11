@@ -13,4 +13,9 @@ class Part extends Model
     'count',
     'price' 
    ];
+
+   public function order()
+   {
+       $this->hasOne('App\Category','category_id');
+   }
 }

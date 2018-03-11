@@ -18,9 +18,9 @@ class CreateOrdersTable extends Migration
             $table->integer('customer_id')->unsigned();
             $table->integer('employee_id')->unsigned();
             $table->string('status')-> nullable(false) ->change();
+            $table->string('description');
             $table->foreign('customer_id')->references('id')->on('users');
             $table->foreign('employee_id')->references('id')->on('users');
-
             $table->timestamps();
         });
     }

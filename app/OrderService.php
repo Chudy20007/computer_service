@@ -10,4 +10,13 @@ class OrderService extends Model
         'order_id',
         'service_id'
     ];
+
+    public function order()
+    {
+        $this->belongsTo('App\Order','order_id');
+    }
+    public function service()
+    {
+        $this->hasOne('App\Service','order_id');
+    }
 }

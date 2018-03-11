@@ -12,21 +12,30 @@ body {
   text-align: left;
 }
 
+
 .row>.col-md-3 {
   width: 100%;
   text-align: center;
 }
 
-.quick_jump {
+.form-header {
+  font-size:26px;
+  text-transform: uppercase;
   font-weight: bold;
   color: #51799E;
 }
 
-.quick_jump:hover {
+.form-header:hover {
+  cursor:pointer;
   color: darkcyan;
 }
 
-
+::placeholder
+{
+  text-transform: uppercase;
+  font-size:13px;
+  color:#cacfd4 !important;
+}
 .main-search
 {
   font-weight: 600;
@@ -67,8 +76,10 @@ border:none;
 }
 .small-img2
 {
-  width:30px;
-  height:30px;
+  border:none;
+  background: url("http://localhost/computer_service/public/css/img/plus.jpg");
+  width:38px;
+  height:38px;
 }
 blockquote {
   padding: 5px 8px;

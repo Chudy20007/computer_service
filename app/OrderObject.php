@@ -4,13 +4,20 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Object extends Model
+    class OrderObject extends Model
 {
     protected $fillable= [
         'problem_description',
         'diagnosis',
         'serial_number',
         'order_id',
-        'fixed'
+        'fixed',
+        'created_at',
+        'updated_at'
     ];
+
+    public function order()
+    {
+        $this->belongsTo('App\Order','order_id');
+    }
 }

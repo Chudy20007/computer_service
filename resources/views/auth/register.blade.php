@@ -64,6 +64,20 @@
                                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
                             </div>
                         </div>
+
+                                                
+                        <div class="form-group{{ $errors->has('role') ? ' has-error' : '' }}">
+                            <label for="role" class="col-md-4 control-label label">Role</label>
+
+                            <div class="col-md-6">
+                                <input id="role" type="text" class="form-control" name="role" value="{{ old('role') }}" required autofocus> @if ($errors->has('role'))
+                                <span class="help-block">
+                                    <strong>{{ $errors->first('role') }}</strong>
+                                </span>
+                                @endif
+                            </div>
+                        </div>
+
                         <div class="form-group">
                             <label for="file" class="col-md-4 control-label label">Avatar</label>
 
@@ -71,7 +85,8 @@
                                 {{ Form::file('file', array('multiple'=>false,'accept'=>'image/jpeg','class'=>'formOption')) }}
                             </div>
                         </div>
-                        <br/>
+
+
                         <div class="form-group">
                             <div class="col-md-1">
                                 <button type="submit" class="btn btn-primary">

@@ -12,7 +12,6 @@
   </div>
 
   <div class='container'>
-Krystian
     @yield('content')
   </div>
   </div>

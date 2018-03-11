@@ -19,6 +19,9 @@ class Kernel extends HttpKernel
         \App\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
         \App\Http\Middleware\TrustProxies::class,
+    //    \App\Http\Middleware\Admin::class,
+      //  \App\Http\Middleware\Supervisor::class,
+        //\App\Http\Middleware\Employee::class
     ];
 
     /**
@@ -57,6 +60,8 @@ class Kernel extends HttpKernel
         'can' => \Illuminate\Auth\Middleware\Authorize::class,
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
-        'admin' => App\Http\Middleware\Admin::class,
+        'admin' => \App\Http\Middleware\Admin::class,
+        'supervisor' => \App\Http\Middleware\Supervisor::class,
+        'employee' => \App\Http\Middleware\Employee::class
     ];
 }
