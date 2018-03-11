@@ -17,10 +17,10 @@ class CreateComplaintsTable extends Migration
             $table->increments('id');
             $table->integer('invoice_id')->unsigned();
             $table->foreign('invoice_id')->references('id')->on('invoices');
-            $table->integer('tax')->unsigned();
-            $table->float('total_price')->unsigned();
-            $table->string('payment_method')->unsigned();
-            $table->string('problem_description')->unsigned();
+            $table->integer('tax')->default($value=23);
+            $table->float('total_price')->default($value=0);
+            $table->string('payment_method');
+            $table->string('problem_description');
             $table->string('status')-> nullable(false) ->change();
             $table->timestamps();
         });

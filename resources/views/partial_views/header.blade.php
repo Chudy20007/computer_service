@@ -81,11 +81,11 @@
   @else
   <a class='menuOptionRight' href="{{URL::route('login')}}">Login</a>
   @endif
-
+  @if (Auth::user()!=null && (Auth::user()->isAdmin()||Auth::user()->isSupervisor()))
   <a class='menuOptionRight' href="{{URL::route('register')}}">Sign in</a>
 
   <a href="javascript:void(0);" style="font-size:15px;" class="icon">&#9776;</a>
-
+@endif
 
 
 </div>

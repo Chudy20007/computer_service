@@ -18,5 +18,9 @@ Route::get('protected', ['middleware' => ['auth', 'admin'], function() {
 Route::get('/', function () {
     return view('main');
 });
+
+Route::get('/welcome', function () {
+    return view('welcome');
+});
 Route::auth();
 Auth::routes();

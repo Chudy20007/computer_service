@@ -27,9 +27,17 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    public function checkRole()
+    public function isAdmin()
     {
-        return $this->role;
+        if($this->role==="admin")
+        return true;
+        else return false;
+    }
+    public function isSupervisor()
+    {
+        if($this->role==="supervisor")
+        return true;
+        else return false;
     }
 
 }

@@ -1,10 +1,10 @@
 @extends('main') @section('content')
-<div class="container">
+<div class="containerr">
     <div class="row">
             <div class='col-md-1'>
                 </div>
-        <div class="col-md-10 picture">
-            <div class="panel panel-default card">
+        <div class="col-md-10 picture ">
+            <div class="panel panel-default">
                 <div class="panel-heading"></div>
 
                 <div class="panel-body">
@@ -34,7 +34,17 @@
                                 @endif
                             </div>
                         </div>
+                        <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
+                            <label for="name" class="col-md-4 control-label label">Phone number</label>
 
+                            <div class="col-md-6">
+                                <input id="phone" type="text" class="form-control" name="phone" value="{{ old('phone') }}" required autofocus> @if ($errors->has('phone'))
+                                <span class="help-block">
+                                    <strong>{{ $errors->first('phone') }}</strong>
+                                </span>
+                                @endif
+                            </div>
+                        </div>
                         <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
                             <label for="password" class="col-md-4 control-label label">Password</label>
 
@@ -61,9 +71,10 @@
                                 {{ Form::file('file', array('multiple'=>false,'accept'=>'image/jpeg','class'=>'formOption')) }}
                             </div>
                         </div>
+                        <br/>
                         <div class="form-group">
-                            <div class="col-md-6 col-md-offset-4">
-                                <button type="submit" class="btn btn-info">
+                            <div class="col-md-1">
+                                <button type="submit" class="btn btn-primary">
                                     Register
                                 </button>
                             </div>
@@ -76,4 +87,5 @@
             </div>
     </div>
 </div>
+
 @endsection
