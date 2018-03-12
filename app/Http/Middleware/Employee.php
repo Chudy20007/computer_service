@@ -15,11 +15,11 @@ class Employee
      */
     public function handle($request, Closure $next)
     {   
-        if ( Auth::check() && Auth::user()->isEmployee())
+        if ( Auth::user()->isEmployee())
         {
             return $next($request);
         }
-        else
-        return redirect('home');
+        
+        return response("Error 404",404);
     }
 }

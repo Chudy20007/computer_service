@@ -12,7 +12,9 @@ class Task extends Model
         'order_id',
         'message',
        'updated_at',
-       'created_at'
+       'created_at',
+       'title',
+       'message'
     ];
 
     public function order()

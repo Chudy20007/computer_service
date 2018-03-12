@@ -18,6 +18,6 @@ use Illuminate\Database\Eloquent\Model;
 
     public function order()
     {
-        $this->belongsTo('App\Order','order_id');
+        return $this->belongsTo('App\Order','order_id');
     }
 }

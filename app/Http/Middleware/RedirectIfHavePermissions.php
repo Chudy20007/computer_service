@@ -1,10 +1,10 @@
 <?php
 
 namespace App\Http\Middleware;
-
-use Closure;
 use Auth;
-class Supervisor
+use Closure;
+
+class RedirectIfHavePermissions
 {
     /**
      * Handle an incoming request.
@@ -13,17 +13,14 @@ class Supervisor
      * @param  \Closure  $next
      * @return mixed
      */
-
-     
     public function handle($request, Closure $next)
-    {   
-     
-        if (Auth::check() && Auth::user()->isSupervisor() )
+    {
+        if (Auth::check() && (Auth::user()->isAdmin() || Auth::user()->isSupervisor()))
         {
-           
             return $next($request);
+            
         }
-
-        return response("401",401);
+        
+        return response(view('user.access_denied'));
     }
 }

@@ -11,13 +11,19 @@
 |
 */
 Route::post('/store_order','OrderController@store');
-Route::middleware(['admin'])->group(function () {
-    Route::get('/a',function() {
-        return "this page requires that you be logged in and an Admin";
+Route::middleware('permissions')->group(function () {
+    Route::post('register', 'Auth\RegisterController@register');
+    Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
+    Route::get('create_task','TaskController@showTaskForm');
+    Route::post('create_task','TaskController@storeTask');
+    Route::get('create_service','ServiceController@showServiceForm');
+    Route::post('create_service','ServiceController@storeService');
+    Route::get('create_category','CategoryController@showCategoryForm');
+    Route::post('create_category','CategoryController@storeCategory');
+       
     });
     Route::get('/b',function() {
         return "this page BBB requires that you be logged in and an Admin";
-    });
     });
 
 Route::get('s', ['middleware' => ['auth', 'supervisor'], function() {
@@ -43,6 +49,15 @@ Route::get('/about', function () {
     return view('static_views.about');
 });
 
+Route::get('/access_denied,',function(){
+return view ('users.access_denied');
+});
+Route::post('password/email','App\Http\Controllers\Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
+Route::get('password/reset','App\Http\Controllers\Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
 Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');
-Route::auth();
-Auth::routes();
+Route::get('login', '\App\Http\Controllers\Auth\LoginController@showLoginForm')->name('login');
+Route::post('login', '\App\Http\Controllers\Auth\LoginController@login');
+Route::get('/services',function()
+{
+return view('services.show');
+});

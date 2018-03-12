@@ -39,7 +39,11 @@ class Kernel extends HttpKernel
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
-
+        'permissions' => [
+       \App\Http\Middleware\RedirectIfHavePermissions::class,
+      //  \App\Http\Middleware\Supervisor::class,
+       // \App\Http\Middleware\Employee::class
+    ],
         'api' => [
             'throttle:60,1',
             'bindings',

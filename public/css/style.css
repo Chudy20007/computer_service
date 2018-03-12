@@ -397,6 +397,7 @@ label {
 }
 
 .topNav a:hover {
+  outline-color: whitesmoke;
   color: black;
 }
 

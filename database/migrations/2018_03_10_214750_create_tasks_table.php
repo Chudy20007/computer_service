@@ -18,6 +18,7 @@ class CreateTasksTable extends Migration
             $table->integer('supervisor_id')->unsigned();
             $table->integer('employee_id')->unsigned();
             $table->integer('order_id')->unsigned();
+            $table->string('title');
             $table->string('message');
             $table->foreign('supervisor_id')->references('id')->on('users');
             $table->foreign('employee_id')->references('id')->on('users');

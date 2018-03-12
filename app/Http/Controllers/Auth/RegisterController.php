@@ -6,7 +6,7 @@ use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
-
+use Auth;
 class RegisterController extends Controller
 {
     /*
@@ -27,7 +27,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/';
 
     /**
      * Create a new controller instance.
@@ -36,7 +36,7 @@ class RegisterController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest');
+        $this->middleware('permissions');
     }
 
     /**
@@ -52,7 +52,10 @@ class RegisterController extends Controller
             'email' => ['required','email','unique:users'],
             'password' => ['required'],
             'phone' => ['required','regex:/^[0-9]{8,}$/','unique:users'],
-            'role' => ['required','regex:/^([a-z]{4,})$/']
+            'role' => ['required','regex:/^([a-z]{4,})$/'],
+            'post-code' =>['required','regex:/^([0-9]{2})-([0-9]{3})$/'],
+            'local-number' => ['required'],
+
         ]);
     }
 
@@ -68,7 +71,11 @@ class RegisterController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'phone' => $data['phone'],
-            'role' =>$data['role'],
+            'role' => $data['role'],
+            'city' => $data['city'],
+            'street' => $data['street'],
+            'local_number' => $data['local-number'],
+            'post_code' => $data['post-code'],
             'password' => bcrypt($data['password']),
         ]);
     }

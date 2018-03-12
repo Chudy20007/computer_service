@@ -24,6 +24,7 @@ class OrderController extends Controller
          $user->email = $request['email'];
          $user->post_code = $request['post-code'];
          $user->city = $request['city'];
+         $user->street =$request['street'];
          $user->local_number = $request['local-number'];
          $user->phone = $request['phone'];
          $user->password = bcrypt($request['name']);

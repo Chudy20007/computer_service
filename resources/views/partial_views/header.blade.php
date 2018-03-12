@@ -1,6 +1,6 @@
 <div class="topNav" id="mainNav">
   
-  <a class='logo' href="{{URL::asset('main')}}">
+  <a class='logo' href="{{URL::asset('/')}}">
     <img src="{{URL::asset('css/img/logo.png')}}" alt="Image Soft" />
   </a>
   <a class='menuOption' href="{{URL::asset('add_order')}}">Add order </a>
@@ -82,7 +82,7 @@
   <a class='menuOptionRight' href="{{URL::route('login')}}">Login</a>
   @endif
   @if (Auth::user()!=null && (Auth::user()->isAdmin()||Auth::user()->isSupervisor()))
-  <a class='menuOptionRight' href="{{URL::route('register')}}">Sign in</a>
+  <a class='menuOptionRight' href="{{URL::route('register')}}">Register new account</a>
 
   <a href="javascript:void(0);" style="font-size:15px;" class="icon">&#9776;</a>
 @endif

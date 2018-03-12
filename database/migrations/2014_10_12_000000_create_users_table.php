@@ -22,6 +22,7 @@ class CreateUsersTable extends Migration
             $table->string('post_code',10);
             $table->string('local_number',10);
             $table->string('phone',15);
+            $table->string('street',25);
             $table->string('role',20)->default($value='customer');
             $table->rememberToken();
             $table->timestamps();
