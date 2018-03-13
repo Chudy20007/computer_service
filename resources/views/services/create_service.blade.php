@@ -11,7 +11,7 @@
                 @include('pictures.error_form') {!! Form::open(['url'=>'create_service','class'=>'form-horizontal']) !!} @include('services.service_create_form')
                 <div class='form-group'>
                     <div class='col-md-6'>
-                        {!! Form::submit('Create service',['class'=>'btn btn-info']) !!} {!! Form::close() !!}
+                        {!! Form::submit('Create service',['class'=>'btn btn-primary']) !!} {!! Form::close() !!}
                     </div>
                 </div>
             </div>

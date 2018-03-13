@@ -17,6 +17,7 @@ class CreateServicesTable extends Migration
             $table->increments('id');
             $table->string('name')->unique();
             $table->float('price');
+            $table->boolean('active')->default($value=true);
             $table->timestamps();
         });
     }

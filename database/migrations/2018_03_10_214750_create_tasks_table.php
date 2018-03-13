@@ -20,6 +20,7 @@ class CreateTasksTable extends Migration
             $table->integer('order_id')->unsigned();
             $table->string('title');
             $table->string('message');
+            $table->boolean('active')->default($value=true);
             $table->foreign('supervisor_id')->references('id')->on('users');
             $table->foreign('employee_id')->references('id')->on('users');
             $table->foreign('order_id')->references('id')->on('orders');

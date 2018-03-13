@@ -23,6 +23,7 @@ class CreateUsersTable extends Migration
             $table->string('local_number',10);
             $table->string('phone',15);
             $table->string('street',25);
+            $table->boolean('active')->default($value=true);
             $table->string('role',20)->default($value='customer');
             $table->rememberToken();
             $table->timestamps();

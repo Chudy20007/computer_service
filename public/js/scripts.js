@@ -13,7 +13,56 @@ $(function () {
         }
     }
 
+    $('.form_button').on('click', function () {
+        console.log("{{Auth::id()}}");
 
+      
+        let token = $('meta[name="csrf_token"]').attr('content');
+    
+    
+
+        const order_id =$('#order_id').val();
+        const part_id = $('#part_id').val();
+        const count = $('#count').val();
+     
+    
+        var part = {
+            order_id: order_id,
+            part_id: part_id,
+            count: count
+        }
+ 
+       let url = window.location.href;
+    
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            url: (url),
+            type: "post", //typ połączenia
+            contentType: 'aplication/json', //gdy wysyłamy dane czasami chcemy ustawić ich typ
+            dataType: 'json', //typ danych jakich oczekujemy w odpowiedzi
+            beforeSend: function (xhr) {
+                var token = $('meta[name="csrf_token"]').attr('content');
+    
+                if (token) {
+                    return xhr.setRequestHeader('X-CSRF-TOKEN', token);
+                }
+            },
+            data: JSON.stringify(part),
+        }).done(function (response) {
+            $('.container').prepend(response);
+            $('.alert').first().hide();
+    
+            $('.alert').first().slideDown(2000).delay(2000).slideUp(2000);
+            $('alert').first().remove();
+    
+    
+        })
+    
+    
+    
+    });
     $('.small-img2').on('click', function () {
         $('#device').append($('<option>',{
             value:$('#add-device').val(),

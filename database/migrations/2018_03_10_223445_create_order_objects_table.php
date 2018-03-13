@@ -20,6 +20,7 @@ class CreateOrderObjectsTable extends Migration
             $table->integer('serial_number')->default($value=0);
             $table->string('diagnosis')->default($value="empty");
             $table->boolean('fixed')->default(false);
+            $table->boolean('active')->default($value=true);
             $table->foreign('order_id')->references('id')->on('orders');
             $table->timestamps();
         });

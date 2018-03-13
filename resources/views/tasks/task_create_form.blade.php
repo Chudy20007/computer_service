@@ -31,8 +31,9 @@
         <div class='col-md-4 control-label'>
                 {!! Form::label('selected_employee','Select employee:') !!}
         </div>
+       
         <div class='col-md-12 col-sm-12 form-select-control'>
-                {{ Form::select('employee_id' ,$employees,['class'=>'form-select-control']) }}
+                {{ Form::select('employee_id' ,$employees,$id,['class'=>'form-select-control']) }}
         </div>
 </div>
 

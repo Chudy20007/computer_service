@@ -18,6 +18,37 @@ body {
   text-align: center;
 }
 
+th
+{
+ 
+  color:whitesmoke;
+}
+th:hover
+{
+  cursor:pointer;
+  color:black;
+}
+
+select {
+  transition: border-color 0.2s;
+  border: 1px solid #0069d9;
+background-color: whitesmoke;
+  font-size: 14px;
+  height: 29px;
+ padding-left:3px;
+  width: 268px;
+  border-radius: 8px;
+  outline: none;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+option
+{
+  border: 1px solid darkblue;
+  background-color: #0069d9;
+  color:white;
+  
+}
 .form-header {
   font-size:26px;
   text-transform: uppercase;
@@ -143,7 +174,7 @@ input[type='file'] {
 .topNav {
   min-height: 5rem;
   overflow: hidden;
-  background-color: #0069d9
+  background-color: #0069d9;
 }
 
 .col-md-3>a {

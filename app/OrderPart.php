@@ -10,7 +10,7 @@ class OrderPart extends Model
         'part_id',
         'order_id'
     ];
-
+    public $timestamps = false;
     public function order()
     {
         $this->belongsTo('App\Order','order_id');

@@ -18,4 +18,9 @@ class Part extends Model
    {
        $this->hasOne('App\Category','category_id');
    }
+
+   public function category()
+   {
+      return $this->hasOne('App\Category','id','category_id');
+   }
 }

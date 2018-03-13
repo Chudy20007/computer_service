@@ -10,6 +10,7 @@ class OrderService extends Model
         'order_id',
         'service_id'
     ];
+    public $timestamps = false;
 
     public function order()
     {

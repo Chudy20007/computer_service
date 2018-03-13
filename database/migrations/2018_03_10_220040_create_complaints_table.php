@@ -21,6 +21,7 @@ class CreateComplaintsTable extends Migration
             $table->float('total_price')->default($value=0);
             $table->string('payment_method');
             $table->string('problem_description');
+            
             $table->string('status')-> nullable(false) ->change();
             $table->timestamps();
         });

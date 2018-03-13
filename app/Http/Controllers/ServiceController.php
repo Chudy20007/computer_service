@@ -21,7 +21,14 @@ class ServiceController extends Controller
     public function storeService (ServiceRequest $request)
     {
  
-        $service = Service::create($request->toArray());
-        return ("Success!");
+        Service::create($request->toArray());
+        return view("/");
+    }
+
+    public function showServicesList()
+    {
+        $services = Service::where('is_active','=',true)->get();
+
+        return view ('services.services_list')->with('services',$services);
     }
 }

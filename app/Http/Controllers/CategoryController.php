@@ -24,4 +24,11 @@ class CategoryController extends Controller
         return ("Success!");
     }
 
+    public function showCategoriesList()
+    {
+        $categories = Category::where('active','=',true)->get();
+
+        return view ('categories.categories_list')->with('categories',$categories);
+    }
+
 }

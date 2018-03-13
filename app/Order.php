@@ -17,20 +17,30 @@ class Order extends Model
 
     public function customer()
     {
-        return  $this->belongsTo('App\Invoice','customer_id');
+        return  $this->belongsTo('App\User','customer_id');
     }
 
     public function employee()
     {
-        return $this->hasOne('App\Invoice','employee_id');
+        return $this->hasOne('App\User','id','employee_id');
     }
 
     public function user()
     {
-        return $this->belongsTo('App\User','customer_id');
+        return $this->hasOne('App\User','customer_id','id');
     }
     public function order_object()
     {
         return $this->hasMany('App\OrderObject','order_id');
+    }
+
+    public function order_service()
+    {
+        return $this->hasMany('App\OrderService','order_id');
+    }
+
+    public function order_part()
+    {
+        return $this->hasMany('App\OrderPart','order_id');
     }
 }

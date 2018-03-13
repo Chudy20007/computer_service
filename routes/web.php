@@ -10,36 +10,40 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::post('/store_order','OrderController@store');
+Route::post('/store_order','OrderController@storeOrder');
 Route::middleware('permissions')->group(function () {
     Route::post('register', 'Auth\RegisterController@register');
     Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
-    Route::get('create_task','TaskController@showTaskForm');
+    Route::get('create_task/{id?}','TaskController@showTaskForm');
     Route::post('create_task','TaskController@storeTask');
     Route::get('create_service','ServiceController@showServiceForm');
     Route::post('create_service','ServiceController@storeService');
     Route::get('create_category','CategoryController@showCategoryForm');
     Route::post('create_category','CategoryController@storeCategory');
-       
+    Route::get('show_employees','EmployeeControler@showEmployeesList');
+    Route::get('add_services_to_order/{id?}','OrderController@showServicesOrderForm');
+    Route::post('store_order_services','OrderController@storeOrderServices'); 
+    Route::get('add_part','PartController@showPartForm');
+    Route::post('store_part','PartController@storePart');   
     });
+
     Route::get('/b',function() {
         return "this page BBB requires that you be logged in and an Admin";
     });
 
-Route::get('s', ['middleware' => ['auth', 'supervisor'], function() {
-    return "this page requires that you be logged in and an Supervisor";
-}]);
-
-Route::get('e', ['middleware' => ['auth', 'employee'], function() {
-    return "this page requires that you be logged in and an Employee";
-}]);
-
+    Route::get('add_services_to_order/{id?}','OrderController@showServicesOrderForm')->middleware('auth');
+    Route::get('add_parts_to_order/{id?}','OrderController@showPartsOrderForm')->middleware('auth');
+    Route::post('add_parts_to_order/{id?}','OrderController@storeOrderParts')->middleware('auth');
+    Route::get('show_orders','OrderController@showOrdersList')->middleware('auth');
+    Route::get('show_parts','PartController@showPartsList')->middleware('auth');
+    Route::get('show_services','ServiceController@showServicesList')->middleware('auth');
+    Route::get('show_categories','CategoryController@showCategoriesList')->middleware('auth');
 Route::get('/', function () {
     return view('main');
 });
 
 Route::get('/add_order',function() {
-    return view('order.add_order');
+    return view('orders.add_order');
 });
 
 Route::get('/contact', function () {
@@ -48,6 +52,8 @@ Route::get('/contact', function () {
 Route::get('/about', function () {
     return view('static_views.about');
 });
+
+
 
 Route::get('/access_denied,',function(){
 return view ('users.access_denied');
