@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Auth;
-
+use Illuminate\Support\Facades\Input;
 use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
@@ -55,6 +55,7 @@ class RegisterController extends Controller
             'role' => ['required','regex:/^([a-z]{4,})$/'],
             'post-code' =>['required','regex:/^([0-9]{2})-([0-9]{3})$/'],
             'local-number' => ['required'],
+            'file' =>['required']
 
         ]);
     }
@@ -67,6 +68,11 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        $id = User::latest('id')->first();
+        $id['id'] = $id['id'] + 1;
+        $files = Input::file('file');
+
+        $files->move('C:\xampp\htdocs\computer_service\public\css\img\avatars', $id['id'] . ".jpg");
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],

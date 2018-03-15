@@ -15,7 +15,7 @@ class TaskController extends Controller
     
     public function __construct()
     {
-        $this->middleware('permissions');
+        $this->middleware('permissions', ['except' => ['storeTaskMessage', 'refreshTaskMessages','showTaskDetails']]);
     }
 
     public function showTaskForm ($id=null)

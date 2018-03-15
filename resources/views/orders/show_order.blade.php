@@ -13,10 +13,11 @@
     <thead class="bg-primary text-center">
       <tr>
         <th scope="col">ID</th>
-        <th scope="col">Customer name</th>
+        <th scope="col">Customer name</th>      
         <th scope="col">E-mail</th>
         <th scope="col">Phone</th>
         <th scope="col">Order status</th>
+        <th scope="col">Item name</th>
         <th scope="col">Description</th>
         <th scope="col">Employee</th>
         <th scope="col">Edit</th>
@@ -31,6 +32,7 @@
         <td>{{$order->customer->email}}</td>
         <td> {{$order->customer->phone}}</td>
         <td> {{$order->status}}</td>
+        <td> {{$order->order_object->name}}</td>
         <td> {{$order->description}}</td>
         <td> {{$order->employee->name}}</td>     
         <td> {!! Form::open(['method'=>'get','class'=>'form-horizontal','action'=>['TaskController@showTaskForm',$order->id]]) !!} {!!

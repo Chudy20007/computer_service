@@ -6,4 +6,4 @@
 <link rel="stylesheet" type="text/css" href="{{URL::asset('css/style.css')}}" />
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
 
-<title>Image Hosting</title>
+<title>Service</title>

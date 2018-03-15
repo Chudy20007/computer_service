@@ -121,4 +121,20 @@ class OrderController extends Controller
 
         return view ('orders.orders_list')->with('orders',$orders);
     }
+
+    public function showOrder($id)
+    {
+        $orders = Order::with('customer','employee','order_object','order_part','order_service')->where('status','=','active')->where('id','=',$id)->get(['status','employee_id','customer_id','description','updated_at','created_at','id','order_object.name']);
+
+        return view ('orders.show_order')->with('orders',$orders);
+    }
+    
+    public function showUserOrdersList($id)
+    {
+        $orders = Order::with('customer','employee','order_object','order_part','order_service')
+     ->where('customer_id','=',$id)
+        ->get(['status','employee_id','customer_id','description','updated_at','created_at','id']);
+
+        return view ('orders.user_orders_list')->with('orders',$orders);
+    }
 }

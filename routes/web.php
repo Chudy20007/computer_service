@@ -31,10 +31,13 @@ Route::middleware('permissions')->group(function () {
         return "this page BBB requires that you be logged in and an Admin";
     });
 
+
     Route::get('add_services_to_order/{id?}','OrderController@showServicesOrderForm')->middleware('auth');
     Route::get('add_parts_to_order/{id?}','OrderController@showPartsOrderForm')->middleware('auth');
     Route::post('add_parts_to_order/{id?}','OrderController@storeOrderParts')->middleware('auth');
     Route::get('show_orders','OrderController@showOrdersList')->middleware('auth');
+    Route::get('order/{id}','OrderController@showOrder')->middleware('auth');
+    Route::get('user/{id}','OrderController@showUserOrdersList')->middleware('auth');
     Route::get('show_parts','PartController@showPartsList')->middleware('auth');
     Route::get('show_services','ServiceController@showServicesList')->middleware('auth');
     Route::get('show_categories','CategoryController@showCategoriesList')->middleware('auth');

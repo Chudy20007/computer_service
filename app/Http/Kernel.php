@@ -44,6 +44,8 @@ class Kernel extends HttpKernel
       //  \App\Http\Middleware\Supervisor::class,
        // \App\Http\Middleware\Employee::class
     ],
+
+ 
         'api' => [
             'throttle:60,1',
             'bindings',

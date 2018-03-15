@@ -26,6 +26,7 @@
     <tbody>
       @foreach($orders as $order)
       <tr class="table-light">
+
         <td> <a href="{{URL::asset('order/'.$order->id)}}"> {{$order->id}}</a></td>
         <td><a href="{{URL::asset('user/'.$order->customer->id)}}">{{$order->customer->name}}</a></td>
         <td>{{$order->customer->email}}</td>
