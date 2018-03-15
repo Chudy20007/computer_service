@@ -38,6 +38,10 @@ Route::middleware('permissions')->group(function () {
     Route::get('show_parts','PartController@showPartsList')->middleware('auth');
     Route::get('show_services','ServiceController@showServicesList')->middleware('auth');
     Route::get('show_categories','CategoryController@showCategoriesList')->middleware('auth');
+    Route::get('show_tasks','TaskController@showTasksList')->middleware('auth');
+    Route::get('show_task_details/{id?}','TaskController@showTaskDetails');
+    Route::post('get_messages','TaskController@refreshTaskMessages');
+    Route::post('show_task_details/{id?}','TaskController@storeTaskMessage');
 Route::get('/', function () {
     return view('main');
 });

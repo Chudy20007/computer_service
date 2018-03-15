@@ -4,18 +4,22 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Task extends Model
+class TaskMessage extends Model
 {
     protected $fillable=[
-        'supervisor_id',
-        'employee_id',
+        'task_id',
         'order_id',
+        'employee_id',
+        'name',
         'message',
-       'updated_at',
-       'created_at',
-       'title',
-       'message'
+        'active'
+
     ];
+
+    public function task()
+    {
+        return $this->belongsTo('App\Task','task_id','id');
+    }
 
     public function order()
     {
@@ -24,7 +28,7 @@ class Task extends Model
 
     public function employee()
     {
-        return $this->hasOne('App\User','id','employee_id');
+        return $this->belongsTo('App\User','employee_id','id');
     }
 
     public function supervisor()

@@ -19,6 +19,7 @@ class UsersTableSeeder extends Seeder
         $user->email = $faker->email;
         $user->post_code = "56-200";
         $user->city = "Warszawa";
+        $user->street ="Krakowska";
         $user->local_number ="44";
         $user->phone = 553-614-777;
         $user->password = bcrypt('willock');

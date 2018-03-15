@@ -46,6 +46,11 @@ class User extends Authenticatable
         else return false;
     }
 
+    public function getName()
+    {
+        return $this->name;
+    }
+
     public function order()
     {
         $this->hasMany('App\Order','order_id')->where ('customer_id','=',$this->id);
