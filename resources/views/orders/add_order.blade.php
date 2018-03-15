@@ -49,7 +49,7 @@
                             </div>
                         </div>
                         <div class="form-group{{ $errors->has('street') ? ' has-error' : '' }}">
-                                <label for="street" class="col-md-4 control-label label">City</label>
+                                <label for="street" class="col-md-4 control-label label">Street</label>
     
                                 <div class="col-md-12">
                                     <input id="street" type="text" class="form-control" name="street" value="{{ old('street') }}"  placeholder="street"  required autofocus> @if ($errors->has('city'))

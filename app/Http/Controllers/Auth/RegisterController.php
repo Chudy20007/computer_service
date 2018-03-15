@@ -55,7 +55,8 @@ class RegisterController extends Controller
             'role' => ['required','regex:/^([a-z]{4,})$/'],
             'post-code' =>['required','regex:/^([0-9]{2})-([0-9]{3})$/'],
             'local-number' => ['required'],
-            'file' =>['required']
+            'file' =>['required'],
+            'street' =>['required']
 
         ]);
     }

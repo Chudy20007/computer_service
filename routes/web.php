@@ -25,6 +25,8 @@ Route::middleware('permissions')->group(function () {
     Route::post('store_order_services','OrderController@storeOrderServices'); 
     Route::get('add_part','PartController@showPartForm');
     Route::post('store_part','PartController@storePart');   
+    Route::get('edit_category/{id}','CategoryController@showCategoryEditForm');
+    Route::post('edit_category','CategoryController@editCategory');
     });
 
     Route::get('/b',function() {
@@ -38,10 +40,16 @@ Route::middleware('permissions')->group(function () {
     Route::get('show_orders','OrderController@showOrdersList')->middleware('auth');
     Route::get('order/{id}','OrderController@showOrder')->middleware('auth');
     Route::get('user/{id}','OrderController@showUserOrdersList')->middleware('auth');
+    Route::get('edit_order/{id}','OrderController@showOrderEditForm')->middleware('auth');
+    Route::post('edit_order','OrderController@editOrder')->middleware('auth');
     Route::get('show_parts','PartController@showPartsList')->middleware('auth');
     Route::get('show_services','ServiceController@showServicesList')->middleware('auth');
     Route::get('show_categories','CategoryController@showCategoriesList')->middleware('auth');
     Route::get('show_tasks','TaskController@showTasksList')->middleware('auth');
+    Route::get('edit_order_objects/{id}','OrderController@showOrderObjectsEditForm')->middleware('auth');
+    Route::post('edit_order_objects','OrderController@editOrderObjects')->middleware('auth');
+    Route::get('show_order_objects/{id}','OrderController@showOrderObjectsList')->middleware('auth');
+    
     Route::get('show_task_details/{id?}','TaskController@showTaskDetails');
     Route::post('get_messages','TaskController@refreshTaskMessages');
     Route::post('show_task_details/{id?}','TaskController@storeTaskMessage');

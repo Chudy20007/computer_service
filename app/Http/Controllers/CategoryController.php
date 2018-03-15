@@ -12,6 +12,21 @@ class CategoryController extends Controller
         $this->middleware('permissions');
     }
 
+
+
+    public function showCategoryEditForm ($id)
+    {   $categories = Category::where('active','=',true)->where('id','=',$id)->get();
+        return view('categories.edit_category')->with('categories',$categories);;
+    }
+
+    public function editCategory (CategoryRequest $request)
+    {
+        $data = $request->all();
+        Category::where('id',$data['id'])->update([
+          'name' => $data['name']  
+        ]);
+        return ("Success!");
+    }
     public function showCategoryForm ()
     {  
         return view('categories.create_category');

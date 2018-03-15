@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\OrderRequest;
 use App\Order;
+
 use App\OrderObject;
 use App\OrderPart;
 use App\OrderService;
@@ -20,7 +21,7 @@ class OrderController extends Controller
         $user = User::where('name', $request['name'])
             ->orWhere('email', $request['email'])->get(['id']);
 
-        $user->id = $user[0]->id;
+        
 
         if ($user->isEmpty()) {
             $user = new User;
@@ -34,6 +35,8 @@ class OrderController extends Controller
             $user->password = bcrypt($request['name']);
             $user->save();
         }
+        else
+        $user->id = $user[0]->id;
         $order = new Order;
         $order->customer_id = $user->id;
         $order->employee_id = 1;
@@ -124,7 +127,9 @@ class OrderController extends Controller
 
     public function showOrder($id)
     {
-        $orders = Order::with('customer','employee','order_object','order_part','order_service')->where('status','=','active')->where('id','=',$id)->get(['status','employee_id','customer_id','description','updated_at','created_at','id','order_object.name']);
+        $orders = Order::with('customer','employee','order_object','order_part','order_service')
+        ->where('status','=','active')
+        ->where('id','=',$id)->get();
 
         return view ('orders.show_order')->with('orders',$orders);
     }
@@ -137,4 +142,72 @@ class OrderController extends Controller
 
         return view ('orders.user_orders_list')->with('orders',$orders);
     }
+
+    public function showOrderEditForm($id)
+    {
+        $employees = User::where('role', '=', 'supervisor')->orWhere('role', '=', 'employee')->pluck('name', 'id');
+
+        $customers = User::pluck('name', 'id');
+        $orders = Order::where('id','=',$id)->get();
+
+        return view ('orders.edit_order')->with('order',$orders)->with('customers',$customers)->with('employees',$employees);
+    }
+
+    public function editOrder(Request $request)
+    {
+        $data =$request->all();
+        
+        Order::where('id', '=', $data['order_id'])->update([
+            'id' => $data['order_id'],
+            'customer_id' => $data['customer_id'],
+            'employee_id' => $data['employee_id'],
+            'description' => $data['description'],
+            'status' => $data['status']
+        ]);
+        $orders = Order::with('customer','employee','order_object','order_part','order_service')
+        ->where('status','=','active')
+        ->get(['status','employee_id','customer_id','description','updated_at','created_at','id']);
+
+        return view ('orders.show_order')->with('orders',$orders);
+    }
+
+    public function showOrderObjectsEditForm($id)
+    {
+      
+        $objects = OrderObject::where('order_id','=',$id)->get();
+       
+        return view ('orders.edit_order_objects')->with('objects',$objects);
+    }    
+
+
+    public function editOrderObjects(Request $request)
+    { $data =$request->all();
+
+        $count = (count($data)-2)/5;
+        
+
+        for ($i=1; $i<=2; $i++)
+        {
+            OrderObject::where('id', '=', $data['object_id'.$i])->update([
+
+                'serial_number' => $data['serial_number'.$i],
+                'fixed' => $data['fixed'.$i],
+                'diagnosis' => $data['diagnosis'.$i],
+                'name' => $data['name'.$i]
+            ]);  
+        }
+
+        $orders = Order::with('customer','employee','order_object','order_part','order_service')
+        ->where('status','=','active')
+        ->where('id','=',$data['id'])->get();
+
+        return view ('orders.show_order')->with('orders',$orders);
+    }
+    public function showOrderObjectsList($id)
+    {
+      
+        $objects = OrderObject::where('order_id','=',$id)->get();
+       
+        return view ('orders.order_objects_list')->with('objects',$objects);
+    }   
 }
