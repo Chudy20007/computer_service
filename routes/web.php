@@ -53,9 +53,9 @@ Route::middleware('permissions')->group(function () {
     Route::get('show_task_details/{id?}','TaskController@showTaskDetails');
     Route::post('get_messages','TaskController@refreshTaskMessages');
     Route::post('show_task_details/{id?}','TaskController@storeTaskMessage');
-Route::get('/', function () {
-    return view('main');
-});
+    Route::get('/', function () {
+        return view('main');
+    });
 
 Route::get('/add_order',function() {
     return view('orders.add_order');
