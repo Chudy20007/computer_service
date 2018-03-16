@@ -17,7 +17,7 @@ class CreatePartsTable extends Migration
             $table->increments('id');
             $table->integer('category_id')->unsigned();
             $table->string('name');
-            $table->integer('serial_number')->unique();
+            $table->string('serial_number')->unique();
             $table->integer('count')->unsigned();
             $table->integer('price')->unsigned();
             $table->boolean('active')->default($value=true);

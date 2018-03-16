@@ -64,7 +64,7 @@ class OrderController extends Controller
 
     public function showServicesOrderForm($id = null)
     {
-        $services = Service::where('is_active', '=', true)->pluck('name', 'id', 'price');
+        $services = Service::where('active', '=', true)->pluck('name', 'id', 'price');
 
         $orders = OrderObject::where('fixed', '=', false)->pluck('name', 'order_id');
 

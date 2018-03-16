@@ -49,7 +49,8 @@ Route::middleware('permissions')->group(function () {
     Route::get('edit_order_objects/{id}','OrderController@showOrderObjectsEditForm')->middleware('auth');
     Route::post('edit_order_objects','OrderController@editOrderObjects')->middleware('auth');
     Route::get('show_order_objects/{id}','OrderController@showOrderObjectsList')->middleware('auth');
-    
+    Route::get('edit_part/{id}','PartController@showPartEditForm')->middleware('auth');
+    Route::post('edit_part','PartController@editPart')->middleware('auth'); 
     Route::get('show_task_details/{id?}','TaskController@showTaskDetails');
     Route::post('get_messages','TaskController@refreshTaskMessages');
     Route::post('show_task_details/{id?}','TaskController@storeTaskMessage');
