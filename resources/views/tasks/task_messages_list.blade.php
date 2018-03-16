@@ -47,7 +47,6 @@
 @php $i++; @endphp
             @endforeach 
             @php
-
             $hiddenValues=[
                 'user_id'=>Auth::id(),
                 'task_id'=>$task_messages[0]->task_id,
