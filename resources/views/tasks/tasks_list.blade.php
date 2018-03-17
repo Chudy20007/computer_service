@@ -47,21 +47,7 @@
         </td>
       </tr>
       @endforeach
-      @if (Auth::user()->isAdmin())
-  <td> {!! Form::open(['method'=>'POST','class'=>'form-horizontal','action'=>['AdminController@edit',$task->id]]) !!} {!!
-          Form::hidden('id',$task->id,['class'=>'form-control']) !!} {!! Form::submit('Edit',['class'=>'btn btn-info']) !!}
-          {{ Form::close() }} </a>
-        </td>
-        <td> {!! Form::open(['method'=>'POST','class'=>'form-horizontal','action'=>['AdminController@destroy',$task->id]]) !!}
-          {!! Form::hidden('id',$task->id,['class'=>'form-control']) !!} {!! Form::hidden('_method','DELETE',['class'=>'form-control'])
-          !!} {!! Form::submit('Deactivate',['class'=>'btn btn-info']) !!} {{ Form::close() }} </a>
-        </td>
-        <td> {!! Form::open(['method'=>'POST','class'=>'form-horizontal','action'=>['AdminController@activate',$task->id]]) !!}
-          {!! Form::hidden('_method','PATCH',['class'=>'form-control'])
-          !!}
-          {!! Form::hidden('id',$task->id,['class'=>'form-control']) !!} {!! Form::submit('Activate',['class'=>'btn btn-info']) !!} {{ Form::close() }} </a>
-        </td>
-     @endif
+   
     </tbody>
   </table>
 </div>

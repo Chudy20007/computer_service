@@ -19,8 +19,10 @@
         <th scope="col">Order status</th>
         <th scope="col">Description</th>
         <th scope="col">Employee</th>
-        <th scope="col">Edit</th>
         <th scope="col">Send Message</th>
+        <th scope="col">Edit</th>
+        <th scope="col">Deactivate</th>
+        <th scope="col">Activate</th>
       </tr>
     </thead>
     <tbody>
@@ -38,27 +40,26 @@
           {{ Form::close() }} </a>
         </td>
                 
-        <td> {!! Form::open(['method'=>'get','class'=>'form-horizontal','action'=>['TaskController@showTaskForm',$order->id]]) !!} {!!
-          Form::hidden('id',$order->id,['class'=>'form-control']) !!} {!! Form::submit('Send',['class'=>'btn btn-primary']) !!}
-          {{ Form::close() }} </a>
-        </td>
-      </tr>
-      @endforeach
+
+     
+     
       @if (Auth::user()->isAdmin())
-  <td> {!! Form::open(['method'=>'POST','class'=>'form-horizontal','action'=>['AdminController@edit',$order->id]]) !!} {!!
+  <td> {!! Form::open(['method'=>'POST','class'=>'form-horizontal','action'=>['OrderController@showOrderObjectsEditForm',$order->id]]) !!} {!!
           Form::hidden('id',$order->id,['class'=>'form-control']) !!} {!! Form::submit('Edit',['class'=>'btn btn-info']) !!}
           {{ Form::close() }} </a>
         </td>
-        <td> {!! Form::open(['method'=>'POST','class'=>'form-horizontal','action'=>['AdminController@destroy',$order->id]]) !!}
+        <td> {!! Form::open(['method'=>'POST','class'=>'form-horizontal','action'=>['OrderController@destroyOrder',$order->id]]) !!}
           {!! Form::hidden('id',$order->id,['class'=>'form-control']) !!} {!! Form::hidden('_method','DELETE',['class'=>'form-control'])
           !!} {!! Form::submit('Deactivate',['class'=>'btn btn-info']) !!} {{ Form::close() }} </a>
         </td>
-        <td> {!! Form::open(['method'=>'POST','class'=>'form-horizontal','action'=>['AdminController@activate',$order->id]]) !!}
+        <td> {!! Form::open(['method'=>'POST','class'=>'form-horizontal','action'=>['OrderController@activateOrder',$order->id]]) !!}
           {!! Form::hidden('_method','PATCH',['class'=>'form-control'])
           !!}
           {!! Form::hidden('id',$order->id,['class'=>'form-control']) !!} {!! Form::submit('Activate',['class'=>'btn btn-info']) !!} {{ Form::close() }} </a>
         </td>
+      </tr>
      @endif
+     @endforeach
     </tbody>
   </table>
 </div>

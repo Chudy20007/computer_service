@@ -40,21 +40,7 @@
         </td>
       </tr>
       @endforeach
-      @if (Auth::user()->isAdmin())
-  <td> {!! Form::open(['method'=>'POST','class'=>'form-horizontal','action'=>['AdminController@edit',$category->id]]) !!} {!!
-          Form::hidden('id',$category->id,['class'=>'form-control']) !!} {!! Form::submit('Edit',['class'=>'btn btn-info']) !!}
-          {{ Form::close() }} </a>
-        </td>
-        <td> {!! Form::open(['method'=>'POST','class'=>'form-horizontal','action'=>['AdminController@destroy',$category->id]]) !!}
-          {!! Form::hidden('id',$category->id,['class'=>'form-control']) !!} {!! Form::hidden('_method','DELETE',['class'=>'form-control'])
-          !!} {!! Form::submit('Deactivate',['class'=>'btn btn-info']) !!} {{ Form::close() }} </a>
-        </td>
-        <td> {!! Form::open(['method'=>'POST','class'=>'form-horizontal','action'=>['AdminController@activate',$category->id]]) !!}
-          {!! Form::hidden('_method','PATCH',['class'=>'form-control'])
-          !!}
-          {!! Form::hidden('id',$category->id,['class'=>'form-control']) !!} {!! Form::submit('Activate',['class'=>'btn btn-info']) !!} {{ Form::close() }} </a>
-        </td>
-     @endif
+    
     </tbody>
   </table>
 </div>

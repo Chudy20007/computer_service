@@ -28,7 +28,8 @@ Route::middleware('permissions')->group(function () {
     Route::get('edit_category/{id}','CategoryController@showCategoryEditForm');
     Route::post('edit_category','CategoryController@editCategory');
     });
-
+    Route::delete('destroy_order','OrderController@destroyOrder');
+    Route::patch('activate_order','OrderController@activateOrder');
     Route::get('/b',function() {
         return "this page BBB requires that you be logged in and an Admin";
     });
@@ -49,6 +50,8 @@ Route::middleware('permissions')->group(function () {
     Route::get('edit_order_objects/{id}','OrderController@showOrderObjectsEditForm')->middleware('auth');
     Route::post('edit_order_objects','OrderController@editOrderObjects')->middleware('auth');
     Route::get('show_order_objects/{id}','OrderController@showOrderObjectsList')->middleware('auth');
+
+    
     Route::get('edit_part/{id}','PartController@showPartEditForm')->middleware('auth');
     Route::post('edit_part','PartController@editPart')->middleware('auth'); 
     Route::get('show_task_details/{id?}','TaskController@showTaskDetails');

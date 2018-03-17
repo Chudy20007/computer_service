@@ -210,4 +210,14 @@ class OrderController extends Controller
        
         return view ('orders.order_objects_list')->with('objects',$objects);
     }   
+
+    public function destroyOrder(Request $request)
+    {
+
+    }
+
+    public function activateOrder(Request $request)
+    {
+
+    }
 }
