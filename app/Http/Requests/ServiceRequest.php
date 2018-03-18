@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Requests;
+use App\Service;
+use Illuminate\Validation\Rule;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -24,10 +26,42 @@ class ServiceRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            'price' => ['required','regex:/(\d{1,}).(\d{2})/','placeholder: 00.00'],
-            'name' => ['required','unique:services']
+        
+        $service = Service::find($this)->first();
+      
     
-        ];
+
+
+        switch($this->method())
+        {
+            case 'GET':
+            case 'DELETE':
+            {
+                return [];
+            }
+            case 'POST':
+            {
+                return [
+                    'price' => ['required','regex:/(\d{1,}).(\d{2})/'],
+                    'name' => ['required',Rule::unique('services', 'name')]
+                ];
+            }
+            case 'PUT':
+            {
+                break;
+            }
+            case 'PATCH':
+            {
+                return [
+                    'price' => ['required','regex:/(\d{1,}).(\d{2})/'],
+                    'name' => ['required',Rule::unique('services', 'name')->ignore($service['id'])],
+            
+                ];
+            }
+            
+            default:break;
+        }
     }
 }
+ 
+

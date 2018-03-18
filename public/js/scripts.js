@@ -188,13 +188,17 @@ console.log(url);
 
     $('.admin-div').on('mouseenter', function () {
 
-        $(this).next().children().slideDown(500).css('display', 'block');
+        $(this).next().children().css('display', 'block').slideDown(500);
 
     })
+    $('.supervisor-div').on('mouseenter', function () {
 
+        $(this).next().children().css('display', 'block').slideDown(500);
+
+    })
     $('.menuOl').on('mouseleave', function () {
 
-        $(this).children().slideUp(500);
+        $(this).children().css('display', 'none').slideUp(500);
 
     })
 

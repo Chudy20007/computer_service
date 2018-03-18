@@ -19,10 +19,13 @@
         <th scope="col">Order status</th>
         <th scope="col">Description</th>
         <th scope="col">Employee</th>
-        <th scope="col">Send Message</th>
+        <th scope="col">Create task</th>
+        
         <th scope="col">Edit</th>
+        @if(Auth::user()->isAdmin())
         <th scope="col">Deactivate</th>
         <th scope="col">Activate</th>
+        @endif
       </tr>
     </thead>
     <tbody>
@@ -36,18 +39,20 @@
         <td> {{$order->description}}</td>
         <td> {{$order->employee->name}}</td>     
         <td> {!! Form::open(['method'=>'get','class'=>'form-horizontal','action'=>['TaskController@showTaskForm',$order->id]]) !!} {!!
-          Form::hidden('id',$order->id,['class'=>'form-control']) !!} {!! Form::submit('Create',['class'=>'btn btn-primary']) !!}
+          Form::hidden('id',$order->id,['class'=>'form-control']) !!} 
+          {!! Form::submit('Create',['class'=>'btn btn-primary']) !!}
           {{ Form::close() }} </a>
         </td>
                 
 
      
      
-      @if (Auth::user()->isAdmin())
-  <td> {!! Form::open(['method'=>'POST','class'=>'form-horizontal','action'=>['OrderController@showOrderObjectsEditForm',$order->id]]) !!} {!!
-          Form::hidden('id',$order->id,['class'=>'form-control']) !!} {!! Form::submit('Edit',['class'=>'btn btn-info']) !!}
+     
+  <td> {!! Form::open(['method'=>'get','class'=>'form-horizontal','action'=>['OrderController@showOrderEditForm',$order->id]]) !!} {!!
+          Form::hidden('id',$order->id,['class'=>'form-control']) !!} {!! Form::submit('Edit',['class'=>'btn btn-primary']) !!}
           {{ Form::close() }} </a>
         </td>
+        @if (Auth::user()->isAdmin())
         <td> {!! Form::open(['method'=>'POST','class'=>'form-horizontal','action'=>['OrderController@destroyOrder',$order->id]]) !!}
           {!! Form::hidden('id',$order->id,['class'=>'form-control']) !!} {!! Form::hidden('_method','DELETE',['class'=>'form-control'])
           !!} {!! Form::submit('Deactivate',['class'=>'btn btn-info']) !!} {{ Form::close() }} </a>

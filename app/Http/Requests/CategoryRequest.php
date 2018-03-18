@@ -23,8 +23,36 @@ class CategoryRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            'name' => ['required','regex:/^([A-Z]{1}[a-z]{3,})$/','unique:categories'],
-        ];
+
+        $service = Service::find($this)->first();
+
+        switch ($this->method()) {
+            case 'GET':
+            case 'DELETE':
+                {
+                    return [];
+                }
+            case 'POST':
+                {
+                    return [
+                        'name' => ['required', 'regex:/^([A-Z]{1}[a-z]{3,})$/', 'unique:categories'],
+                    ];
+                }
+            case 'PUT':
+                {
+                    break;
+                }
+            case 'PATCH':
+                {
+                    return [
+
+                        'name' => ['required', 'regex:/^([A-Z]{1}[a-z]{3,})$/', Rule::unique('categories', 'name')->ignore($category['id'])],
+
+                    ];
+                }
+
+            default:break;
+        }
+
     }
 }

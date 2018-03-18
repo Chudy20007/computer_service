@@ -26,15 +26,20 @@ Route::middleware('permissions')->group(function () {
     Route::get('add_part','PartController@showPartForm');
     Route::post('store_part','PartController@storePart');   
     Route::get('edit_category/{id}','CategoryController@showCategoryEditForm');
-    Route::post('edit_category','CategoryController@editCategory');
+    Route::patch('edit_category','CategoryController@editCategory');
+    Route::get('edit_service/{id}','ServiceController@showServiceEditForm');
+    Route::patch('edit_service','ServiceController@editService');
     });
+
+    
     Route::delete('destroy_order','OrderController@destroyOrder');
     Route::patch('activate_order','OrderController@activateOrder');
     Route::get('/b',function() {
         return "this page BBB requires that you be logged in and an Admin";
     });
-
-
+Route::get('sendbasicemail','@OrderController@sendMessage');
+    Route::post('send_message/{id}','OrderController@showMessageForm')->middleware('auth');
+    Route::post('send_message','OrderController@sendMessage')->middleware('auth');
     Route::get('add_services_to_order/{id?}','OrderController@showServicesOrderForm')->middleware('auth');
     Route::get('add_parts_to_order/{id?}','OrderController@showPartsOrderForm')->middleware('auth');
     Route::post('add_parts_to_order/{id?}','OrderController@storeOrderParts')->middleware('auth');
@@ -43,6 +48,7 @@ Route::middleware('permissions')->group(function () {
     Route::get('user/{id}','OrderController@showUserOrdersList')->middleware('auth');
     Route::get('edit_order/{id}','OrderController@showOrderEditForm')->middleware('auth');
     Route::post('edit_order','OrderController@editOrder')->middleware('auth');
+  
     Route::get('show_parts','PartController@showPartsList')->middleware('auth');
     Route::get('show_services','ServiceController@showServicesList')->middleware('auth');
     Route::get('show_categories','CategoryController@showCategoriesList')->middleware('auth');

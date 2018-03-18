@@ -1,10 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Swift_Attachment;
 use App\Http\Requests\OrderRequest;
 use App\Order;
-
+use Mail;
 use App\OrderObject;
 use App\OrderPart;
 use App\OrderService;
@@ -210,6 +210,38 @@ class OrderController extends Controller
        
         return view ('orders.order_objects_list')->with('objects',$objects);
     }   
+
+    public function showMessageForm($id)
+    {
+      
+        return view('orders.send_message')->with('user_id',$id);
+    }
+
+    public function sendMessage(Request $request)
+    {
+        $datas=$request->all();
+        $email = User::where('id',$datas['user_id'])->get(['email']);
+
+
+$datas['email']=$email[0]->email;
+$em['email']=$datas['email'];
+$em['content']=$datas['message'];
+$em['path']=$swiftAttachment = Swift_Attachment::fromPath("C:/Users/Krystian/Desktop/a.pdf");
+
+        Mail::send('mail', ['title'=>"Order status1 updated"], function($m) use ($em) {
+           
+
+            $m->to($em['email'])
+            ->from('computer_service@gmail.com','Computer Service')
+            ->subject('Order status updated')
+            ->setBody($em['content'],'text/html');
+          //  ->attach($em['path'], array('as' => 'invoice.pdf', 'mime' => 'LONGTEXT'));
+            return "Send";
+        });
+      }
+
+
+     
 
     public function destroyOrder(Request $request)
     {

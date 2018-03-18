@@ -18,6 +18,43 @@ body {
   text-align: center;
 }
 
+
+#find-button:hover {
+  outline: none;
+  border: 0;
+  padding: 0;
+  border: none;
+}
+ 
+#find-button:focus {
+  outline: none;
+  border: 0;
+  padding: 0;
+  border: none;
+}
+
+#find-button:active {
+  outline: none;
+  border: 0;
+  padding: 0;
+  border: none;
+}
+
+.supervisor-div
+{
+  float:left;
+  margin-left:0;
+  padding-left:0;
+  width:40px;
+}
+
+.menu
+{
+  padding-right:100px;
+  width:100%;
+  background-color: #0069d9;
+}
+
 th
 {
  
