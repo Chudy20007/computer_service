@@ -29,14 +29,25 @@ class PartController extends Controller
 
    public function showPartEditForm($id)
    {
-    $parts = Part::with('category')->where('active','=',true)->where('id','=',$id)->get();
+    $part = Part::with('category')->where('active','=',true)->where('id','=',$id)->get()->first();
 
-    return view ('parts.part_edit_form')->with('parts',$parts); 
+    $categories = Category::where('active','=',true)->pluck('name','id');
+    return view ('parts.edit_part')->with('part',$part)->with('categories',$categories); 
    }
 
-   public function editPart(Request $request)
+   public function editPart(PartRequest $request)
    {
-    Part::update($request->toArray())->where('id','=',$request->input('id'));
+       
+       $datas=[
+        'name'=>$request->name,
+        'serial_number'=>$request->serial_number,
+        'category_id'=>$request->category_id,
+        'price'=>$request->price,
+        'count'=>$request->count
+       ];
+
+       
+    Part::where('id','=',$request->id)->update($datas);
     $parts = Part::with('category')->where('active','=',true)->get();
 
     return view ('parts.parts_list')->with('parts',$parts);

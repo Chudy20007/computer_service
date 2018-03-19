@@ -12,7 +12,6 @@
 
     <thead class="bg-primary text-center">
       <tr>
-        <th scope="col">ID</th>
         <th scope="col">Category</th>
         <th scope="col">Name</th>
         <th scope="col">Count</th>
@@ -26,21 +25,14 @@
     <tbody>
       @foreach($parts as $part)
       <tr class="table-light">
-
-        <td>{{$part->id}}</td>
         <td>{{$part->category->name}}</td>
         <td>{{$part->name}}</td>
         <td> {{$part->count}}</td>
         <td> {{$part->price}}</td>
         <td> {{$part->created_at}}</td>
         <td> {{$part->updated_at}}</td>     
-        <td> {!! Form::open(['method'=>'get','class'=>'form-horizontal','action'=>['TaskController@showTaskForm',$part->id]]) !!} {!!
-          Form::hidden('id',$part->id,['class'=>'form-control']) !!} {!! Form::submit('Create',['class'=>'btn btn-primary']) !!}
-          {{ Form::close() }} </a>
-        </td>
-                
-        <td> {!! Form::open(['method'=>'get','class'=>'form-horizontal','action'=>['TaskController@showTaskForm',$part->id]]) !!} {!!
-          Form::hidden('id',$part->id,['class'=>'form-control']) !!} {!! Form::submit('Send',['class'=>'btn btn-primary']) !!}
+        <td> {!! Form::open(['method'=>'GET','class'=>'form-horizontal','action'=>['PartController@showPartEditForm',$part->id]]) !!} {!!
+          Form::hidden('id',$part->id,['class'=>'form-control']) !!} {!! Form::submit('Edit',['class'=>'btn btn-primary']) !!}
           {{ Form::close() }} </a>
         </td>
       </tr>

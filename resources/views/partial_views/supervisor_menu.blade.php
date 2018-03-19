@@ -34,10 +34,10 @@
                             <a class="menuOption supervisor-div" href="{{URL::asset('user/'.Auth::id())}}">Tasks</a>
                             <ul class='menuOl'>
                               <li>
-                                <a href="{{URL::asset('show_employees')}}">Show</a>
+                                <a href="{{URL::asset('show_tasks')}}">Show</a>
                               </li>
                               <li>
-                                <a href="{{URL::asset('show_services')}}">Add</a>
+                                <a href="{{URL::asset('create_task')}}">Add</a>
                               </li>
                             </ul>
                         </ol>

@@ -1,9 +1,9 @@
 <?php
 
 namespace App\Http\Requests;
-
+use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
-
+use App\Category;
 class CategoryRequest extends FormRequest
 {
     /**
@@ -24,7 +24,7 @@ class CategoryRequest extends FormRequest
     public function rules()
     {
 
-        $service = Service::find($this)->first();
+        $category = Category::find($this)->first();
 
         switch ($this->method()) {
             case 'GET':
@@ -35,7 +35,7 @@ class CategoryRequest extends FormRequest
             case 'POST':
                 {
                     return [
-                        'name' => ['required', 'regex:/^([A-Z]{1}[a-z]{3,})$/', 'unique:categories'],
+                        'name' => ['required', 'regex:/^([A-Z]{1}[a-z]{3,})$/', Rule::unique('categories', 'name')],
                     ];
                 }
             case 'PUT':

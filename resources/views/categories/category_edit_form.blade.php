@@ -4,8 +4,8 @@
         </div>
         <div class='col-md-12'>
                         {{ method_field('PATCH') }}
-                {!! Form::text('name',$categories[0]->name,['class'=>'form-control']) !!}
-                {!! Form::hidden('id',$categories[0]->id,['class'=>'form-control']) !!}
+                {!! Form::text('name',$category->name,['class'=>'form-control']) !!}
+                {!! Form::hidden('id',$category->id,['class'=>'form-control']) !!}
         </div>
 </div>
 

@@ -34,7 +34,7 @@ class ServiceController extends Controller
         ];
         $id =$request['id'];
         Service::where('id',$id)->update($service);
- return "A";
+ return redirect("show_services");
     }
     public function storeService (ServiceRequest $request)
     {

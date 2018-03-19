@@ -15,8 +15,8 @@ class CategoryController extends Controller
 
 
     public function showCategoryEditForm ($id)
-    {   $categories = Category::where('active','=',true)->where('id','=',$id)->get();
-        return view('categories.edit_category')->with('categories',$categories);;
+    {   $category = Category::where('active','=',true)->where('id','=',$id)->get()->first();
+        return view('categories.edit_category')->with('category',$category);
     }
 
     public function editCategory (CategoryRequest $request)
@@ -25,7 +25,7 @@ class CategoryController extends Controller
         Category::where('id',$data['id'])->update([
           'name' => $data['name']  
         ]);
-        return ("Success!");
+        return redirect ('show_categories');
     }
     public function showCategoryForm ()
     {  
@@ -36,7 +36,7 @@ class CategoryController extends Controller
     {
  
         Category::create($request->toArray());
-        return ("Success!");
+        return ("show_categories");
     }
 
     public function showCategoriesList()

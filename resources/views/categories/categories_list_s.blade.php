@@ -14,13 +14,20 @@
       <tr>
         <th scope="col">Name</th>
         <th scope="col">Created</th>
+        <th scope="col">Updated</th>
+        <th scope="col">Edit</th>
       </tr>
     </thead>
     <tbody>
       @foreach($categories as $category)
       <tr class="table-light">
         <td>{{$category->name}}</td>
+        <td> {{$category->created_at}}</td>
         <td> {{$category->updated_at}}</td>
+        <td> {!! Form::open(['method'=>'GET','class'=>'form-horizontal','action'=>['CategoryController@showCategoryEditForm',$category->id]]) !!} {!!
+            Form::hidden('id',$category->id,['class'=>'form-control']) !!} {!! Form::submit('Edit',['class'=>'btn btn-primary']) !!}
+            {{ Form::close() }} </a>
+          </td>
       </tr>
       @endforeach
     
