@@ -19,7 +19,6 @@
         <th scope="col">Added</th>
         <th scope="col">Updated</th>
         <th scope="col">Edit</th>
-        <th scope="col">Send Message</th>
       </tr>
     </thead>
     <tbody>
@@ -37,21 +36,6 @@
         </td>
       </tr>
       @endforeach
-      @if (Auth::user()->isAdmin())
-  <td> {!! Form::open(['method'=>'POST','class'=>'form-horizontal','action'=>['AdminController@edit',$part->id]]) !!} {!!
-          Form::hidden('id',$part->id,['class'=>'form-control']) !!} {!! Form::submit('Edit',['class'=>'btn btn-info']) !!}
-          {{ Form::close() }} </a>
-        </td>
-        <td> {!! Form::open(['method'=>'POST','class'=>'form-horizontal','action'=>['AdminController@destroy',$part->id]]) !!}
-          {!! Form::hidden('id',$part->id,['class'=>'form-control']) !!} {!! Form::hidden('_method','DELETE',['class'=>'form-control'])
-          !!} {!! Form::submit('Deactivate',['class'=>'btn btn-info']) !!} {{ Form::close() }} </a>
-        </td>
-        <td> {!! Form::open(['method'=>'POST','class'=>'form-horizontal','action'=>['AdminController@activate',$part->id]]) !!}
-          {!! Form::hidden('_method','PATCH',['class'=>'form-control'])
-          !!}
-          {!! Form::hidden('id',$part->id,['class'=>'form-control']) !!} {!! Form::submit('Activate',['class'=>'btn btn-info']) !!} {{ Form::close() }} </a>
-        </td>
-     @endif
     </tbody>
   </table>
 </div>

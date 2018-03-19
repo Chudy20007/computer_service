@@ -21,6 +21,9 @@
         <th scope="col">Create task</th>
 
         <th scope="col">Edit</th>
+        <th scope="col">Deactivate</th>
+        <th scope="col">Activate</th>
+        @endif
       </tr>
     </thead>
     <tbody>
@@ -45,8 +48,16 @@
           !!} {!! Form::hidden('id',$order->id,['class'=>'form-control']) !!} {!! Form::submit('Edit',['class'=>'btn btn-primary'])
           !!} {{ Form::close() }} </a>
         </td>
-
-        @endforeach
+        <td> {!! Form::open(['method'=>'POST','class'=>'form-horizontal','action'=>['OrderController@destroyOrder',$order->id]])
+          !!} {!! Form::hidden('id',$order->id,['class'=>'form-control']) !!} {!! Form::hidden('_method','DELETE',['class'=>'form-control'])
+          !!} {!! Form::submit('Deactivate',['class'=>'btn btn-info']) !!} {{ Form::close() }} </a>
+        </td>
+        <td> {!! Form::open(['method'=>'POST','class'=>'form-horizontal','action'=>['OrderController@activateOrder',$order->id]])
+          !!} {!! Form::hidden('_method','PATCH',['class'=>'form-control']) !!} {!! Form::hidden('id',$order->id,['class'=>'form-control'])
+          !!} {!! Form::submit('Activate',['class'=>'btn btn-info']) !!} {{ Form::close() }} </a>
+        </td>
+      </tr>
+      @endif @endforeach
     </tbody>
   </table>
 </div>

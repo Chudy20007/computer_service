@@ -5,6 +5,7 @@ use Swift_Attachment;
 use App\Http\Requests\OrderRequest;
 use App\Order;
 use Mail;
+use Auth;
 use App\OrderObject;
 use App\OrderPart;
 use App\OrderService;
@@ -120,9 +121,42 @@ class OrderController extends Controller
 
     public function showOrdersList()
     {
-        $orders = Order::with('customer','employee','order_object','order_part','order_service')->where('status','=','active')->get(['status','employee_id','customer_id','description','updated_at','created_at','id']);
 
-        return view ('orders.orders_list')->with('orders',$orders);
+        switch (Auth::user()->getRole())
+        {
+            case "employee":
+            {
+                $orders = Order::with('customer','employee','order_object','order_part','order_service')
+                ->where('status','=','active')->get(['status','employee_id','customer_id','description','updated_at','created_at','id']);
+
+        return view ('orders.orders_list_e')->with('orders',$orders);              
+            }
+
+            case "supervisor":
+            {
+                $orders = Order::with('customer','employee','order_object','order_part','order_service')
+                ->get(['status','employee_id','customer_id','description','updated_at','created_at','id']);
+
+        return view ('orders.orders_list_s')->with('orders',$orders);              
+            }
+
+            case "admin":
+            {
+                $orders = Order::with('customer','employee','order_object','order_part','order_service')
+                ->get(['status','employee_id','customer_id','description','updated_at','created_at','id']);
+
+        return view ('orders.orders_list_a')->with('orders',$orders);                
+            }
+
+            default:
+            {
+              return view('pictures.access_denied');
+                 
+            }
+
+        }
+        
+       
     }
 
     public function showOrder($id)

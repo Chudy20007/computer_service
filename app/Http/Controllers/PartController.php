@@ -5,6 +5,7 @@ use App\Category;
 use Illuminate\Http\Request;
 use App\Http\Requests\PartRequest;
 use App\Part;
+use Auth;
 class PartController extends Controller
 {
 
@@ -22,9 +23,37 @@ class PartController extends Controller
 
     public function showPartsList()
     {
-        $parts = Part::with('category')->where('active','=',true)->get();
 
-        return view ('parts.parts_list')->with('parts',$parts);
+        switch (Auth::user()->getRole())
+        {
+            case "employee":
+            {
+                $parts = Part::with('category')->where('active','=',true)->get();
+
+                return view ('parts.parts_list_e')->with('parts',$parts);        
+            }
+
+            case "supervisor":
+            {
+                $parts = Part::with('category')->where('active','=',true)->get();
+
+                return view ('parts.parts_list_s')->with('parts',$parts);      
+            }
+
+            case "admin":
+            {
+                $parts = Part::with('category')->get();
+
+                return view ('parts.parts_list_a')->with('parts',$parts);                 
+            }
+
+            default:
+            {
+                return redirect('pictures.access_denied');
+                 
+            }
+        }
+       
     }
 
    public function showPartEditForm($id)

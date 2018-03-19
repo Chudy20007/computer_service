@@ -26,7 +26,7 @@ class TaskRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => ['required','regex:/^([A-Z]{1}[a-z]{3,})$/'],
+            'title' => ['required','regex:/([A-Z]{1}[a-z]{3,})/'],
             'message' => ['required']
             //
         ];

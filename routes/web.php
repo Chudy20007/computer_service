@@ -53,6 +53,8 @@ Route::get('sendbasicemail','@OrderController@sendMessage');
     Route::get('show_services','ServiceController@showServicesList')->middleware('auth');
     Route::get('show_categories','CategoryController@showCategoriesList')->middleware('auth');
     Route::get('show_tasks','TaskController@showTasksList')->middleware('auth');
+    Route::get('edit_task/{id}','TaskController@showTaskEditForm')->middleware('auth');
+    Route::patch('edit_task','TaskController@editTask')->middleware('auth');
     Route::get('edit_order_objects/{id}','OrderController@showOrderObjectsEditForm')->middleware('auth');
     Route::post('edit_order_objects','OrderController@editOrderObjects')->middleware('auth');
     Route::get('show_order_objects/{id}','OrderController@showOrderObjectsList')->middleware('auth');

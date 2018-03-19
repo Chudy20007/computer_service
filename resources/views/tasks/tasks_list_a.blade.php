@@ -21,6 +21,8 @@
         <th scope="col">Updated</th>
         <th scope="col">Details</th>
         <th scope="col">Edit</th>
+        <th scope="col">Deactivate</th>
+        <th scope="col">Activate</th>
       </tr>
     </thead>
     <tbody>
@@ -41,6 +43,14 @@
           {!! Form::submit('Edit',['class'=>'btn btn-primary']) !!}
            {{ Form::close() }} </a>
          </td>
+        <td> {!! Form::open(['method'=>'POST','class'=>'form-horizontal','action'=>['TaskController@deactivateTask',$task->id]])
+          !!} {!! Form::hidden('id',$task->id,['class'=>'form-control']) !!} {!! Form::hidden('_method','DELETE',['class'=>'form-control'])
+          !!} {!! Form::submit('Deactivate',['class'=>'btn btn-info']) !!} {{ Form::close() }} </a>
+        </td>
+        <td> {!! Form::open(['method'=>'POST','class'=>'form-horizontal','action'=>['TaskController@activateTask',$task->id]])
+          !!} {!! Form::hidden('_method','PATCH',['class'=>'form-control']) !!} {!! Form::hidden('id',$task->id,['class'=>'form-control'])
+          !!} {!! Form::submit('Activate',['class'=>'btn btn-info']) !!} {{ Form::close() }} </a>
+        </td>
       </tr>
       @endforeach
    

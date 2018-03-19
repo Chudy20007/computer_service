@@ -50,7 +50,11 @@ class User extends Authenticatable
     {
         return $this->name;
     }
-
+    
+    public function getRole()
+    {
+        return $this->role;
+    }
     public function order()
     {
         $this->hasMany('App\Order','order_id')->where ('customer_id','=',$this->id);

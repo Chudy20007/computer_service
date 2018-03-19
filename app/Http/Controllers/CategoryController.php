@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Http\Requests\CategoryRequest;
 use App\Category;
+use Auth;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -41,9 +42,39 @@ class CategoryController extends Controller
 
     public function showCategoriesList()
     {
-        $categories = Category::where('active','=',true)->get();
 
-        return view ('categories.categories_list')->with('categories',$categories);
+        switch (Auth::user()->getRole())
+        {
+            case "employee":
+            {
+                $categories = Category::where('active','=',true)->get();
+
+                return view ('categories.categories_list_e')->with('categories',$categories);                 
+            }
+
+            case "supervisor":
+            {
+                $categories = Category::where('active','=',true)->get();
+
+                return view ('categories.categories_list_s')->with('categories',$categories);               
+            }
+
+            case "admin":
+            {
+                $categories = Category::all();
+
+                return view ('categories.categories_list_a')->with('categories',$categories);               
+            }
+
+            default:
+            {
+        return view('pictures.access_denied');
+                 
+            }
+
+        }
+
+
     }
 
 }

@@ -26,6 +26,20 @@ class TaskController extends Controller
         return view('tasks.create_task')->with('orders', $orders)->with('employees', $employees)->with('id',$id);
     }
 
+    public function showTaskEditForm($id)
+    {
+        $employees = User::where('role','=','employee')->pluck('name','id');
+        $orders = OrderObject::with('order')->get()->where('order.status','=','active')->pluck('name','order_id');
+        $task= Task::where('id',$id)->get()->first();
+        return view('tasks.edit_task')->with('orders', $orders)->with('employees', $employees)->with('id',$id)->with('task',$task);
+    }
+
+    public function editTask(TaskRequest $request)
+    {
+
+        return "Updated";
+    }
+
     public function storeTask (TaskRequest $request)
     {
  
@@ -35,9 +49,41 @@ class TaskController extends Controller
     }
 
     public function showTasksList()
-    {   $tasks = Task::with('employee','supervisor','order')->get();
+    {   
+        
+        
+        
+        switch (Auth::user()->getRole())
+        {
+            case "employee":
+            {
+                $tasks = Task::with('employee','supervisor','order')->where('active','=',true)->get();
     
-        return view('tasks.tasks_list')->with('tasks', $tasks);
+                return view('tasks.tasks_list_e')->with('tasks', $tasks);              
+            }
+
+            case "supervisor":
+            {
+                $tasks = Task::with('employee','supervisor','order')->where('active','=',true)->get();
+    
+                return view('tasks.tasks_list_s')->with('tasks', $tasks);      
+            }
+
+            case "admin":
+            {
+                $tasks = Task::with('employee','supervisor','order')->get();
+    
+                return view('tasks.tasks_list_a')->with('tasks', $tasks);               
+            }
+
+            default:
+            {
+                return redirect('pictures.access_denied');
+                 
+            }
+
+        }       
+
     }
 
     public function showTaskDetails($id)

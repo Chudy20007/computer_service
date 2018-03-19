@@ -45,8 +45,34 @@ class ServiceController extends Controller
 
     public function showServicesList()
     {
-        $services = Service::where('active','=',true)->get();
+        switch (Auth::user()->getRole())
+        {
+            case "employee":
+            {
+                $services = Service::where('active','=',true)->get();
+                return view ('services.services_list_e')->with('services',$services);                 
+            }
 
-        return view ('services.services_list')->with('services',$services);
+            case "supervisor":
+            {
+                $services = Service::where('active','=',true)->get();
+                return view ('services.services_list_s')->with('services',$services);                   
+            }
+
+            case "admin":
+            {
+                $services = Service::all();
+                return view ('services.services_list_a')->with('services',$services);                  
+            }
+
+            default:
+            {
+                $services = Service::where('active','=',true)->get();
+                return view ('services.services_list')->with('services',$services);   
+                 
+            }
+
+        }
+ 
     }
 }
