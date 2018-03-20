@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Requests;
-
+use App\Task;
 use Illuminate\Foundation\Http\FormRequest;
 
 class TaskRequest extends FormRequest
@@ -25,10 +25,39 @@ class TaskRequest extends FormRequest
 
     public function rules()
     {
-        return [
-            'title' => ['required','regex:/([A-Z]{1}[a-z]{3,})/'],
-            'message' => ['required']
-            //
-        ];
+        $task = Task::find($this)->first();
+
+        switch($this->method())
+        {
+            case 'GET':
+            case 'DELETE':
+            {
+                return [];
+            }
+            case 'POST':
+            {
+                return [
+                    'title' => ['required','regex:/([A-Z]{1}[a-z]{3,})/'],
+                    'message' => ['required']
+                    //
+                ];
+            }
+            case 'PUT':
+            {
+                break;
+            }
+            case 'PATCH':
+            {
+                return [
+                    'title' => ['required','regex:/([A-Z]{1}[a-z]{3,})/'],
+                    'message' => ['required']
+                    
+            
+                ];
+            }
+            
+            default:break;
+        }
+       
     }
 }

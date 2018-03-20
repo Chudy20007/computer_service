@@ -44,4 +44,6 @@
         <div class='col-md-12 col-sm-12 form-select-control'>
                 {{ Form::select('order_id' ,$orders,$task->order_id,['class'=>'form-select-control']) }}
         </div>
+        {!! Form::hidden('supervisor_id',Auth::id()) !!}
+        {!! Form::hidden('id',$task->id) !!}
 </div>

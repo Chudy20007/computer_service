@@ -20,6 +20,7 @@ class CreateInvoicesTable extends Migration
             $table->integer('tax')->default($value=23);
             $table->float('total_price')->default($value=0);
             $table->string('payment_method');
+            $table->boolean('active')->default($value=true);
             $table->foreign('order_id')->references('id')->on('orders');
             $table->foreign('employee_id')->references('id')->on('users');
             $table->timestamps();

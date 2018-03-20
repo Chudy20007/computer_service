@@ -1,11 +1,13 @@
 <?php
-
 namespace App\Http\Controllers;
-use App\User;
-use Auth;
+use App\Category;
 use Illuminate\Http\Request;
+use App\Http\Requests\EmployeeRequest;
+use App\User;
+use App\Service;
+use Auth;
 
-class EmployeeControler extends Controller
+class EmployeeController extends Controller
 {
     public function showEmployeesList()
     {
@@ -39,5 +41,18 @@ class EmployeeControler extends Controller
         }
 
 
+    }
+
+    public function showEmployeeEditForm($id)
+    {
+        $employee=User::where('id',$id)->get()->first();
+        
+        return view('employees.edit_employee')->with('user',$employee);
+
+    }
+
+    public function editEmployee(EmployeeRequest $request)
+    {
+return "S";
     }
 }

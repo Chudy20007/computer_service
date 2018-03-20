@@ -96,13 +96,17 @@ console.log(url);
         },
         data: JSON.stringify(task_message),
     }).done(function (response) {
+        $('.div-comments').remove();
+        $("html, body").animate({ scrollTop: 100 },3000);
+        
         $('.author').prepend(response);
+        
         $('.div-comments').hide();
 
         $('.div-comments').slideDown(2000).delay(2000);
        
 
-
+      
     })
 
 

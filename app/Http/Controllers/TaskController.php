@@ -36,8 +36,18 @@ class TaskController extends Controller
 
     public function editTask(TaskRequest $request)
     {
-
-        return "Updated";
+       
+        $id=$request->id;
+        $task=[
+        'title'=>$request->title,
+        'order_id'=>$request->order_id,
+        'employee_id'=>$request->employee_id,
+        'message'=>$request->message,
+        'supervisor_id'=>$request->supervisor_id
+        ];
+ 
+        Task::where('id',$id)->update($task);
+        return redirect("show_tasks");
     }
 
     public function storeTask (TaskRequest $request)
@@ -124,6 +134,10 @@ class TaskController extends Controller
 
     foreach ($tasks as $task)
     {
+        $src="http://localhost/computer_service/public/css/img/avatars\\";
+        $src=$src.$task->employee_id;
+        $src=$src.'.jpg';
+
         $user_name=$task->employee->name;
         $content.=
        ("<div class='div-comments text-left'>
@@ -131,7 +145,7 @@ class TaskController extends Controller
             <cite>
                 <span> ($task->updated_at)</span>
                 <a href='/user/$task->employee_id' class='quick_jump'>
-                    <img class='small-img' src='css/img/avatars/$task->employee_id.jpg'></a>$user_name wrote: $task->message </cite>
+                    <img class='small-img' src='$src'></a>$user_name wrote: $task->message </cite>
         </blockquote>
 
 

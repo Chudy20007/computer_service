@@ -20,7 +20,7 @@ Route::middleware('permissions')->group(function () {
     Route::post('create_service','ServiceController@storeService');
     Route::get('create_category','CategoryController@showCategoryForm');
     Route::post('create_category','CategoryController@storeCategory');
-    Route::get('show_employees','EmployeeControler@showEmployeesList');
+    Route::get('show_employees','EmployeeController@showEmployeesList');
     Route::get('add_services_to_order/{id?}','OrderController@showServicesOrderForm');
     Route::post('store_order_services','OrderController@storeOrderServices'); 
     Route::get('add_part','PartController@showPartForm');
@@ -29,11 +29,25 @@ Route::middleware('permissions')->group(function () {
     Route::patch('edit_category','CategoryController@editCategory');
     Route::get('edit_service/{id}','ServiceController@showServiceEditForm');
     Route::patch('edit_service','ServiceController@editService');
+    Route::get('edit_employee/{id}','EmployeeController@showEmployeeEditForm');
+    Route::patch('edit_employee','EmployeeController@editEmployee');
     });
 
     
-    Route::delete('destroy_order','OrderController@destroyOrder');
-    Route::patch('activate_order','OrderController@activateOrder');
+    Route::delete('deactivate_order}','AdminController@deactivateOrder');
+    Route::patch('activate_order}','AdminController@activateOrder');
+    Route::delete('deactivate_part','AdminController@deactivatePart');
+    Route::patch('activate_part','AdminController@activatePart');
+    Route::delete('deactivate_category}','AdminController@deactivateCategory');
+    Route::patch('activate_category}','AdminController@activateCategory');
+    Route::delete('deactivate_task','AdminController@deactivateTask');
+    Route::patch('activate_task','AdminController@activateTask');
+    Route::delete('deactivate_service}','AdminController@deactivateService');
+    Route::patch('activate_service}','AdminController@activateService');
+    Route::delete('deactivate_employee','AdminController@deactivateEmployee');
+    Route::patch('activate_employee','AdminController@activateEmployee');
+
+
     Route::get('/b',function() {
         return "this page BBB requires that you be logged in and an Admin";
     });

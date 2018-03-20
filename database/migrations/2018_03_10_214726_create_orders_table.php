@@ -18,6 +18,7 @@ class CreateOrdersTable extends Migration
             $table->integer('customer_id')->unsigned();
             $table->integer('employee_id')->unsigned();
             $table->string('status')-> default($value='active');
+            $table->boolean('active')->default($value=true);
             $table->string('description');
             $table->foreign('customer_id')->references('id')->on('users');
             $table->foreign('employee_id')->references('id')->on('users');

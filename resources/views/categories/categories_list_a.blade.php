@@ -30,11 +30,11 @@
             Form::hidden('id',$category->id,['class'=>'form-control']) !!} {!! Form::submit('Edit',['class'=>'btn btn-primary']) !!}
             {{ Form::close() }} </a>
           </td>
-          <td> {!! Form::open(['method'=>'POST','class'=>'form-horizontal','action'=>['CategoryController@deactivateCategory',$category->id]])
+          <td> {!! Form::open(['method'=>'POST','class'=>'form-horizontal','action'=>['AdminController@deactivateCategory',$category->id]])
             !!} {!! Form::hidden('id',$category->id,['class'=>'form-control']) !!} {!! Form::hidden('_method','DELETE',['class'=>'form-control'])
             !!} {!! Form::submit('Deactivate',['class'=>'btn btn-info']) !!} {{ Form::close() }} </a>
           </td>
-          <td> {!! Form::open(['method'=>'POST','class'=>'form-horizontal','action'=>['CategoryController@deactivateCategory',$category->id]])
+          <td> {!! Form::open(['method'=>'POST','class'=>'form-horizontal','action'=>['AdminController@deactivateCategory',$category->id]])
             !!} {!! Form::hidden('_method','PATCH',['class'=>'form-control']) !!} {!! Form::hidden('id',$user->id,['class'=>'form-control'])
             !!} {!! Form::submit('Activate',['class'=>'btn btn-info']) !!} {{ Form::close() }} </a>
           </td>

@@ -1,4 +1,4 @@
-@extends('main') @section('content')
+
 <div class="containerr">
     
     <div class="row">
@@ -12,14 +12,11 @@
                 <div class="panel-heading"></div>
 
                 <div class="panel-body">
-                    <form class="form-horizontal" method="POST" enctype="multipart/form-data" action="{{ route('register') }}">
-                        {{ csrf_field() }}
-
                         <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
                             <label for="name" class="col-md-4 control-label label">Name</label>
 
                             <div class="col-md-12">
-                                <input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}" required autofocus> @if ($errors->has('name'))
+                                <input id="name" type="text" class="form-control" name="name" value="{{$user->name}}" required autofocus> @if ($errors->has('name'))
                                 <span class="help-block">
                                     <strong>{{ $errors->first('name') }}</strong>
                                 </span>
@@ -31,7 +28,7 @@
                             <label for="email" class="col-md-4 control-label label">E-Mail Address</label>
 
                             <div class="col-md-12">
-                                <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required> @if ($errors->has('email'))
+                                <input id="email" type="email" class="form-control" name="email" value="{{$user->email}}" required> @if ($errors->has('email'))
                                 <span class="help-block">
                                     <strong>{{ $errors->first('email') }}</strong>
                                 </span>
@@ -42,7 +39,7 @@
                             <label for="name" class="col-md-4 control-label label">Phone number</label>
 
                             <div class="col-md-12">
-                                <input id="phone" type="text" class="form-control" name="phone" value="{{ old('phone') }}" required autofocus> @if ($errors->has('phone'))
+                                <input id="phone" type="text" class="form-control" name="phone" value="{{$user->phone}}" required autofocus> @if ($errors->has('phone'))
                                 <span class="help-block">
                                     <strong>{{ $errors->first('phone') }}</strong>
                                 </span>
@@ -90,19 +87,19 @@
                             <label for="post-code" class="col-md-4 control-label label">Post code number</label>
 
                             <div class="col-md-12">
-                                <input id="post-code" type="text" class="form-control" name="post-code"  placeholder="XX-XXX"  value="{{ old('post-code') }}" required autofocus> @if ($errors->has('post-code'))
+                                <input id="post-code" type="text" class="form-control" name="post-code"  placeholder="XX-XXX"  value="{{$user->post_code}}" required autofocus> @if ($errors->has('post-code'))
                                 <span class="help-block">
                                     <strong>{{ $errors->first('post-code') }}</strong>
                                 </span>
                                 @endif
                             </div>
                         </div>
-
+{!!Form::hidden('id',$user->id)!!}
                         <div class="form-group{{ $errors->has('city') ? ' has-error' : '' }}">
                             <label for="city" class="col-md-4 control-label label">City</label>
 
                             <div class="col-md-12">
-                                <input id="city" type="text" class="form-control" name="city" value="{{ old('city') }}"  placeholder="city"  required autofocus> @if ($errors->has('city'))
+                                <input id="city" type="text" class="form-control" name="city" value="{{$user->city}}"  placeholder="city"  required autofocus> @if ($errors->has('city'))
                                 <span class="help-block">
                                     <strong>{{ $errors->first('city') }}</strong>
                                 </span>
@@ -113,7 +110,7 @@
                                 <label for="street" class="col-md-4 control-label label">Street</label>
     
                                 <div class="col-md-12">
-                                    <input id="street" type="text" class="form-control" name="street" value="{{ old('street') }}"  placeholder="street"  required autofocus> @if ($errors->has('city'))
+                                    <input id="street" type="text" class="form-control" name="street" value="{{$user->street}}"  placeholder="street"  required autofocus> @if ($errors->has('city'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('street') }}</strong>
                                     </span>
@@ -124,7 +121,7 @@
                             <label for="local-number" class="col-md-4 control-label label">Local number</label>
 
                             <div class="col-md-12">
-                                <input id="local-number" type="text" class="form-control" name="local-number" placeholder="number"  value="{{ old('local-number') }}" required autofocus> @if ($errors->has('local-number'))
+                                <input id="local-number" type="text" class="form-control" name="local-number" placeholder="number"  value="{{$user->local_number}}" required autofocus> @if ($errors->has('local-number'))
                                 <span class="help-block">
                                     <strong>{{ $errors->first('local-number') }}</strong>
                                 </span>
@@ -143,12 +140,9 @@
 
                         <div class="form-group">
                             <div class="col-md-1">
-                                <button type="submit" class="btn btn-primary">
-                                    Register
-                                </button>
                             </div>
                         </div>
-                    </form>
+                
                 </div>
             </div>
         </div>
@@ -156,5 +150,3 @@
             </div>
     </div>
 </div>
-
-@endsection

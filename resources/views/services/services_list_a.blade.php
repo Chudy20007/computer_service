@@ -14,7 +14,10 @@
         <th scope="col">Name</th>
         <th scope="col">Price</th>
         <th scope="col">Created</th>
+        <th scope="col">Active</th>
         <th scope="col">Edit</th>
+        <th scope="col">Deactivate</th>
+        <th scope="col">Activate</th>
       </tr>
     </thead>
     <tbody>
@@ -23,17 +26,18 @@
         <td>{{$services->name}}</td>
         <td> {{$services->price}}</td>
         <td> {{$services->created_at}}</td>
+        <td> {{$services->active == 1 ? 'yes' : 'no'}}</td>
         <td> {!! Form::open(['method'=>'get','class'=>'form-horizontal','action'=>['ServiceController@showServiceEditForm',$services->id]])
           !!} {!! Form::hidden('id',$services->id,['class'=>'form-control']) !!} {!! Form::submit('Edit',['class'=>'btn btn-primary'])
           !!} {{ Form::close() }} </a>
         </td>
-        <td> {!! Form::open(['method'=>'POST','class'=>'form-horizontal','action'=>['ServiceController@deactivateService',$services->id]])
+        <td> {!! Form::open(['method'=>'POST','class'=>'form-horizontal','action'=>['AdminController@deactivateService',$services->id]])
           !!} {!! Form::hidden('id',$services->id,['class'=>'form-control']) !!} {!! Form::hidden('_method','DELETE',['class'=>'form-control'])
-          !!} {!! Form::submit('Deactivate',['class'=>'btn btn-info']) !!} {{ Form::close() }} </a>
+          !!} {!! Form::submit('Deactivate',['class'=>'btn btn-primary']) !!} {{ Form::close() }} </a>
         </td>
-        <td> {!! Form::open(['method'=>'POST','class'=>'form-horizontal','action'=>['ServiceController@activateService',$services->id]])
+        <td> {!! Form::open(['method'=>'POST','class'=>'form-horizontal','action'=>['AdminController@activateService',$services->id]])
           !!} {!! Form::hidden('_method','PATCH',['class'=>'form-control']) !!} {!! Form::hidden('id',$services->id,['class'=>'form-control'])
-          !!} {!! Form::submit('Activate',['class'=>'btn btn-info']) !!} {{ Form::close() }} </a>
+          !!} {!! Form::submit('Activate',['class'=>'btn btn-primary']) !!} {{ Form::close() }} </a>
         </td>
       </tr>
 

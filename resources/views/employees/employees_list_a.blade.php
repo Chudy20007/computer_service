@@ -16,6 +16,7 @@
         <th scope="col">E-mail</th>
         <th scope="col">Phone</th>
         <th scope="col">Role</th>
+        <th scope="col">Active</th>
         <th scope="col">Send message</th>
         <th scope="col">Edit</th>
         <th scope="col">Deactivate</th>
@@ -30,6 +31,7 @@
         <td>{{$user->email}}</td>
         <td> {{$user->phone}}</td>
         <td> {{$user->role}}</td> 
+        <td> {{$user->active == 1 ? 'yes' : 'no'}}</td> 
         <td> {!! Form::open(['method'=>'POST','class'=>'form-horizontal','action'=>['OrderController@showMessageForm',$user->id]]) !!}
        {!! Form::submit('Send',['class'=>'btn btn-primary']) !!}
           {{ Form::close() }} </a>
@@ -38,11 +40,11 @@
           !!} {!! Form::hidden('id',$user->id,['class'=>'form-control']) !!} {!! Form::submit('Edit',['class'=>'btn btn-primary'])
           !!} {{ Form::close() }} </a>
         </td>
-        <td> {!! Form::open(['method'=>'POST','class'=>'form-horizontal','action'=>['EmployeeController@deactivateEmployee',$user->id]])
+        <td> {!! Form::open(['method'=>'POST','class'=>'form-horizontal','action'=>['AdminController@deactivateEmployee',$user->id]])
           !!} {!! Form::hidden('id',$user->id,['class'=>'form-control']) !!} {!! Form::hidden('_method','DELETE',['class'=>'form-control'])
           !!} {!! Form::submit('Deactivate',['class'=>'btn btn-info']) !!} {{ Form::close() }} </a>
         </td>
-        <td> {!! Form::open(['method'=>'POST','class'=>'form-horizontal','action'=>['EmployeeController@activateEmployee',$user->id]])
+        <td> {!! Form::open(['method'=>'POST','class'=>'form-horizontal','action'=>['AdminController@activateEmployee',$user->id]])
           !!} {!! Form::hidden('_method','PATCH',['class'=>'form-control']) !!} {!! Form::hidden('id',$user->id,['class'=>'form-control'])
           !!} {!! Form::submit('Activate',['class'=>'btn btn-info']) !!} {{ Form::close() }} </a>
         </td>

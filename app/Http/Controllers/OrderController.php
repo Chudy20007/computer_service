@@ -143,7 +143,7 @@ class OrderController extends Controller
             case "admin":
             {
                 $orders = Order::with('customer','employee','order_object','order_part','order_service')
-                ->get(['status','employee_id','customer_id','description','updated_at','created_at','id']);
+                ->get(['status','employee_id','customer_id','description','updated_at','active','created_at','id']);
 
         return view ('orders.orders_list_a')->with('orders',$orders);                
             }
@@ -277,13 +277,5 @@ $em['path']=$swiftAttachment = Swift_Attachment::fromPath("C:/Users/Krystian/Des
 
      
 
-    public function destroyOrder(Request $request)
-    {
 
-    }
-
-    public function activateOrder(Request $request)
-    {
-
-    }
 }
