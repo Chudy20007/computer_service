@@ -56,11 +56,12 @@ Route::get('sendbasicemail','@OrderController@sendMessage');
 
 Route::get('create_invoice/{id}','InvoiceController@showInvoiceForm')->middleware('auth');
 Route::post('store_invoice','InvoiceController@storeInvoice')->middleware('auth');
-Route::get('invoices_list','InvoiceController@showInvoicesList')->middleware('auth');
+Route::get('show_invoices','InvoiceController@showInvoicesList')->middleware('auth');
 Route::delete('deactivate_invoice','AdminController@deactivateInvoice');
 Route::patch('activate_invoice','AdminController@activateInvoice');
+Route::post('send_invoices','InvoiceController@saveHTMLInvoicesInServer');
 Route::post('generate_invoice','InvoiceController@generateInvoice');
-
+Route::get('send_html_invoice/{invoice_id}','InvoiceController@showHTMLInvoiceForm');
 Route::delete('deactivate_service_order}','AdminController@deactivateOrderService');
 Route::patch('activate_service_order}','AdminController@activateOrderService');
 Route::delete('deactivate_order_part','AdminController@deactivateOrderPart');
@@ -74,7 +75,7 @@ Route::patch('activate_service}','AdminController@activateService');
 Route::delete('deactivate_employee','AdminController@deactivateEmployee');
 Route::patch('activate_employee','AdminController@activateEmployee');
 
-    Route::post('send_message/{id}','OrderController@showMessageForm')->middleware('auth');
+    Route::get('send_message/{id}','OrderController@showMessageForm')->middleware('auth');
     Route::post('send_message','OrderController@sendMessage')->middleware('auth');
     Route::get('add_services_to_order/{id?}','OrderController@showServicesOrderForm')->middleware('auth');
     Route::get('add_parts_to_order/{id?}','OrderController@showPartsOrderForm')->middleware('auth');

@@ -8,7 +8,7 @@
     <div class='col-md-8 picture'>
         <div class='card'>
             <div class='panel-body'>
-                @include('pictures.error_form') {!! Form::open(['url'=>'send_message','class'=>'form-horizontal']) !!}
+                @include('pictures.error_form') {!! Form::open(['url'=>'send_message','files' => true,'class'=>'form-horizontal']) !!}
                 <div class='form-group'>
                     <div class='col-md-12'>
                             {!! Form::hidden('user_id',$user_id,['class'=>'form-control','class'=>'user_id']) !!} 
@@ -20,6 +20,11 @@
                                     <br/>
                             {!! Form::textarea('message',null,['class'=>'form-select-control' /*'multiple'=>'multiple' */]) !!}
                             </div>
+                            <div class='col-md-12 text-center'>
+                                <br/>
+                                {{ Form::file('file[]', array('multiple'=>true,'class'=>'formOption')) }}
+                        </div>
+                         
                         </div>  
                         <div class='row'>
                                 

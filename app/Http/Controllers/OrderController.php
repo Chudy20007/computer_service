@@ -13,6 +13,8 @@ use App\OrderService;
 use App\Part;
 use App\Service;
 use App\User;
+use Carbon\Carbon ;
+use Illuminate\Support\Facades\Input;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
@@ -270,14 +272,18 @@ class OrderController extends Controller
 
     public function sendMessage(Request $request)
     {
+
         $datas=$request->all();
         $email = User::where('id',$datas['user_id'])->get(['email']);
-
-
+$content="<h3>Dead Sir/Madam,</h3></br>";
+$footer="</br></br>If you have any questions, please contact with us. </br><h3>With regards</h3></br> Computer Service </br></br>".Auth::user()->getName();
+        $files = Input::file('file');
+      
 $datas['email']=$email[0]->email;
 $em['email']=$datas['email'];
-$em['content']=$datas['message'];
-$em['path']=$swiftAttachment = Swift_Attachment::fromPath("C:/Users/Krystian/Desktop/a.pdf");
+$em['content']=$content.$datas['message'].$footer;
+$em['path']=$swiftAttachment = Swift_Attachment::fromPath($files[0]->getPathName())->setFilename('Invoice '.Carbon::now().'.pdf');
+
 
         Mail::send('mail', ['title'=>"Order status1 updated"], function($m) use ($em) {
            
@@ -285,8 +291,8 @@ $em['path']=$swiftAttachment = Swift_Attachment::fromPath("C:/Users/Krystian/Des
             $m->to($em['email'])
             ->from('computer_service@gmail.com','Computer Service')
             ->subject('Order status updated')
-            ->setBody($em['content'],'text/html');
-          //  ->attach($em['path'], array('as' => 'invoice.pdf', 'mime' => 'LONGTEXT'));
+            ->setBody($em['content'],'text/html')
+            ->attach($em['path'], array('as' => 'Invoice.pdf', 'mime' => 'application/pdf'));
             return "Send";
         });
       }

@@ -25,6 +25,7 @@
         <th scope="col">Deactivate</th>
         <th scope="col">Activate</th>
         <th scope="col">Prepare HTML</th>
+        <th scope="col">Send HTML to Server PDF</th>
         <th scope="col">Generate PDF</th>
       </tr>
     </thead>
@@ -34,7 +35,7 @@
        
         <td>{{$invoice->id}}</td>
         <td><a href="{{URL::asset('order/'.$invoice->order_id)}}"<td>{{$invoice->order_id}}</td>
-        <td> {{$invoice->order->customer->name}}</td>
+        <td><a href="{{URL::asset('user/'.$invoice->order->customer->id)}}"> {{$invoice->order->customer->name}}</a></td>
         <td> {{$invoice->employee->name}}</td> 
         <td> {{$invoice->total_price}}</td> 
         <td> {{$invoice->payment_method}}</td> 
@@ -55,12 +56,14 @@
         </td>
         <td> {!! Form::open(['method'=>'POST','class'=>'form-horizontal','action'=>['InvoiceController@generateInvoice',$invoice->id]])
                 !!} {!! Form::hidden('invoice_id',$invoice->id,['class'=>'form-control'])
-                !!} {!! Form::submit('Genarate',['class'=>'btn btn-primary']) !!} {{ Form::close() }} </a>
+                !!} {!! Form::submit('Prepare',['class'=>'btn btn-primary']) !!} {{ Form::close() }} </a>
               </td>
-              <td> {!! Form::open(['method'=>'POST','class'=>'form-horizontal','action'=>['InvoiceController@generateInvoiceToPDF',$invoice->id]])
+
+              <td> {!! Form::open(['method'=>'GET','class'=>'form-horizontal','action'=>['InvoiceController@showHTMLInvoiceForm',$invoice->id]])
                 !!} {!! Form::hidden('invoice_id',$invoice->id,['class'=>'form-control'])
-                !!} {!! Form::submit('Genarate',['class'=>'btn btn-primary']) !!} {{ Form::close() }} </a>
+                !!} {!! Form::submit('Send',['class'=>'btn btn-primary']) !!} {{ Form::close() }} </a>
               </td>
+
       </tr>
       @endforeach
      
