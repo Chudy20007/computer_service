@@ -83,6 +83,28 @@
                                 @endif
                             </div>
                         </div>
+
+                        @if(Auth::user()->isAdmin())
+                        <div class="form-group{{ $errors->has('active') ? ' has-error' : '' }}">
+                            <label for="role" class="col-md-4 control-label label">Active</label>
+                        
+                            <div class="col-md-12">
+                                <select id="active" type="text" class="form-control" name="active" required autofocus>
+                                   <option value="1">yes</option>
+                                   <option value="0">no</option> 
+                                    </select>   @if ($errors->has('role'))
+                                <span class="help-block">
+                                    <strong>{{ $errors->first('role') }}</strong>
+                                </span>
+                                @endif
+                            </div>
+                        </div>
+                            
+                        
+                        @else
+                        {!!Form::hidden('active',1)!!}
+                        @endif
+
                         <div class="form-group{{ $errors->has('post-code') ? ' has-error' : '' }}">
                             <label for="post-code" class="col-md-4 control-label label">Post code number</label>
 
@@ -136,7 +158,6 @@
                                 {{ Form::file('file', array('multiple'=>false,'accept'=>'image/jpeg','class'=>'formOption')) }}
                             </div>
                         </div>
-
 
                         <div class="form-group">
                             <div class="col-md-1">

@@ -20,8 +20,11 @@
         <th scope="col">Fixed</th>
         <th scope="col">Created</th>
         <th scope="col">Updated</th>
+        <th scope="col">Active</th>
         <th scope="col">Edit</th>
         <th scope="col">Send Message</th>
+        <th scope="col">Deactivate</th>   
+        <th scope="col">Activate</th>    
       </tr>
     </thead>
     <tbody>
@@ -35,6 +38,7 @@
         <td> {{$object->fixed==true ?'yes' :'no'}}</td>
         <td> {{$object->created_at}}</td>     
         <td> {{$object->updated_at}}</td> 
+        <td> {{$object->active==true ?'yes' :'no'}}</td>
         <td> {!! Form::open(['method'=>'get','class'=>'form-horizontal','action'=>['OrderController@showOrderObjectsEditForm',$object->order_id]]) !!} {!!
           Form::hidden('id',$object->id,['class'=>'form-control']) !!} {!! Form::submit('Edit objects',['class'=>'btn btn-primary']) !!}
           {{ Form::close() }} </a>
@@ -44,6 +48,14 @@
           Form::hidden('id',$object->id,['class'=>'form-control']) !!} {!! Form::submit('Send',['class'=>'btn btn-primary']) !!}
           {{ Form::close() }} </a>
         </td>
+        <td> {!! Form::open(['method'=>'POST','class'=>'form-horizontal','action'=>['AdminController@deactivateOrderObject',$object->id]])
+          !!} {!! Form::hidden('object_id',$object->id,['class'=>'form-control']) !!} {!! Form::hidden('_method','DELETE',['class'=>'form-control'])
+          !!} {!! Form::submit('Deactivate',['class'=>'btn btn-primary']) !!} {{ Form::close() }} </a>
+        </td>
+        <td> {!! Form::open(['method'=>'POST','class'=>'form-horizontal','action'=>['AdminController@activateOrderObject',$object->id]])
+          !!} {!! Form::hidden('_method','PATCH',['class'=>'form-control']) !!} {!! Form::hidden('object_id',$object->id,['class'=>'form-control'])
+          !!} {!! Form::submit('Activate',['class'=>'btn btn-primary']) !!} {{ Form::close() }} </a>
+        </td>  
       </tr>
       @endforeach
     

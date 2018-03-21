@@ -4,6 +4,6 @@
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 <link rel="stylesheet" type="text/css" href="{{URL::asset('css/bootstrap.css')}}" />
 <link rel="stylesheet" type="text/css" href="{{URL::asset('css/style.css')}}" />
+<link rel="stylesheet" type="text/css" href="{{URL::asset('css/invoice.css')}}" />
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
 
-<title>Service</title>

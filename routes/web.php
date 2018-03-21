@@ -46,12 +46,34 @@ Route::middleware('permissions')->group(function () {
     Route::patch('activate_service}','AdminController@activateService');
     Route::delete('deactivate_employee','AdminController@deactivateEmployee');
     Route::patch('activate_employee','AdminController@activateEmployee');
-
+    Route::get('generated_invoice','InvoiceController@generateInvoice');
+    Route::post('generated_invoice_to_pdf','InvoiceController@generateInvoiceToPDF');
 
     Route::get('/b',function() {
         return "this page BBB requires that you be logged in and an Admin";
     });
 Route::get('sendbasicemail','@OrderController@sendMessage');
+
+Route::get('create_invoice/{id}','InvoiceController@showInvoiceForm')->middleware('auth');
+Route::post('store_invoice','InvoiceController@storeInvoice')->middleware('auth');
+Route::get('invoices_list','InvoiceController@showInvoicesList')->middleware('auth');
+Route::delete('deactivate_invoice','AdminController@deactivateInvoice');
+Route::patch('activate_invoice','AdminController@activateInvoice');
+Route::post('generate_invoice','InvoiceController@generateInvoice');
+
+Route::delete('deactivate_service_order}','AdminController@deactivateOrderService');
+Route::patch('activate_service_order}','AdminController@activateOrderService');
+Route::delete('deactivate_order_part','AdminController@deactivateOrderPart');
+Route::patch('activate_order_part','AdminController@activateOrderPart');
+Route::delete('deactivate_order_object}','AdminController@deactivateOrderObject');
+Route::patch('activate_order_object}','AdminController@activateOrderObject');
+
+
+Route::delete('deactivate_service}','AdminController@deactivateService');
+Route::patch('activate_service}','AdminController@activateService');
+Route::delete('deactivate_employee','AdminController@deactivateEmployee');
+Route::patch('activate_employee','AdminController@activateEmployee');
+
     Route::post('send_message/{id}','OrderController@showMessageForm')->middleware('auth');
     Route::post('send_message','OrderController@sendMessage')->middleware('auth');
     Route::get('add_services_to_order/{id?}','OrderController@showServicesOrderForm')->middleware('auth');
@@ -72,8 +94,8 @@ Route::get('sendbasicemail','@OrderController@sendMessage');
     Route::get('edit_order_objects/{id}','OrderController@showOrderObjectsEditForm')->middleware('auth');
     Route::post('edit_order_objects','OrderController@editOrderObjects')->middleware('auth');
     Route::get('show_order_objects/{id}','OrderController@showOrderObjectsList')->middleware('auth');
-
-    
+    Route::get('show_order_parts/{id}','OrderController@showOrderPartsList')->middleware('auth');
+    Route::get('show_order_services/{id}','OrderController@showOrderServicesList')->middleware('auth');    
     Route::get('edit_part/{id}','PartController@showPartEditForm')->middleware('auth');
     Route::patch('edit_part','PartController@editPart')->middleware('auth'); 
     Route::get('show_task_details/{id?}','TaskController@showTaskDetails');

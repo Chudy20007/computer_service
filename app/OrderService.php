@@ -14,10 +14,10 @@ class OrderService extends Model
 
     public function order()
     {
-        $this->belongsTo('App\Order','order_id');
+       return $this->belongsTo('App\Order','order_id');
     }
     public function service()
     {
-        $this->hasOne('App\Service','order_id');
+       return $this->belongsTo('App\Service','service_id');
     }
 }

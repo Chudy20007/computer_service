@@ -17,6 +17,11 @@ class OrderPart extends Model
     }
     public function object()
     {
-        $this->belongsTo('App\Object','order_id')->where('order_id','=','id');
+        return $this->belongsTo('App\Object','order_id')->where('order_id','=','id');
+    }
+
+    public function part()
+    {
+        return $this->belongsTo('App\Part','part_id');
     }
 }

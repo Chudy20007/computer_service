@@ -17,7 +17,7 @@ class Order extends Model
 
     public function customer()
     {
-        return  $this->belongsTo('App\User','customer_id');
+        return  $this->hasOne('App\User','id','customer_id');
     }
 
     public function employee()

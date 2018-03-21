@@ -20,10 +20,12 @@
         <th scope="col">Description</th>
         <th scope="col">Employee</th>
         <th scope="col">Create task</th>
-
+        <th scope="col">Order service</th>
+        <th scope="col">Order parts</th>
+        <th scope="col">Order objects</th>
         <th scope="col">Edit</th>
-        <th scope="col">Deactivate</th>
         <th scope="col">Activate</th>
+        <th scope="col">Deactivate</th>
       </tr>
     </thead>
     <tbody>
@@ -43,6 +45,18 @@
         <td> {{$order->employee->name}}</td>
         <td> {!! Form::open(['method'=>'get','class'=>'form-horizontal','action'=>['TaskController@showTaskForm',$order->id]])
           !!} {!! Form::hidden('id',$order->id,['class'=>'form-control']) !!} {!! Form::submit('Create',['class'=>'btn btn-primary'])
+          !!} {{ Form::close() }} </a>
+        </td>
+        <td> {!! Form::open(['method'=>'get','class'=>'form-horizontal','action'=>['OrderController@showOrderServicesList',$order->id]])
+          !!} {!! Form::hidden('id',$order->id,['class'=>'form-control']) !!} {!! Form::submit('Show',['class'=>'btn btn-primary'])
+          !!} {{ Form::close() }} </a>
+        </td>
+        <td> {!! Form::open(['method'=>'get','class'=>'form-horizontal','action'=>['OrderController@showOrderPartsList',$order->id]])
+          !!} {!! Form::hidden('id',$order->id,['class'=>'form-control']) !!} {!! Form::submit('Show',['class'=>'btn btn-primary'])
+          !!} {{ Form::close() }} </a>
+        </td>
+        <td> {!! Form::open(['method'=>'get','class'=>'form-horizontal','action'=>['OrderController@showOrderObjectsList',$order->id]])
+          !!} {!! Form::hidden('id',$order->id,['class'=>'form-control']) !!} {!! Form::submit('Show',['class'=>'btn btn-primary'])
           !!} {{ Form::close() }} </a>
         </td>
         <td> {!! Form::open(['method'=>'get','class'=>'form-horizontal','action'=>['OrderController@showOrderEditForm',$order->id]])

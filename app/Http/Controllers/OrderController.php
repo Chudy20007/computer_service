@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use Swift_Attachment;
 use App\Http\Requests\OrderRequest;
+use App\Http\Requests\OrderServiceRequest;
 use App\Order;
 use Mail;
 use Auth;
@@ -71,13 +72,14 @@ class OrderController extends Controller
 
         return view('orders.add_services_to_order')->with('order_id', $id)->with('orders', $orders)->with('services', $services);
     }
-    public function storeOrderServices(Request $request)
+    public function storeOrderServices(OrderServiceRequest $request)
     {
-
+ 
         foreach ($request->service_id as $service_id) {
             $datas[] = [
-                'order_id' => $request->order_id, 'service_id' => $service_id,
-                //...
+                'order_id' => $request->order_id, 
+                'service_id' => $service_id,
+            
             ];
         }
 
@@ -243,6 +245,21 @@ class OrderController extends Controller
         $objects = OrderObject::where('order_id','=',$id)->get();
        
         return view ('orders.order_objects_list')->with('objects',$objects);
+    }   
+
+    public function showOrderPartsList($id)
+    {
+      
+        $parts = OrderPart::with('part')->where('order_id','=',$id)->where('active','=',true)->get();
+       
+        return view ('orders.order_parts_list')->with('parts',$parts);
+    }   
+
+    public function showOrderServicesList($id)
+    {
+      
+        $services = OrderService::with('service')->where('order_id','=',$id)->where('active','=',true)->get();
+        return view ('orders.order_services_list')->with('services',$services);
     }   
 
     public function showMessageForm($id)

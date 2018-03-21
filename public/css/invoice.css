@@ -1,0 +1,17 @@
+.container2{
+	width:695px;
+	height:842px;
+	margin:auto;
+	
+
+}
+.info >th
+{
+	color:black;
+}
+
+.info > th:hover
+{
+	color:white;
+	background-color: #0069d9;
+}

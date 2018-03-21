@@ -53,6 +53,21 @@ class EmployeeController extends Controller
 
     public function editEmployee(EmployeeRequest $request)
     {
-return "S";
+        $employee=[
+            'name' => $request->name,
+            'email' => $request->email,
+            'role' => $request->role,
+            'active' => $request->active,
+            'phone' => $request->phone,
+            'street' => $request->street,
+            'city' => $request->city,
+            'local_number' => $request->local_number,
+            'post_code' => $request->post_code,
+            'password' => bcrypt($request->password)
+        ];
+
+        User::where('id',$request->id)->update($employee);
+
+        return redirect ('show_employees');
     }
 }
