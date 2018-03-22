@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Invoice;
+use Auth;
 use App\Order;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -18,7 +19,10 @@ class InvoiceController extends Controller
 
         return view('invoices.create_invoice')->with('order', $order)->with('employee', $employee)->with('customer', $customer);
     }
-
+    public function __construct()
+    {
+        $this->middleware('auth',['except' => ['showInvoicesList','storeInvoice','generateInvoice','showHTMLInvoiceForm','saveHTMLInvoicesInServer']]);
+    }
     public function storeInvoice(Request $request)
     {
         $invoice = [
@@ -56,8 +60,35 @@ class InvoiceController extends Controller
 
     public function showInvoicesList()
     {
-        $invoices = Invoice::with('employee', 'order.customer')->get();
-        return view('invoices.invoices_list')->with('invoices', $invoices);
+        switch (Auth::user()->getRole())
+        {
+            case "employee":
+            {
+                $invoices = Invoice::with('employee', 'order.customer')->get();
+                return view('invoices.invoices_list_e')->with('invoices', $invoices);          
+            }
+
+            case "supervisor":
+            {
+                $invoices = Invoice::with('employee', 'order.customer')->get();
+                return view('invoices.invoices_list')->with('invoices', $invoices);        
+            }
+
+            case "admin":
+            {
+                $invoices = Invoice::with('employee', 'order.customer')->get();
+                return view('invoices.invoices_list')->with('invoices', $invoices);            
+            }
+
+            default:
+            {
+              return view('pictures.access_denied');
+                 
+            }
+
+        }
+
+
     }
 
     public function generateInvoice(Request $request)

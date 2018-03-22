@@ -17,9 +17,9 @@
       @break
 
       @case("employee")
-
-      @break
       @include('partial_views.employee_menu')
+      @break
+
       @case("supervisor")
       @include('partial_views.supervisor_menu')
       @break

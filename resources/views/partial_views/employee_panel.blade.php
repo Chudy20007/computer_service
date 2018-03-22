@@ -1,24 +1,20 @@
 <a class="menuOption">
     <ol>
       <li>
-        <a class="menuOption admin-div" href="{{URL::asset('user/'.Auth::id())}}">user panel</a>
+        <a class="menuOption admin-div" href="{{URL::asset('user/'.Auth::id())}}">employee panel</a>
         <ul class='menuOl'>
           <li>
-            <a href="{{URL::asset('user/'.Auth::id())}}">Profile</a>
+            <a href="{{URL::asset('show_employees')}}">employees</a>
           </li>
           <li>
-            <a href="{{URL::asset('user_panel')}}">Pictures</a>
+            <a href="{{URL::asset('show_services')}}">services</a>
           </li>
           <li class='z'>
-            <a href="{{URL::asset('albums/user/'.Auth::id())}}">Albums</a>
+            <a href="{{URL::asset('show_categories')}}">categories</a>
             
           </li>
           <li>
-            <a href="{{URL::asset('pictures/create')}}">Add pictures</a>
-          </li>
-          <li class='z'>
-            <a href="{{URL::asset('albums/create')}}">Add albums</a>
-            
+            <a href="{{URL::asset('show_tasks')}}">tasks</a>
           </li>
         </ul>
       </li>

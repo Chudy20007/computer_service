@@ -1,31 +1,36 @@
 <?php
 
 namespace App\Http\Controllers;
-use Swift_Attachment;
+
 use App\Http\Requests\OrderRequest;
 use App\Http\Requests\OrderServiceRequest;
 use App\Order;
-use Mail;
-use Auth;
 use App\OrderObject;
 use App\OrderPart;
 use App\OrderService;
 use App\Part;
 use App\Service;
 use App\User;
-use Carbon\Carbon ;
-use Illuminate\Support\Facades\Input;
+use Auth;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Input;
+use Mail;
+use Swift_Attachment;
 
 class OrderController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth', ['except' => ['sendBasicMail', 'showMessageForm', 'sendMessage', 'storeOrderServices']]);
+    }
+
     public function storeOrder(OrderRequest $request)
     {
 
         $user = User::where('name', $request['name'])
             ->orWhere('email', $request['email'])->get(['id']);
-
-        
 
         if ($user->isEmpty()) {
             $user = new User;
@@ -38,9 +43,10 @@ class OrderController extends Controller
             $user->phone = $request['phone'];
             $user->password = bcrypt($request['name']);
             $user->save();
+        } else {
+            $user->id = $user[0]->id;
         }
-        else
-        $user->id = $user[0]->id;
+
         $order = new Order;
         $order->customer_id = $user->id;
         $order->employee_id = 1;
@@ -76,12 +82,12 @@ class OrderController extends Controller
     }
     public function storeOrderServices(OrderServiceRequest $request)
     {
- 
+
         foreach ($request->service_id as $service_id) {
             $datas[] = [
-                'order_id' => $request->order_id, 
+                'order_id' => $request->order_id,
                 'service_id' => $service_id,
-            
+
             ];
         }
 
@@ -126,179 +132,309 @@ class OrderController extends Controller
     public function showOrdersList()
     {
 
-        switch (Auth::user()->getRole())
-        {
+        switch (Auth::user()->getRole()) {
             case "employee":
-            {
-                $orders = Order::with('customer','employee','order_object','order_part','order_service')
-                ->where('status','=','active')->get(['status','employee_id','customer_id','description','updated_at','created_at','id']);
+                {
+                    $orders = Order::with('customer', 'employee', 'order_object', 'order_part', 'order_service')
+                        ->where('orders.status', '!=', 'closed')->where('orders.employee_id', '=', Auth::id())->get(['status', 'employee_id', 'customer_id', 'description', 'updated_at', 'created_at', 'id']);
 
-        return view ('orders.orders_list_e')->with('orders',$orders);              
-            }
+                    return view('orders.orders_list_e')->with('orders', $orders);
+                }
 
             case "supervisor":
-            {
-                $orders = Order::with('customer','employee','order_object','order_part','order_service')
-                ->get(['status','employee_id','customer_id','description','updated_at','created_at','id']);
+                {
+                    $orders = Order::with('customer', 'employee', 'order_object', 'order_part', 'order_service')
+                        ->get(['status', 'employee_id', 'customer_id', 'description', 'updated_at', 'created_at', 'id']);
 
-        return view ('orders.orders_list_s')->with('orders',$orders);              
-            }
+                    return view('orders.orders_list_s')->with('orders', $orders);
+                }
 
             case "admin":
-            {
-                $orders = Order::with('customer','employee','order_object','order_part','order_service')
-                ->get(['status','employee_id','customer_id','description','updated_at','active','created_at','id']);
+                {
+                    $orders = Order::with('customer', 'employee', 'order_object', 'order_part', 'order_service')
+                        ->get(['status', 'employee_id', 'customer_id', 'description', 'updated_at', 'active', 'created_at', 'id']);
 
-        return view ('orders.orders_list_a')->with('orders',$orders);                
-            }
+                    return view('orders.orders_list_a')->with('orders', $orders);
+                }
 
             default:
-            {
-              return view('pictures.access_denied');
-                 
-            }
+                {
+                    return view('pictures.access_denied');
+
+                }
 
         }
-        
-       
+
     }
 
     public function showOrder($id)
     {
-        $orders = Order::with('customer','employee','order_object','order_part','order_service')
-        ->where('status','=','active')
-        ->where('id','=',$id)->get();
+        switch (Auth::user()->getRole()) {
+            case "employee":
+                {
+                    $orders = Order::with('customer', 'employee', 'order_object', 'order_part', 'order_service')
+                        ->where('status', '!=', 'closed')
+                        ->where('id', '=', $id)
+                        ->where('employee_id', '=', Auth::id())->get();
+                    if ($orders->isEmpty()) {
+                        return view('user.access_denied');
+                    } else {
+                        return view('orders.show_order')->with('orders', $orders);
+                    }
 
-        return view ('orders.show_order')->with('orders',$orders);
+                }
+
+            case "supervisor":
+                {
+                    $orders = Order::with('customer', 'employee', 'order_object', 'order_part', 'order_service')
+                        ->where('status', '!=', 'closed')
+                        ->where('id', '=', $id)->get();
+
+                    return view('orders.show_order')->with('orders', $orders);
+                }
+
+            case "admin":
+                {
+                    $orders = Order::with('customer', 'employee', 'order_object', 'order_part', 'order_service')
+                        ->where('status', '!=', 'closed')
+                        ->where('id', '=', $id)->get();
+
+                    return view('orders.show_order')->with('orders', $orders);
+                }
+
+            default:
+                {
+                    return view('user.access_denied');
+
+                }
+        }
     }
-    
+
     public function showUserOrdersList($id)
     {
-        $orders = Order::with('customer','employee','order_object','order_part','order_service')
-     ->where('customer_id','=',$id)
-        ->get(['status','employee_id','customer_id','description','updated_at','created_at','id']);
+        $orders = Order::with('customer', 'employee', 'order_object', 'order_part', 'order_service')
+            ->where('customer_id', '=', $id)
+            ->get(['status', 'employee_id', 'customer_id', 'description', 'updated_at', 'created_at', 'id']);
 
-        return view ('orders.user_orders_list')->with('orders',$orders);
+        return view('orders.user_orders_list')->with('orders', $orders);
     }
 
     public function showOrderEditForm($id)
     {
-        $employees = User::where('role', '=', 'supervisor')->orWhere('role', '=', 'employee')->pluck('name', 'id');
+        $orders = Order::where('id', '=', $id)->get();
 
-        $customers = User::pluck('name', 'id');
-        $orders = Order::where('id','=',$id)->get();
+        switch (Auth::user()->getRole()) {
+            case "employee":
+                {
+                    if ($orders[0]->employee_id == Auth::id()) {
+                        return view('orders.edit_order_e')
+                            ->with('order', $orders);
+                    } else {
+                        return view('user.access_denied');
+                    }
 
-        return view ('orders.edit_order')->with('order',$orders)->with('customers',$customers)->with('employees',$employees);
+                    break;
+                }
+
+            case "supervisor":
+                {
+                    $employees = User::where('role', '=', 'supervisor')->orWhere('role', '=', 'employee')->pluck('name', 'id');
+
+                    $customers = User::pluck('name', 'id');
+                    return view('orders.edit_order')
+                        ->with('order', $orders)
+                        ->with('customers', $customers)
+                        ->with('employees', $employees);
+                    break;
+                }
+
+            case "admin":
+                {
+                    $employees = User::where('role', '=', 'supervisor')->orWhere('role', '=', 'employee')->pluck('name', 'id');
+
+                    $customers = User::pluck('name', 'id');
+                    return view('orders.edit_order')
+                        ->with('order', $orders)
+                        ->with('customers', $customers)
+                        ->with('employees', $employees);
+                    break;
+                }
+        }
+
     }
 
     public function editOrder(Request $request)
     {
-        $data =$request->all();
-        
+        $data = $request->all();
+
         Order::where('id', '=', $data['order_id'])->update([
             'id' => $data['order_id'],
             'customer_id' => $data['customer_id'],
             'employee_id' => $data['employee_id'],
             'description' => $data['description'],
-            'status' => $data['status']
+            'status' => $data['status'],
         ]);
-        $orders = Order::with('customer','employee','order_object','order_part','order_service')
-        ->where('status','=','active')
-        ->get(['status','employee_id','customer_id','description','updated_at','created_at','id']);
+        $orders = Order::with('customer', 'employee', 'order_object', 'order_part', 'order_service')
+            ->where('status', '=', 'active')
+            ->get(['status', 'employee_id', 'customer_id', 'description', 'updated_at', 'created_at', 'id']);
 
-        return view ('orders.show_order')->with('orders',$orders);
+        return view('orders.show_order')->with('orders', $orders);
     }
 
     public function showOrderObjectsEditForm($id)
     {
-      
-        $objects = OrderObject::where('order_id','=',$id)->get();
-       
-        return view ('orders.edit_order_objects')->with('objects',$objects);
-    }    
 
+        $objects = OrderObject::where('order_id', '=', $id)->get();
+
+        return view('orders.edit_order_objects')->with('objects', $objects);
+    }
 
     public function editOrderObjects(Request $request)
-    { $data =$request->all();
+    {$data = $request->all();
 
-        $count = (count($data)-2)/5;
-        
+        $count = (count($data) - 2) / 5;
 
-        for ($i=1; $i<=2; $i++)
-        {
-            OrderObject::where('id', '=', $data['object_id'.$i])->update([
+        for ($i = 1; $i <= 2; $i++) {
+            OrderObject::where('id', '=', $data['object_id' . $i])->update([
 
-                'serial_number' => $data['serial_number'.$i],
-                'fixed' => $data['fixed'.$i],
-                'diagnosis' => $data['diagnosis'.$i],
-                'name' => $data['name'.$i]
-            ]);  
+                'serial_number' => $data['serial_number' . $i],
+                'fixed' => $data['fixed' . $i],
+                'diagnosis' => $data['diagnosis' . $i],
+                'name' => $data['name' . $i],
+            ]);
         }
 
-        $orders = Order::with('customer','employee','order_object','order_part','order_service')
-        ->where('status','=','active')
-        ->where('id','=',$data['id'])->get();
+        $orders = Order::with('customer', 'employee', 'order_object', 'order_part', 'order_service')
+            ->where('status', '=', 'active')
+            ->where('id', '=', $data['id'])->get();
 
-        return view ('orders.show_order')->with('orders',$orders);
+        return view('orders.show_order')->with('orders', $orders);
     }
     public function showOrderObjectsList($id)
     {
-      
-        $objects = OrderObject::where('order_id','=',$id)->get();
-       
-        return view ('orders.order_objects_list')->with('objects',$objects);
-    }   
+        switch (Auth::user()->getRole()) {
+            case "employee":
+                {
+                    $objects = OrderObject::where('order_id', '=', $id)->where('active', '=', true)->get();
+
+                    return view('orders.order_objects_list_e')->with('objects', $objects);
+                }
+
+            case "supervisor":
+                {
+                    $objects = OrderObject::where('order_id', '=', $id)->get();
+
+                    return view('orders.order_objects_list')->with('objects', $objects);
+                    break;
+                }
+
+            case "admin":
+                {
+                    $objects = OrderObject::where('order_id', '=', $id)->get();
+
+                    return view('orders.order_objects_list')->with('objects', $objects);
+                    break;
+                }
+        }
+
+    }
 
     public function showOrderPartsList($id)
     {
-      
-        $parts = OrderPart::with('part')->where('order_id','=',$id)->where('active','=',true)->get();
-       
-        return view ('orders.order_parts_list')->with('parts',$parts);
-    }   
+        switch (Auth::user()->getRole()) {
+            case "employee":
+                {
+                    $parts = OrderPart::with('part')->where('order_id', '=', $id)->where('active', '=', true)->get();
+
+                    return view('orders.order_parts_list_e')->with('parts', $parts);
+                }
+
+            case "supervisor":
+                {
+                    $parts = OrderPart::with('part')->where('order_id', '=', $id)->get();
+
+                    return view('orders.order_parts_list')->with('parts', $parts);
+                    break;
+                }
+
+            case "admin":
+                {
+                    $parts = OrderPart::with('part')->where('order_id', '=', $id)->get();
+
+                    return view('orders.order_parts_list')->with('parts', $parts);
+                    break;
+                }
+        }
+
+    }
 
     public function showOrderServicesList($id)
     {
-      
-        $services = OrderService::with('service')->where('order_id','=',$id)->where('active','=',true)->get();
-        return view ('orders.order_services_list')->with('services',$services);
-    }   
+        switch (Auth::user()->getRole()) {
+            case "employee":
+                {
+                    $services = OrderService::with('service')->where('order_id', '=', $id)->where('active', '=', true)->get();
+                    return view('orders.order_services_list_e')->with('services', $services);
+                }
+
+            case "supervisor":
+                {
+                    $services = OrderService::with('service')->where('order_id', '=', $id)->get();
+                    return view('orders.order_services_list')->with('services', $services);
+                    break;
+                }
+
+            case "admin":
+                {
+                    $services = OrderService::with('service')->where('order_id', '=', $id)->get();
+                    return view('orders.order_services_list')->with('services', $services);
+                    break;
+                }
+        }
+
+    }
 
     public function showMessageForm($id)
     {
-      
-        return view('orders.send_message')->with('user_id',$id);
+
+        return view('orders.send_message')->with('user_id', $id);
     }
 
     public function sendMessage(Request $request)
     {
 
-        $datas=$request->all();
-        $email = User::where('id',$datas['user_id'])->get(['email']);
-$content="<h3>Dead Sir/Madam,</h3></br>";
-$footer="</br></br>If you have any questions, please contact with us. </br><h3>With regards</h3></br> Computer Service </br></br>".Auth::user()->getName();
+        $datas = $request->all();
+        $email = User::where('id', $datas['user_id'])->get(['email']);
+        $content = "<h3>Dear Sir/Madam,</h3><br />";
+        $footer = "<br />If you have any questions, please contact with us. <br /><h3>With regards</h3><br />" . Auth::user()->getName();
         $files = Input::file('file');
-      
-$datas['email']=$email[0]->email;
-$em['email']=$datas['email'];
-$em['content']=$content.$datas['message'].$footer;
-$em['path']=$swiftAttachment = Swift_Attachment::fromPath($files[0]->getPathName())->setFilename('Invoice '.Carbon::now().'.pdf');
 
+        $datas['email'] = $email[0]->email;
+        $em['email'] = $datas['email'];
+        $em['content'] = $content . $datas['message'] . $footer;
+        if ($files[0] != null) {
+            $em['path'] = $swiftAttachment = Swift_Attachment::fromPath($files[0]->getPathName())->setFilename('Invoice ' . Carbon::now() . '.pdf');
 
-        Mail::send('mail', ['title'=>"Order status1 updated"], function($m) use ($em) {
-           
+            Mail::send('mail', ['title' => "Order status1 updated"], function ($m) use ($em) {
 
-            $m->to($em['email'])
-            ->from('computer_service@gmail.com','Computer Service')
-            ->subject('Order status updated')
-            ->setBody($em['content'],'text/html')
-            ->attach($em['path'], array('as' => 'Invoice.pdf', 'mime' => 'application/pdf'));
-            return "Send";
-        });
-      }
+                $m->to($em['email'])
+                    ->from('computer_service@gmail.com', 'Computer Service')
+                    ->subject('Order status updated')
+                    ->setBody($em['content'], 'text/html')
+                    ->attach($em['path'], array('as' => 'Invoice.pdf', 'mime' => 'application/pdf'));
+                return "Send";
+            });
+        } else {
+            Mail::send('mail', ['title' => "Order status1 updated"], function ($m) use ($em) {
 
+                $m->to($em['email'])
+                    ->from('computer_service@gmail.com', 'Computer Service')
+                    ->subject('Order status updated')
+                    ->setBody($em['content'], 'text/html');
 
-     
-
+                return "Send";
+            });
+        }
+    }
 
 }

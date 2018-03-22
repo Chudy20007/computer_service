@@ -9,6 +9,11 @@ use Auth;
 
 class EmployeeController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('permissions',['except' => ['showEmployeesList']]);
+    }
     public function showEmployeesList()
     {
         switch (Auth::user()->getRole())
