@@ -19,7 +19,7 @@ class CreatePartsTable extends Migration
             $table->string('name');
             $table->string('serial_number')->unique();
             $table->integer('count')->unsigned();
-            $table->integer('price')->unsigned();
+            $table->float('price')->unsigned();
             $table->boolean('active')->default($value=true);
             $table->foreign('category_id')->references('id')->on('categories');
             $table->timestamps();

@@ -25,6 +25,30 @@ class UsersTableSeeder extends Seeder
         $user->password = bcrypt('willock');
         $user->role = 'admin';
         $user->save();
+
+        $user = new User();
+        $user ->name = $faker->name;
+        $user->email = $faker->email;
+        $user->post_code = "11-111";
+        $user->city = "Berlin";
+        $user->street = "Alexander Platz";
+        $user->local_number = rand(15, 45);
+        $user->phone = rand(235, 32612);
+        $user->password = bcrypt('willock');
+        $user->role = 'employee';
+        $user->save();
+
+        $user = new User();
+        $user ->name = $faker->name;
+        $user->email = $faker->email;
+        $user->post_code = "41-341";
+        $user->city = "Warszawa";
+        $user->street = "Krzywa";
+        $user->local_number = rand(15, 55);
+        $user->phone = rand(325, 32612);
+        $user->password = bcrypt('willock');
+        $user->role = 'supervisor';
+        $user->save();
         }
     }
 }

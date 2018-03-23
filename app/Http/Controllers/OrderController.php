@@ -12,6 +12,7 @@ use App\Part;
 use App\Service;
 use App\User;
 use Auth;
+use File;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
@@ -413,17 +414,49 @@ class OrderController extends Controller
         $em['email'] = $datas['email'];
         $em['content'] = $content . $datas['message'] . $footer;
         if ($files[0] != null) {
-            $em['path'] = $swiftAttachment = Swift_Attachment::fromPath($files[0]->getPathName())->setFilename('Invoice ' . Carbon::now() . '.pdf');
+            //dd($files[0]->getClientOriginalName());
+  
+            switch (File::extension($files[0]->getClientOriginalName()))
+            {
+                case "jpg":
+                {
+                    $em['path'] = $swiftAttachment = Swift_Attachment::fromPath($files[0]->getPathName())->setFilename($files[0]->getClientOriginalName());
 
-            Mail::send('mail', ['title' => "Order status1 updated"], function ($m) use ($em) {
+                    Mail::send('mail', ['title' => "Order status1 updated"], function ($m) use ($em) {
+        
+                        $m->to($em['email'])
+                            ->from('computer_service@gmail.com', 'Computer Service')
+                            ->subject('Order status updated')
+                            ->setBody($em['content'], 'text/html')
+                            ->attach($em['path'], array('mime' => 'image/jpeg'));
+                        return "Send";
+                    });
+                    break;
+                }
 
-                $m->to($em['email'])
-                    ->from('computer_service@gmail.com', 'Computer Service')
-                    ->subject('Order status updated')
-                    ->setBody($em['content'], 'text/html')
-                    ->attach($em['path'], array('as' => 'Invoice.pdf', 'mime' => 'application/pdf'));
-                return "Send";
-            });
+                
+                case "pdf":
+                {            $em['path'] = $swiftAttachment = Swift_Attachment::fromPath($files[0]->getPathName())->setFilename('Invoice ' . Carbon::now() . '.pdf');
+
+                    Mail::send('mail', ['title' => "Order status1 updated"], function ($m) use ($em) {
+        
+                        $m->to($em['email'])
+                            ->from('computer_service@gmail.com', 'Computer Service')
+                            ->subject('Order status updated')
+                            ->setBody($em['content'], 'text/html')
+                            ->attach($em['path'], array('mime' => 'application/pdf'));
+                        return "Send";
+                    });
+                    break;
+                }
+
+                default:
+                {
+                    return view ('orders.send_message')->with('user_id',$datas['user_id']);
+                }
+
+            }
+
         } else {
             Mail::send('mail', ['title' => "Order status1 updated"], function ($m) use ($em) {
 

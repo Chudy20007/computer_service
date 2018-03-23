@@ -56,7 +56,7 @@ class PartRequest extends FormRequest
                     return [
                         'serial_number' => ['required', 'regex:/([a-z|A-Z|0-9]{7,20})/', Rule::unique('parts', 'serial_number')->ignore($part['id'])],
                         'count' => ['required', 'regex:/(\d{1,})/'],
-                        'price' => ['required', 'regex:/(\d{1,}).(\d{2})/'],
+                        'price' => ['required', 'regex:/^([1-9][0-9]*|0)(\.[0-9]{2})?$/'],
                         'category_id' => ['required'],
                         'name' => ['required', Rule::unique('parts', 'name')->ignore($part['id'])],
 
