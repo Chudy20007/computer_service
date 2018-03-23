@@ -38,7 +38,8 @@ class TaskRequest extends FormRequest
             {
                 return [
                     'title' => ['required','regex:/([A-Z]{1}[a-z]{3,})/'],
-                    'message' => ['required']
+                    'message' => ['required'],
+                    'order_id' =>['required']
                     //
                 ];
             }

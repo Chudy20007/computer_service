@@ -69,12 +69,18 @@ class OrderController extends Controller
 
         OrderObject::insert($devices);
 
-        return "AAA";
+        return view ("main");
 
     }
 
     public function showServicesOrderForm($id = null)
     {
+        $order = Order::where('id',$id)->get()->first();
+      
+        if ($order->status=="closed")
+        {
+            return view ("user.order_closed");
+        }
         $services = Service::where('active', '=', true)->pluck('name', 'id', 'price');
 
         $orders = OrderObject::where('fixed', '=', false)->pluck('name', 'order_id');
@@ -83,7 +89,13 @@ class OrderController extends Controller
     }
     public function storeOrderServices(OrderServiceRequest $request)
     {
-
+        $order = Order::where('id',$request->order_id)->get()->first();
+       
+        if ($order->status=="closed")
+        {
+            return view ("user.order_closed");
+        }
+        
         foreach ($request->service_id as $service_id) {
             $datas[] = [
                 'order_id' => $request->order_id,
@@ -93,11 +105,18 @@ class OrderController extends Controller
         }
 
         OrderService::insert($datas);
-        return ("Success!");
+        return redirect ("show_orders");
     }
 
     public function showPartsOrderForm($id = null)
     {
+        $order = Order::where('id',$id)->get()->first();
+      
+        if ($order->status=="closed")
+        {
+            return view ("user.order_closed");
+        }
+
         $parts = Part::where('count', '>', 0)->pluck('name', 'id');
 
         $orders = OrderObject::where('fixed', '=', false)->pluck('name', 'order_id');
@@ -106,6 +125,7 @@ class OrderController extends Controller
     }
     public function storeOrderParts(Request $request)
     {
+
         $data = json_decode(file_get_contents('php://input'), true);
         $selected_part = Part::where('id', '=', $data['part_id'])->get(['count']);
 
@@ -137,7 +157,7 @@ class OrderController extends Controller
             case "employee":
                 {
                     $orders = Order::with('customer', 'employee', 'order_object', 'order_part', 'order_service')
-                        ->where('orders.status', '!=', 'closed')->where('orders.employee_id', '=', Auth::id())->get(['status', 'employee_id', 'customer_id', 'description', 'updated_at', 'created_at', 'id']);
+                       /* ->where('orders.status', '!=', 'closed') */->where('orders.employee_id', '=', Auth::id())->get(['status', 'employee_id', 'customer_id', 'description', 'updated_at', 'created_at', 'id']);
 
                     return view('orders.orders_list_e')->with('orders', $orders);
                 }
@@ -174,9 +194,9 @@ class OrderController extends Controller
             case "employee":
                 {
                     $orders = Order::with('customer', 'employee', 'order_object', 'order_part', 'order_service')
-                        ->where('status', '!=', 'closed')
+                      /*  ->where('status', '!=', 'closed') */
                         ->where('id', '=', $id)
-                        ->where('employee_id', '=', Auth::id())->get();
+                        ->where('employee_id', '=', Auth::id())->latest()->get();
                     if ($orders->isEmpty()) {
                         return view('user.access_denied');
                     } else {
@@ -188,7 +208,7 @@ class OrderController extends Controller
             case "supervisor":
                 {
                     $orders = Order::with('customer', 'employee', 'order_object', 'order_part', 'order_service')
-                        ->where('status', '!=', 'closed')
+                    
                         ->where('id', '=', $id)->get();
 
                     return view('orders.show_order')->with('orders', $orders);
@@ -197,7 +217,7 @@ class OrderController extends Controller
             case "admin":
                 {
                     $orders = Order::with('customer', 'employee', 'order_object', 'order_part', 'order_service')
-                        ->where('status', '!=', 'closed')
+                       
                         ->where('id', '=', $id)->get();
 
                     return view('orders.show_order')->with('orders', $orders);
@@ -429,7 +449,7 @@ class OrderController extends Controller
                             ->subject('Order status updated')
                             ->setBody($em['content'], 'text/html')
                             ->attach($em['path'], array('mime' => 'image/jpeg'));
-                        return "Send";
+                            return view("main");
                     });
                     break;
                 }
@@ -445,7 +465,7 @@ class OrderController extends Controller
                             ->subject('Order status updated')
                             ->setBody($em['content'], 'text/html')
                             ->attach($em['path'], array('mime' => 'application/pdf'));
-                        return "Send";
+                            return view("main");
                     });
                     break;
                 }
@@ -465,7 +485,7 @@ class OrderController extends Controller
                     ->subject('Order status updated')
                     ->setBody($em['content'], 'text/html');
 
-                return "Send";
+                return view("main");
             });
         }
     }

@@ -17,7 +17,7 @@
         {!! Form::label('status','Order status:') !!}
 </div>
     <div class='col-md-12 col-sm-12 form-select-control'>
-        {!! Form::select('status' ,array('active'=>'active','pause'=>'pause','in_progress'=>'in progress'),['class'=>'form-select-control']) !!}
+        {!! Form::select('status' ,array('active'=>'active','closed'=>'closed','pause'=>'pause','in_progress'=>'in progress'),['class'=>'form-select-control']) !!}
 </div>
 <div class='col-md-4 control-label'>
     {!! Form::label('description','Order description:') !!}

@@ -7,6 +7,7 @@ use App\OrderObject;
 use App\Task;
 use App\TaskMessage;
 use App\User;
+use App\Order;
 use Auth;
 use Illuminate\Http\Request;
 
@@ -20,6 +21,13 @@ class TaskController extends Controller
 
     public function showTaskForm($id = null)
     {
+        $order = Order::where('id',$id)->get()->first();
+      
+        if ($order->status=="closed")
+        {
+            return view ("user.order_closed");
+        }
+
         $employees = User::where('role', '=', 'employee')->pluck('name', 'id');
         $orders = OrderObject::with('order')->get()->where('order.status', '=', 'active')->pluck('name', 'order_id');
 
@@ -85,7 +93,7 @@ class TaskController extends Controller
 
             default:
                 {
-                    return redirect('pictures.access_denied');
+                    return redirect('user.access_denied');
 
                 }
 

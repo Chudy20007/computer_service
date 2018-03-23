@@ -131,6 +131,10 @@ Route::get('/about', function () {
 Route::get('/access_denied,', function () {
     return view('users.access_denied');
 });
+
+Route::get('/denied,', function () {
+    return view('users.order_closed');
+});
 Route::post('password/email', '\App\Http\Controllers\Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
 Route::get('password/reset', '\App\Http\Controllers\Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
 Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');

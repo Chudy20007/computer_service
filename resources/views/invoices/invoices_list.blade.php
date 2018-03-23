@@ -42,16 +42,10 @@
         <td> {{$invoice->tax}}</td> 
         <td> {{$invoice->updated_at}}</td> 
         <td> {{$invoice->active == 1 ? 'yes' : 'no'}}</td> 
-        <td> {!! Form::open(['method'=>'get','class'=>'form-horizontal','action'=>['EmployeeController@showEmployeeEditForm',$invoice->id]])
-          !!} {!! Form::hidden('invoice_id',$invoice->id,['class'=>'form-control']) !!} {!! Form::submit('Edit',['class'=>'btn btn-primary'])
-          !!} {{ Form::close() }} </a>
-        </td>
-                <td> {!! Form::open(['method'=>'get','class'=>'form-horizontal','action'=>['EmployeeController@showEmployeeEditForm',$invoice->id]])
-          !!} {!! Form::hidden('invoice_id',$invoice->id,['class'=>'form-control']) !!} {!! Form::submit('Create',['class'=>'btn btn-primary'])
-          !!} {{ Form::close() }} </a>
+
         </td>
         <td> {!! Form::open(['method'=>'get','class'=>'form-horizontal','action'=>['ComplaintController@showComplaintForm',$invoice->id]]) !!} {!!
-          Form::hidden('id',$order->id,['class'=>'form-control']) !!} {!! Form::submit('Create',['class'=>'btn btn-primary']) !!}
+          Form::hidden('id',$invoice->id,['class'=>'form-control']) !!} {!! Form::submit('Create',['class'=>'btn btn-primary']) !!}
           {{ Form::close() }} </a>
         </td>
         <td> {!! Form::open(['method'=>'POST','class'=>'form-horizontal','action'=>['AdminController@deactivateInvoice',$invoice->id]])

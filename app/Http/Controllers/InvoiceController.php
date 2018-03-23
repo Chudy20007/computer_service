@@ -16,7 +16,9 @@ class InvoiceController extends Controller
         $order = Order::with('order_service.service', 'order_part.part', 'order_object', 'customer', 'employee')->where('id', '=', $id)->get()->first();
         $employee = $order->employee->pluck('name', 'id');
         $customer = $order->customer->pluck('name', 'id');
-
+     
+        if ($order->status!="closed")
+        return view("user.access_denied");
         return view('invoices.create_invoice')->with('order', $order)->with('employee', $employee)->with('customer', $customer);
     }
     public function __construct()
@@ -105,7 +107,13 @@ class InvoiceController extends Controller
 
     public function saveHTMLInvoicesInServer(Request $request)
     {
+        $invoice = Invoice::with('order_service.service', 'order_part.part', 'order_object', 'order.customer', 'employee')->where('id', $request->invoice_id)->get()->first();
         $files = Input::file('file');
+        
+        if(count($files)!=2 || @file_get_contents('C:\Invoices\Invoice nr_ ' . $invoice->id . ' ' . $invoice->order->customer->name . '.html')===false)
+        return view('user.document_error');
+    
+       
         foreach ($files as $file) {
             $file_type = explode('.', $file->getClientOriginalName());
             if ($file_type[1] == "html") {
