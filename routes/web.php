@@ -51,6 +51,19 @@ Route::post('generated_invoice_to_pdf', 'InvoiceController@generateInvoiceToPDF'
 Route::get('/b', function () {
     return "this page BBB requires that you be logged in and an Admin";
 });
+
+
+Route::get('create_complaint/{id}', 'ComplaintController@showComplaintForm')->middleware('auth');
+Route::post('store_complaint', 'ComplaintController@storeComplaint')->middleware('auth');
+Route::get('show_complaints', 'ComplaintController@showComplaintsList')->middleware('auth');
+Route::delete('deactivate_complaint', 'AdminController@deactivateComplaint');
+Route::patch('activate_complaint', 'AdminController@activateComplaint');
+Route::post('send_complaints', 'ComplaintController@saveHTMLComplaintsInServer');
+Route::post('generate_complaint', 'ComplaintController@generateComplaint');
+Route::get('send_html_complaint/{complaint_id}', 'ComplaintController@showHTMLComplaintForm')->middleware('auth');
+
+
+
 Route::get('sendbasicemail', 'OrderController@sendMessage');
 Route::post('store_order_services', 'OrderController@storeOrderServices')->middleware('auth');
 Route::get('create_invoice/{id}', 'InvoiceController@showInvoiceForm')->middleware('auth');
@@ -60,7 +73,7 @@ Route::delete('deactivate_invoice', 'AdminController@deactivateInvoice');
 Route::patch('activate_invoice', 'AdminController@activateInvoice');
 Route::post('send_invoices', 'InvoiceController@saveHTMLInvoicesInServer');
 Route::post('generate_invoice', 'InvoiceController@generateInvoice');
-Route::get('send_html_invoice/{invoice_id}', 'InvoiceController@showHTMLInvoiceForm')->middleware('auth');;
+Route::get('send_html_invoice/{invoice_id}', 'InvoiceController@showHTMLInvoiceForm')->middleware('auth');
 Route::delete('deactivate_service_order}', 'AdminController@deactivateOrderService')->middleware('auth');;
 Route::patch('activate_service_order}', 'AdminController@activateOrderService')->middleware('auth');;
 Route::delete('deactivate_order_part', 'AdminController@deactivateOrderPart')->middleware('auth');;

@@ -64,6 +64,7 @@
           Form::hidden('id',$order->id,['class'=>'form-control']) !!} {!! Form::submit('Create',['class'=>'btn btn-primary']) !!}
           {{ Form::close() }} </a>
         </td>
+
       </tr>
       @endforeach
       @endforeach

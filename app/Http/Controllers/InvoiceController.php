@@ -55,7 +55,7 @@ class InvoiceController extends Controller
         $invoice['updated_at'] = Carbon::now();
 
         Invoice::insert($invoice);
-        return redirect('invoices_list');
+        return redirect('show_invoices');
     }
 
     public function showInvoicesList()
@@ -82,7 +82,7 @@ class InvoiceController extends Controller
 
             default:
             {
-              return view('pictures.access_denied');
+              return view('user.access_denied');
                  
             }
 

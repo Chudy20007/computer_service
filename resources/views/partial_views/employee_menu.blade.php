@@ -64,7 +64,7 @@
                                             <a href="{{URL::asset('show_parts')}}">Show</a>
                                           </li>
                                           <li>
-                                            <a href="{{URL::asset('create_part')}}">Add</a>
+                                            <a href="{{URL::asset('add_part')}}">Add</a>
                                           </li>
                                         </ul>
                                     </ol>
@@ -79,6 +79,36 @@
                                               </li>
                                               <li>
                                                 <a href="{{URL::asset('register')}}">Add</a>
+                                              </li>
+                                            </ul>
+                                        </ol>
+                                      </a>
+
+                                      <a class="menuOption">
+                                        <ol>
+                                          <li>
+                                            <a class="menuOption supervisor-div" href="{{URL::asset('user/'.Auth::id())}}">Invoices</a>
+                                            <ul class='menuOl'>
+                                              <li>
+                                                <a href="{{URL::asset('show_invoices')}}">Show</a>
+                                              </li>
+                                              <li>
+                                                <a href="{{URL::asset('create_invoice')}}">Add</a>
+                                              </li>
+                                            </ul>
+                                        </ol>
+                                      </a>
+
+                                      <a class="menuOption">
+                                        <ol>
+                                          <li>
+                                            <a class="menuOption supervisor-div" href="{{URL::asset('user/'.Auth::id())}}">Complaints</a>
+                                            <ul class='menuOl'>
+                                              <li>
+                                                <a href="{{URL::asset('show_complaints')}}">Show</a>
+                                              </li>
+                                              <li>
+                                                <a href="{{URL::asset('create_complaint')}}">Add</a>
                                               </li>
                                             </ul>
                                         </ol>

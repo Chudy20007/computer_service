@@ -19,6 +19,7 @@ class CreateComplaintsTable extends Migration
             $table->foreign('invoice_id')->references('id')->on('invoices');
             $table->integer('tax')->default($value=23);
             $table->float('total_price')->default($value=0);
+            $table->float('discount')->default($value=0);
             $table->string('payment_method');
             $table->string('problem_description');
             $table->boolean('active')->default($value=true);

@@ -26,7 +26,7 @@
         <th scope="col">Activate</th>
         <th scope="col">Prepare HTML</th>
         <th scope="col">Send HTML to Server PDF</th>
-        <th scope="col">Generate PDF</th>
+        <th scope="col">Create complaint</th>
       </tr>
     </thead>
     <tbody>
@@ -46,6 +46,14 @@
           !!} {!! Form::hidden('invoice_id',$invoice->id,['class'=>'form-control']) !!} {!! Form::submit('Edit',['class'=>'btn btn-primary'])
           !!} {{ Form::close() }} </a>
         </td>
+                <td> {!! Form::open(['method'=>'get','class'=>'form-horizontal','action'=>['EmployeeController@showEmployeeEditForm',$invoice->id]])
+          !!} {!! Form::hidden('invoice_id',$invoice->id,['class'=>'form-control']) !!} {!! Form::submit('Create',['class'=>'btn btn-primary'])
+          !!} {{ Form::close() }} </a>
+        </td>
+        <td> {!! Form::open(['method'=>'get','class'=>'form-horizontal','action'=>['ComplaintController@showComplaintForm',$invoice->id]]) !!} {!!
+          Form::hidden('id',$order->id,['class'=>'form-control']) !!} {!! Form::submit('Create',['class'=>'btn btn-primary']) !!}
+          {{ Form::close() }} </a>
+        </td>
         <td> {!! Form::open(['method'=>'POST','class'=>'form-horizontal','action'=>['AdminController@deactivateInvoice',$invoice->id]])
           !!} {!! Form::hidden('invoice_id',$invoice->id,['class'=>'form-control']) !!} {!! Form::hidden('_method','DELETE',['class'=>'form-control'])
           !!} {!! Form::submit('Deactivate',['class'=>'btn btn-primary']) !!} {{ Form::close() }} </a>
@@ -62,6 +70,10 @@
               <td> {!! Form::open(['method'=>'GET','class'=>'form-horizontal','action'=>['InvoiceController@showHTMLInvoiceForm',$invoice->id]])
                 !!} {!! Form::hidden('invoice_id',$invoice->id,['class'=>'form-control'])
                 !!} {!! Form::submit('Send',['class'=>'btn btn-primary']) !!} {{ Form::close() }} </a>
+              </td>
+              <td> {!! Form::open(['method'=>'get','class'=>'form-horizontal','action'=>['ComplaintController@showComplaintForm',$invoice->id]])
+                !!} {!! Form::hidden('invoice_id',$invoice->id,['class'=>'form-control']) !!} {!! Form::submit('Create',['class'=>'btn
+                btn-primary']) !!} {{ Form::close() }}
               </td>
 
       </tr>
