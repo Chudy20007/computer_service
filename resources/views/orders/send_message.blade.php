@@ -1,7 +1,7 @@
 @extends('main') @section('content')
 <div class='row'>
         <div class='col-md-12 text-center'>
-                <span class="form-header">Send message </span>
+                <span class="form-header"> Wyślij wiadomość e-mail </span>
             </div>
         <div class='col-md-2'>
         </div>
@@ -30,7 +30,7 @@
                                 
                                 <div class='col-md-12 text-center'>
                                         
-                            {!! Form::submit('Send message',['class'=>'btn btn-primary']) !!} {!! Form::close() !!}
+                            {!! Form::submit('Wyślij wiadomość e-mail',['class'=>'btn btn-primary']) !!} {!! Form::close() !!}
                                 </div>
                             </div>
                         </div>

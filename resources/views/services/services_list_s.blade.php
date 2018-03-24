@@ -12,10 +12,10 @@
 
     <thead class="bg-primary text-center">
       <tr>
-        <th scope="col">Name</th>
-        <th scope="col">Price</th>
-        <th scope="col">Created</th>
-        <th scope="col">Edit</th>
+        <th scope="col">Nazwa</th>
+        <th scope="col">Cena</th>
+        <th scope="col">Utworzono</th>
+        <th scope="col">Edytuj</th>
       </tr>
     </thead>
     <tbody>

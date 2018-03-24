@@ -1,7 +1,7 @@
 @extends('main') @section('content')
 <div class='row'>
         <div class='col-md-12 text-center'>
-                <span class="form-header">Edit objects </span>
+                <span class="form-header">Edytuj przedmioty </span>
             </div>
         <div class='col-md-2'>
         </div>
@@ -12,7 +12,7 @@
                 ','class'=>'form-horizontal']) !!} @include('orders.edit_order_objects_form')
                 <div class='form-group'>
                     <div class='col-md-6'>
-                        {!! Form::submit('Edit objects',['class'=>'btn btn-primary', ]) !!} {!! Form::close() !!}
+                        {!! Form::submit('Edytuj przedmioty',['class'=>'btn btn-primary', ]) !!} {!! Form::close() !!}
                     </div>
                 </div>
             </div>

@@ -12,18 +12,18 @@
 
     <thead class="bg-primary text-center">
       <tr>
-        <th scope="col">Order </th>
-        <th scope="col">Title</th>
-        <th scope="col">Supervisor</th>
-        <th scope="col">Employee</th>
-        <th scope="col">Message</th>
-        <th scope="col">Added</th>
-        <th scope="col">Updated</th>
-        <th scope="col">Active</th>
-        <th scope="col">Details</th>
-        <th scope="col">Edit</th>
-        <th scope="col">Deactivate</th>
-        <th scope="col">Activate</th>
+        <th scope="col">Zamówienie </th>
+        <th scope="col">Tytuł</th>
+        <th scope="col">Kierownik</th>
+        <th scope="col">Pracownik</th>
+        <th scope="col">Wiadomość</th>
+        <th scope="col">Utworzono</th>
+        <th scope="col">Zaktualizowano</th>
+        <th scope="col">Aktywny</th>
+        <th scope="col">Szczegóły</th>
+        <th scope="col">Edytuj</th>
+        <th scope="col">Dezaktywuj</th>
+        <th scope="col">Aktywuj</th>
       </tr>
     </thead>
     <tbody>
@@ -38,23 +38,23 @@
         <td> {{$task->updated_at}}</td>     
         <td> {{$task->active == 1 ? 'yes' : 'no'}}</td> 
         <td> {!! Form::open(['method'=>'get','class'=>'form-horizontal','action'=>['TaskController@showTaskDetails',$task->id]]) !!}
-         {!! Form::submit('Details',['class'=>'btn btn-primary']) !!}
+         {!! Form::submit('Szczegóły',['class'=>'btn btn-primary']) !!}
           {{ Form::close() }} </a>
         </td>
         <td> {!! Form::open(['method'=>'get','class'=>'form-horizontal','action'=>['TaskController@showTaskEditForm',$task->id]]) !!}
-          {!! Form::submit('Edit',['class'=>'btn btn-primary']) !!}
+          {!! Form::submit('Edytuj',['class'=>'btn btn-primary']) !!}
            {{ Form::close() }} </a>
          </td>
         <td> {!! Form::open(['method'=>'POST','class'=>'form-horizontal','action'=>['AdminController@deactivateTask',$task->id]])
           !!} {!! Form::hidden('id',$task->id,['class'=>'form-control']) !!} 
           {!! Form::hidden('_method','DELETE',['class'=>'form-control'])
-          !!} {!! Form::submit('Deactivate',['class'=>'btn btn-primary']) !!} 
+          !!} {!! Form::submit('Dezaktywuj',['class'=>'btn btn-primary']) !!} 
           {{ Form::close() }} </a>
         </td>
         <td> {!! Form::open(['method'=>'POST','class'=>'form-horizontal','action'=>['AdminController@activateTask',$task->id]])
           !!} {!! Form::hidden('_method','PATCH',['class'=>'form-control']) !!} 
           {!! Form::hidden('id',$task->id,['class'=>'form-control'])
-          !!} {!! Form::submit('Activate',['class'=>'btn btn-primary']) !!} 
+          !!} {!! Form::submit('Aktywuj',['class'=>'btn btn-primary']) !!} 
           {{ Form::close() }} </a>
         </td>
       </tr>

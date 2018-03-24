@@ -1,26 +1,26 @@
 <div class='form-group'>
     <div class='col-md-4 control-label'>
-            {!! Form::label('customer_id','Customer:') !!}
+            {!! Form::label('customer_id','Klient:') !!}
     </div>
     <div class='col-md-12 col-sm-12 form-select-control'>
             {!! Form::select('customer_id' ,$customers,['class'=>'form-select-control', /*'multiple'=>'multiple' */]) !!}
     </div>
 
     <div class='col-md-4 control-label'>
-        {!! Form::label('employee_id','Employee:') !!}
+        {!! Form::label('employee_id','Pracownik:') !!}
 </div>
 <div class='col-md-12 col-sm-12 form-select-control'>
         {!! Form::select('employee_id' ,$employees,['class'=>'form-select-control', /*'multiple'=>'multiple' */]) !!}
 </div>
 
     <div class='col-md-4 control-label'>
-        {!! Form::label('status','Order status:') !!}
+        {!! Form::label('status','Status zlecenia:') !!}
 </div>
     <div class='col-md-12 col-sm-12 form-select-control'>
-        {!! Form::select('status' ,array('active'=>'active','closed'=>'closed','pause'=>'pause','in_progress'=>'in progress'),['class'=>'form-select-control']) !!}
+        {!! Form::select('status' ,array('active'=>'aktywne','pause'=>'wstrzymane','closed'=>'zamknięte','in_progress'=>'w trakcie realizacji'),['class'=>'form-select-control']) !!}
 </div>
 <div class='col-md-4 control-label'>
-    {!! Form::label('description','Order description:') !!}
+    {!! Form::label('description','Opis zlecenia:') !!}
 </div>
 <div class='col-md-12 col-sm-12 form-select-control'>
     {!! Form::textarea('description' ,$order[0]->description,['class'=>'form-select-control']) !!}

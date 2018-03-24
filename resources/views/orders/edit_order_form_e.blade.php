@@ -5,10 +5,10 @@
         {!! Form::label('status','Order status:') !!}
 </div>
     <div class='col-md-12 col-sm-12 form-select-control'>
-        {!! Form::select('status' ,array('active'=>'active','pause'=>'pause','closed'=>'closed','in_progress'=>'in progress'),['class'=>'form-select-control']) !!}
+        {!! Form::select('status' ,array('active'=>'aktywne','pause'=>'wstrzymane','closed'=>'zamknięte','in_progress'=>'w trakcie realizacji'),['class'=>'form-select-control']) !!}
 </div>
 <div class='col-md-4 control-label'>
-    {!! Form::label('description','Order description:') !!}
+    {!! Form::label('description','Opis zlecenia:') !!}
 </div>
 <div class='col-md-12 col-sm-12 form-select-control'>
     {!! Form::textarea('description' ,$order[0]->description,['class'=>'form-select-control']) !!}

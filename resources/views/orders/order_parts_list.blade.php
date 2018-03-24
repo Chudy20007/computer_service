@@ -12,14 +12,13 @@
 
     <thead class="bg-primary text-center">
       <tr>
-        <th scope="col">Order ID</th>
-        <th scope="col">Name</th>
-        <th scope="col">Serial number</th>
-        <th scope="col">Count</th>
-        <th scope="col">Active</th>
-        <th scope="col">Deactivate</th>   
-        <th scope="col">Activate</th>  
-
+          <th scope="col">Numer zlecenia</th>
+          <th scope="col">Nazwa</th>
+          <th scope="col">Kod produktu</th>
+          <th scope="col">Sztuk</th>
+          <th scope="col">Aktywne</th>
+          <th scope="col">Dezaktywuj</th>
+          <th scope="col">Aktywuj</th>
       </tr>
     </thead>
     <tbody>

@@ -12,9 +12,9 @@
 
     <thead class="bg-primary text-center">
       <tr>
-        <th scope="col">Order ID</th>
-        <th scope="col">Name</th>
-        <th scope="col">Price</th>
+        <th scope="col">Numer zlecenia</th>
+        <th scope="col">Nazwa</th>
+        <th scope="col">Cena</th>
 
       </tr>
     </thead>

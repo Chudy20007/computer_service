@@ -12,8 +12,8 @@ use App\Part;
 use App\Service;
 use App\User;
 use Auth;
-use File;
 use Carbon\Carbon;
+use File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use Mail;
@@ -69,17 +69,16 @@ class OrderController extends Controller
 
         OrderObject::insert($devices);
 
-        return view ("main");
+        return view("main");
 
     }
 
     public function showServicesOrderForm($id = null)
     {
-        $order = Order::where('id',$id)->get()->first();
-      
-        if ($order->status=="closed")
-        {
-            return view ("user.order_closed");
+        $order = Order::where('id', $id)->get()->first();
+
+        if ($order->status == "closed") {
+            return view("user.order_closed");
         }
         $services = Service::where('active', '=', true)->pluck('name', 'id', 'price');
 
@@ -89,13 +88,12 @@ class OrderController extends Controller
     }
     public function storeOrderServices(OrderServiceRequest $request)
     {
-        $order = Order::where('id',$request->order_id)->get()->first();
-       
-        if ($order->status=="closed")
-        {
-            return view ("user.order_closed");
+        $order = Order::where('id', $request->order_id)->get()->first();
+
+        if ($order->status == "closed") {
+            return view("user.order_closed");
         }
-        
+
         foreach ($request->service_id as $service_id) {
             $datas[] = [
                 'order_id' => $request->order_id,
@@ -105,16 +103,15 @@ class OrderController extends Controller
         }
 
         OrderService::insert($datas);
-        return redirect ("show_orders");
+        return redirect("show_orders");
     }
 
     public function showPartsOrderForm($id = null)
     {
-        $order = Order::where('id',$id)->get()->first();
-      
-        if ($order->status=="closed")
-        {
-            return view ("user.order_closed");
+        $order = Order::where('id', $id)->get()->first();
+
+        if ($order->status == "closed") {
+            return view("user.order_closed");
         }
 
         $parts = Part::where('count', '>', 0)->pluck('name', 'id');
@@ -157,7 +154,7 @@ class OrderController extends Controller
             case "employee":
                 {
                     $orders = Order::with('customer', 'employee', 'order_object', 'order_part', 'order_service')
-                       /* ->where('orders.status', '!=', 'closed') */->where('orders.employee_id', '=', Auth::id())->get(['status', 'employee_id', 'customer_id', 'description', 'updated_at', 'created_at', 'id']);
+                    /* ->where('orders.status', '!=', 'closed') */->where('orders.employee_id', '=', Auth::id())->get(['status', 'employee_id', 'customer_id', 'description', 'updated_at', 'created_at', 'id']);
 
                     return view('orders.orders_list_e')->with('orders', $orders);
                 }
@@ -194,7 +191,7 @@ class OrderController extends Controller
             case "employee":
                 {
                     $orders = Order::with('customer', 'employee', 'order_object', 'order_part', 'order_service')
-                      /*  ->where('status', '!=', 'closed') */
+                    /*  ->where('status', '!=', 'closed') */
                         ->where('id', '=', $id)
                         ->where('employee_id', '=', Auth::id())->latest()->get();
                     if ($orders->isEmpty()) {
@@ -208,7 +205,7 @@ class OrderController extends Controller
             case "supervisor":
                 {
                     $orders = Order::with('customer', 'employee', 'order_object', 'order_part', 'order_service')
-                    
+
                         ->where('id', '=', $id)->get();
 
                     return view('orders.show_order')->with('orders', $orders);
@@ -217,7 +214,7 @@ class OrderController extends Controller
             case "admin":
                 {
                     $orders = Order::with('customer', 'employee', 'order_object', 'order_part', 'order_service')
-                       
+
                         ->where('id', '=', $id)->get();
 
                     return view('orders.show_order')->with('orders', $orders);
@@ -312,24 +309,27 @@ class OrderController extends Controller
 
     public function editOrderObjects(Request $request)
     {$data = $request->all();
+        $ob = OrderObject::where('order_id', '=', $data['id'])->get()->first();
+        $ob_id= $ob->id;
 
-        $count = (count($data) - 2) / 5;
+        do {
+            if (isset($data['object_id' . $ob_id])) {
+                OrderObject::where('id', '=', $data['object_id' . $ob_id])->update([
 
-        for ($i = 1; $i <= 2; $i++) {
-            OrderObject::where('id', '=', $data['object_id' . $i])->update([
-
-                'serial_number' => $data['serial_number' . $i],
-                'fixed' => $data['fixed' . $i],
-                'diagnosis' => $data['diagnosis' . $i],
-                'name' => $data['name' . $i],
-            ]);
-        }
+                    'serial_number' => $data['serial_number' . $ob_id],
+                    'fixed' => $data['fixed' . $ob_id],
+                    'diagnosis' => $data['diagnosis' . $ob_id],
+                    'name' => $data['name' . $ob_id],
+                ]);
+            }
+            $ob_id++;
+        } while (isset($data['object_id' . $ob_id]));
 
         $orders = Order::with('customer', 'employee', 'order_object', 'order_part', 'order_service')
             ->where('status', '=', 'active')
             ->where('id', '=', $data['id'])->get();
 
-        return view('orders.show_order')->with('orders', $orders);
+        return redirect ('show_order_objects/'.$data['id'])->with('id', $data['id']);
     }
     public function showOrderObjectsList($id)
     {
@@ -435,45 +435,43 @@ class OrderController extends Controller
         $em['content'] = $content . $datas['message'] . $footer;
         if ($files[0] != null) {
             //dd($files[0]->getClientOriginalName());
-  
-            switch (File::extension($files[0]->getClientOriginalName()))
-            {
+
+            switch (File::extension($files[0]->getClientOriginalName())) {
                 case "jpg":
-                {
-                    $em['path'] = $swiftAttachment = Swift_Attachment::fromPath($files[0]->getPathName())->setFilename($files[0]->getClientOriginalName());
+                    {
+                        $em['path'] = $swiftAttachment = Swift_Attachment::fromPath($files[0]->getPathName())->setFilename($files[0]->getClientOriginalName());
 
-                    Mail::send('mail', ['title' => "Order status1 updated"], function ($m) use ($em) {
-        
-                        $m->to($em['email'])
-                            ->from('computer_service@gmail.com', 'Computer Service')
-                            ->subject('Order status updated')
-                            ->setBody($em['content'], 'text/html')
-                            ->attach($em['path'], array('mime' => 'image/jpeg'));
+                        Mail::send('mail', ['title' => "Order status1 updated"], function ($m) use ($em) {
+
+                            $m->to($em['email'])
+                                ->from('computer_service@gmail.com', 'Computer Service')
+                                ->subject('Order status updated')
+                                ->setBody($em['content'], 'text/html')
+                                ->attach($em['path'], array('mime' => 'image/jpeg'));
                             return view("main");
-                    });
-                    break;
-                }
+                        });
+                        break;
+                    }
 
-                
                 case "pdf":
-                {            $em['path'] = $swiftAttachment = Swift_Attachment::fromPath($files[0]->getPathName())->setFilename('Invoice ' . Carbon::now() . '.pdf');
+                    { $em['path'] = $swiftAttachment = Swift_Attachment::fromPath($files[0]->getPathName())->setFilename('Invoice ' . Carbon::now() . '.pdf');
 
-                    Mail::send('mail', ['title' => "Order status1 updated"], function ($m) use ($em) {
-        
-                        $m->to($em['email'])
-                            ->from('computer_service@gmail.com', 'Computer Service')
-                            ->subject('Order status updated')
-                            ->setBody($em['content'], 'text/html')
-                            ->attach($em['path'], array('mime' => 'application/pdf'));
+                        Mail::send('mail', ['title' => "Order status1 updated"], function ($m) use ($em) {
+
+                            $m->to($em['email'])
+                                ->from('computer_service@gmail.com', 'Computer Service')
+                                ->subject('Order status updated')
+                                ->setBody($em['content'], 'text/html')
+                                ->attach($em['path'], array('mime' => 'application/pdf'));
                             return view("main");
-                    });
-                    break;
-                }
+                        });
+                        break;
+                    }
 
                 default:
-                {
-                    return view ('orders.send_message')->with('user_id',$datas['user_id']);
-                }
+                    {
+                        return view('orders.send_message')->with('user_id', $datas['user_id']);
+                    }
 
             }
 

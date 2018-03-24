@@ -13,19 +13,19 @@
     <thead class="bg-primary text-center">
       <tr>
         <th scope="col">ID</th>
-        <th scope="col">Customer name</th>      
-        <th scope="col">Order status</th>
-        <th scope="col">Item name</th>
-        <th scope="col">S/N</th>
-        <th scope="col">Diagnosis</th>
-        <th scope="col">Fixed</th>
-        <th scope="col">Description</th>
-        <th scope="col">Employee</th>
-        <th scope="col">Edit</th>
-        <th scope="col">Add part</th>
-        <th scope="col">Add service</th>
-        <th scope="col">Add task</th>
-        <th scope="col">Invoice</th>
+        <th scope="col">Klient</th>      
+        <th scope="col">Status zlecenia</th>
+        <th scope="col">Nazwa przedmiotu</th>
+        <th scope="col">Kod produktu</th>
+        <th scope="col">Diagnoza</th>
+        <th scope="col">Naprawiono</th>
+        <th scope="col">Opis</th>
+        <th scope="col">Pracownik</th>
+        <th scope="col">Edytuj</th>
+        <th scope="col">Dodaj część</th>
+        <th scope="col">Dodaj usługę</th>
+        <th scope="col">Dodaj wątek</th>
+
       </tr>
     </thead>
     <tbody>
@@ -42,28 +42,25 @@
         <td> {{$order->description}}</td>
         <td> {{$order->employee->name}}</td>     
         <td> {!! Form::open(['method'=>'get','class'=>'form-horizontal','action'=>['OrderController@showOrderEditForm',$order->id]])
-          !!} {!! Form::hidden('id',$order->id,['class'=>'form-control']) !!} {!! Form::submit('Edit',['class'=>'btn btn-primary'])
+          !!} {!! Form::hidden('id',$order->id,['class'=>'form-control']) !!} {!! Form::submit('Edytu zlecenie',['class'=>'btn btn-primary'])
           !!} {{ Form::close() }} </a>
         </td>
 
         <td> {!! Form::open(['method'=>'get','class'=>'form-horizontal','action'=>['OrderController@showPartsOrderForm',$order->id]]) !!} {!!
-          Form::hidden('id',$order->id,['class'=>'form-control']) !!} {!! Form::submit('Add',['class'=>'btn btn-primary']) !!}
+          Form::hidden('id',$order->id,['class'=>'form-control']) !!} {!! Form::submit('Dodaj część',['class'=>'btn btn-primary']) !!}
           {{ Form::close() }} </a>
         </td>
                 
         <td> {!! Form::open(['method'=>'get','class'=>'form-horizontal','action'=>['OrderController@showServicesOrderForm',$order->id]]) !!} {!!
-          Form::hidden('id',$order->id,['class'=>'form-control']) !!} {!! Form::submit('Add',['class'=>'btn btn-primary']) !!}
+          Form::hidden('id',$order->id,['class'=>'form-control']) !!} {!! Form::submit('Dodaj usługę',['class'=>'btn btn-primary']) !!}
           {{ Form::close() }} </a>
         </td>
                         
         <td> {!! Form::open(['method'=>'get','class'=>'form-horizontal','action'=>['TaskController@showTaskForm',$order->id]]) !!} {!!
-          Form::hidden('id',$order->id,['class'=>'form-control']) !!} {!! Form::submit('Create',['class'=>'btn btn-primary']) !!}
+          Form::hidden('id',$order->id,['class'=>'form-control']) !!} {!! Form::submit('Utwórz wątek',['class'=>'btn btn-primary']) !!}
           {{ Form::close() }} </a>
         </td>
-        <td> {!! Form::open(['method'=>'get','class'=>'form-horizontal','action'=>['InvoiceController@showInvoiceForm',$order->id]]) !!} {!!
-          Form::hidden('id',$order->id,['class'=>'form-control']) !!} {!! Form::submit('Create',['class'=>'btn btn-primary']) !!}
-          {{ Form::close() }} </a>
-        </td>
+
 
       </tr>
       @endforeach

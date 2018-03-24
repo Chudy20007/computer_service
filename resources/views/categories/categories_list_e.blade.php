@@ -12,7 +12,7 @@
 
     <thead class="bg-primary text-center">
       <tr>
-        <th scope="col">Name</th>
+        <th scope="col">Nazwa</th>
       </tr>
     </thead>
     <tbody>

@@ -1,7 +1,7 @@
 <div class='form-group text-center'>
         
         <div class='col-md-12 control-label'>
-                {!! Form::label('message','Message:') !!}
+                {!! Form::label('message','Wiadomość:') !!}
         </div>
         <div class='col-md-12'>
                 {!! Form::textarea('message',null,['class'=>'form-control','minlength'=>'8']) !!}

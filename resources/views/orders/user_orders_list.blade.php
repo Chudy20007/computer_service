@@ -13,14 +13,14 @@
     <thead class="bg-primary text-center">
       <tr>
         <th scope="col">ID</th>
-        <th scope="col">Customer name</th>
+        <th scope="col">Klient</th>
         <th scope="col">E-mail</th>
-        <th scope="col">Phone</th>
-        <th scope="col">Order status</th>
-        <th scope="col">Description</th>
-        <th scope="col">Employee</th>
-        <th scope="col">Edit</th>
-        <th scope="col">Send Message</th>
+        <th scope="col">Telefon</th>
+        <th scope="col">Status zlecenia</th>
+        <th scope="col">Opis</th>
+        <th scope="col">Pracownik</th>
+        <th scope="col">Edytuj</th>
+        <th scope="col">Wyślij wiadomość e-mail</th>
       </tr>
     </thead>
     <tbody>
@@ -35,12 +35,12 @@
         <td> {{$order->description}}</td>
         <td> {{$order->employee->name}}</td>     
         <td> {!! Form::open(['method'=>'get','class'=>'form-horizontal','action'=>['TaskController@showTaskForm',$order->id]]) !!} {!!
-          Form::hidden('id',$order->id,['class'=>'form-control']) !!} {!! Form::submit('Create',['class'=>'btn btn-primary']) !!}
+          Form::hidden('id',$order->id,['class'=>'form-control']) !!} {!! Form::submit('Utwórz wątek',['class'=>'btn btn-primary']) !!}
           {{ Form::close() }} </a>
         </td>
                 
         <td> {!! Form::open(['method'=>'get','class'=>'form-horizontal','action'=>['TaskController@showTaskForm',$order->id]]) !!} {!!
-          Form::hidden('id',$order->id,['class'=>'form-control']) !!} {!! Form::submit('Send',['class'=>'btn btn-primary']) !!}
+          Form::hidden('id',$order->id,['class'=>'form-control']) !!} {!! Form::submit('Wyślij wiadomość',['class'=>'btn btn-primary']) !!}
           {{ Form::close() }} </a>
         </td>
       </tr>

@@ -13,14 +13,14 @@
     <thead class="bg-primary text-center">
       <tr>
         <th scope="col">ID</th>
-        <th scope="col">Order ID</th>
-        <th scope="col">Name</th>
-        <th scope="col">Serial number</th>
-        <th scope="col">Diagnosis</th>
-        <th scope="col">Fixed</th>
-        <th scope="col">Created</th>
-        <th scope="col">Updated</th>
-        <th scope="col">Edit</th>
+        <th scope="col">Numer zlecenia</th>
+        <th scope="col">Nazwa</th>
+        <th scope="col">Kod produktu</th>
+        <th scope="col">Diagnoza</th>
+        <th scope="col">Naprawiono</th>
+        <th scope="col">Utworzono</th>
+        <th scope="col">Edytowano</th>
+        <th scope="col">Edytuj</th>
 
       </tr>
     </thead>
@@ -32,11 +32,11 @@
         <td>{{$object->name}}</td>
         <td> {{$object->serial_number}}</td>
         <td> {{$object->diagnosis}}</td>
-        <td> {{$object->fixed==true ?'yes' :'no'}}</td>
+        <td> {{$object->fixed==true ?'tak' :'nie'}}</td>
         <td> {{$object->created_at}}</td>     
         <td> {{$object->updated_at}}</td> 
         <td> {!! Form::open(['method'=>'get','class'=>'form-horizontal','action'=>['OrderController@showOrderObjectsEditForm',$object->order_id]]) !!} {!!
-          Form::hidden('id',$object->id,['class'=>'form-control']) !!} {!! Form::submit('Edit objects',['class'=>'btn btn-primary']) !!}
+          Form::hidden('id',$object->id,['class'=>'form-control']) !!} {!! Form::submit('Edytuj przedmiot',['class'=>'btn btn-primary']) !!}
           {{ Form::close() }} </a>
         </td>
 

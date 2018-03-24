@@ -8,7 +8,7 @@
                 @include('pictures.error_form') {!! Form::open(['url'=>'store_order_services','class'=>'form-horizontal']) !!} @include('orders.add_services_to_order_form')
                 <div class='form-group'>
                     <div class='col-md-6'>
-                        {!! Form::submit('Add services',['class'=>'btn btn-primary']) !!} {!! Form::close() !!}
+                        {!! Form::submit('Dodaj usługę do zlecenia',['class'=>'btn btn-primary']) !!} {!! Form::close() !!}
                     </div>
                 </div>
             </div>

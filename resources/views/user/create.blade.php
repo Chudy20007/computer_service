@@ -12,7 +12,7 @@
                         {{ csrf_field() }}
 
                         <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
-                            <label for="name" class="col-md-4 control-label label">Name</label>
+                            <label for="name" class="col-md-4 control-label label">Imię i nazwisko</label>
 
                             <div class="col-md-6">
                                 <input id="name" type="text" class="form-control" name="name" value="" required autofocus> @if ($errors->has('name'))
@@ -24,7 +24,7 @@
                         </div>
 
                         <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                            <label for="email" class="col-md-4 control-label label">E-Mail Address</label>
+                            <label for="email" class="col-md-4 control-label label">Adres e-mail</label>
 
                             <div class="col-md-6">
                                 <input id="email" type="email" class="form-control" name="email" value="" required> @if ($errors->has('email'))
@@ -36,7 +36,7 @@
                         </div>
 
                         <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                            <label for="password" class="col-md-4 control-label label">Password</label>
+                            <label for="password" class="col-md-4 control-label label">Hasło</label>
 
                             <div class="col-md-6">
                                 <input id="password" type="password" class="form-control" name="password" required> @if ($errors->has('password'))
@@ -48,7 +48,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="password-confirm" class="col-md-4 control-label label">Confirm Password</label>
+                            <label for="password-confirm" class="col-md-4 control-label label">Powtórz hasło</label>
 
                             <div class="col-md-6">
                                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
@@ -57,23 +57,23 @@
                         @if (Auth::user()->isAdmin())
 
                         <div class="form-group">
-                            <label for="password-confirm" class="col-md-4 control-label label">Priviliges:</label>
+                            <label for="password-confirm" class="col-md-4 control-label label">Uprawnienia</label>
 
                             <div class="col-md-6">
                                 <select id="privileges" type="select" class="form-control" name="privileges" required>
-                                    <option value='1'> Admin </option>
-                                    <option value='0'> User </option>
+                                    <option value='1'> administrator </option>
+                                    <option value='0'> użytkownik </option>
                                 </select>
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label for="password-confirm" class="col-md-4 control-label label">Active:</label>
+                            <label for="password-confirm" class="col-md-4 control-label label">Aktywny</label>
 
                             <div class="col-md-6">
                                 <select id="active" type="select" class="form-control" name="active" required>
-                                    <option value='1'> Enabled </option>
-                                    <option value='0'> Disabled </option>
+                                    <option value='1'> tak </option>
+                                    <option value='0'> nie </option>
                                 </select>
                             </div>
                         </div>
@@ -88,7 +88,7 @@
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
                                 <button type="submit" class="btn btn-info">
-                                    Create user
+                                    Utwórz użytkownika
                                 </button>
                             </div>
                         </div>

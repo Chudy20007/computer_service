@@ -12,7 +12,7 @@
 
                 <div class='form-group'>
                     <div class='col-md-6'>
-                        {!! Form::submit('Edit employee',['class'=>'btn btn-primary']) !!} {!! Form::close() !!}
+                        {!! Form::submit('Edytuj pracownika',['class'=>'btn btn-primary']) !!} {!! Form::close() !!}
                     </div>
                 </div>
             </div>

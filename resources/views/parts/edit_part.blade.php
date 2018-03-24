@@ -1,7 +1,7 @@
 @extends('main') @section('content')
 <div class='row'>
         <div class='col-md-12 text-center'>
-                <span class="form-header"> Edit part </span>
+                <span class="form-header"> Edytuj część magazynową </span>
             </div>
         <div class='col-md-2'>
         </div>
@@ -12,7 +12,7 @@
                 <div class='form-group'>
                     <div class='col-md-6'>
                             {{ method_field('PATCH') }}
-                        {!! Form::submit('Edit part',['class'=>'btn btn-primary']) !!} {!! Form::close() !!}
+                        {!! Form::submit('Edytuj część',['class'=>'btn btn-primary']) !!} {!! Form::close() !!}
                     </div>
                 </div>
             </div>

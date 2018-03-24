@@ -12,14 +12,14 @@
 
     <thead class="bg-primary text-center">
       <tr>
-        <th scope="col">Order </th>
-        <th scope="col">Title</th>
-        <th scope="col">Supervisor</th>
-        <th scope="col">Employee</th>
-        <th scope="col">Message</th>
-        <th scope="col">Added</th>
-        <th scope="col">Updated</th>
-        <th scope="col">Details</th>
+        <th scope="col">Zamówienie </th>
+        <th scope="col">Tytuł</th>
+        <th scope="col">Kierownik</th>
+        <th scope="col">Pracownik</th>
+        <th scope="col">Wiadomość</th>
+        <th scope="col">Utworzono</th>
+        <th scope="col">Zaktualizowano</th>
+        <th scope="col">Szczegóły</th>
       </tr>
     </thead>
     <tbody>
@@ -33,7 +33,7 @@
         <td> {{$task->created_at}}</td>
         <td> {{$task->updated_at}}</td>     
         <td> {!! Form::open(['method'=>'get','class'=>'form-horizontal','action'=>['TaskController@showTaskDetails',$task->id]]) !!}
-         {!! Form::submit('Details',['class'=>'btn btn-primary']) !!}
+         {!! Form::submit('Szczegóły',['class'=>'btn btn-primary']) !!}
           {{ Form::close() }} </a>
         </td>
       </tr>

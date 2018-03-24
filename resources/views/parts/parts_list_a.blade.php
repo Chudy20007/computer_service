@@ -12,16 +12,16 @@
 
     <thead class="bg-primary text-center">
       <tr>
-        <th scope="col">Category</th>
-        <th scope="col">Name</th>
-        <th scope="col">Count</th>
-        <th scope="col">Price</th>
-        <th scope="col">Added</th>
-        <th scope="col">Updated</th>
-        <th scope="col">Active</th>
-        <th scope="col">Edit</th>
-        <th scope="col">Deactivate</th>
-        <th scope="col">Activate</th>
+        <th scope="col">Kategoria</th>
+        <th scope="col">Nazwa</th>
+        <th scope="col">Sztuk</th>
+        <th scope="col">Cena</th>
+        <th scope="col">Utworzono</th>
+        <th scope="col">Edytowano</th>
+        <th scope="col">Aktywne</th>
+        <th scope="col">Edytuj</th>
+        <th scope="col">Dezaktywuj</th>
+        <th scope="col">Aktywuj</th>
       </tr>
     </thead>
     <tbody>

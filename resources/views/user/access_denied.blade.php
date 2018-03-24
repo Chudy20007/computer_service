@@ -2,9 +2,9 @@
 <div class='picture'>
   <div style="padding:0" class='col-md-12'>
     <div class="alert alert-danger text-center">
-      <h3>Access denied!</h3>
-      Return to
-      <a href="{{URL::asset('/')}}" class="alert-link">home page</a>.
+      <h3>Brak dostępu!</h3>
+      Powrót do
+      <a href="{{URL::asset('/')}}" class="alert-link">strony głównej</a>.
     </div>
   </div>
 </div>

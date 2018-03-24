@@ -12,11 +12,11 @@
 
     <thead class="bg-primary text-center">
       <tr>
-        <th scope="col">Name</th>
+        <th scope="col">Imię i nazwisko</th>
         <th scope="col">E-mail</th>
-        <th scope="col">Phone</th>
-        <th scope="col">Role</th>
-        <th scope="col">Send message</th>
+        <th scope="col">Telefon</th>
+        <th scope="col">Rola</th>
+        <th scope="col">Wyślij wiadomość</th>
 
       </tr>
     </thead>
@@ -28,7 +28,7 @@
         <td> {{$user->phone}}</td>
         <td> {{$user->role}}</td> 
         <td> {!! Form::open(['method'=>'POST','class'=>'form-horizontal','action'=>['OrderController@showMessageForm',$user->id]]) !!}
-       {!! Form::submit('Send',['class'=>'btn btn-primary']) !!}
+       {!! Form::submit('Wyślij wiadomość e-mail',['class'=>'btn btn-primary']) !!}
           {{ Form::close() }} </a>
         </td>
       </tr>

@@ -11,13 +11,13 @@
 
     <thead class="bg-primary text-center">
       <tr>
-        <th scope="col">Name</th>
-        <th scope="col">Price</th>
-        <th scope="col">Created</th>
-        <th scope="col">Active</th>
-        <th scope="col">Edit</th>
-        <th scope="col">Deactivate</th>
-        <th scope="col">Activate</th>
+        <th scope="col">Nazwa</th>
+        <th scope="col">Cena</th>
+        <th scope="col">Utworzono</th>
+        <th scope="col">Aktywny</th>
+        <th scope="col">Edytuj</th>
+        <th scope="col">Dezaktywuj</th>
+        <th scope="col">Aktywuj</th>
       </tr>
     </thead>
     <tbody>

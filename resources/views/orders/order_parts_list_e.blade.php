@@ -12,10 +12,10 @@
 
     <thead class="bg-primary text-center">
       <tr>
-        <th scope="col">Order ID</th>
-        <th scope="col">Name</th>
-        <th scope="col">Serial number</th>
-        <th scope="col">Count</th>
+        <th scope="col">Numer zlecenia</th>
+        <th scope="col">Nazwa</th>
+        <th scope="col">Kod produktu</th>
+        <th scope="col">Sztuk</th>
 
       </tr>
     </thead>

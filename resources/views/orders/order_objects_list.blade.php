@@ -13,18 +13,18 @@
     <thead class="bg-primary text-center">
       <tr>
         <th scope="col">ID</th>
-        <th scope="col">Order ID</th>
-        <th scope="col">Name</th>
-        <th scope="col">Serial number</th>
-        <th scope="col">Diagnosis</th>
-        <th scope="col">Fixed</th>
-        <th scope="col">Created</th>
-        <th scope="col">Updated</th>
-        <th scope="col">Active</th>
-        <th scope="col">Edit</th>
-        <th scope="col">Send Message</th>
-        <th scope="col">Deactivate</th>   
-        <th scope="col">Activate</th>    
+        <th scope="col">Numer zlecenia</th>
+        <th scope="col">Nazwa</th>
+        <th scope="col">Kod produktu</th>
+        <th scope="col">Diagnoza</th>
+        <th scope="col">Naprawiono</th>
+        <th scope="col">Utworzono</th>
+        <th scope="col">Edytowano</th>
+        <th scope="col">Aktywne</th>        
+        <th scope="col">Edytuj</th>
+        <th scope="col">Wyślij wiadomość</th>
+        <th scope="col">Dezaktywuj</th>   
+        <th scope="col">Aktywuj</th>    
       </tr>
     </thead>
     <tbody>
@@ -35,26 +35,26 @@
         <td>{{$object->name}}</td>
         <td> {{$object->serial_number}}</td>
         <td> {{$object->diagnosis}}</td>
-        <td> {{$object->fixed==true ?'yes' :'no'}}</td>
+        <td> {{$object->fixed==true ?'tak' :'nie'}}</td>
         <td> {{$object->created_at}}</td>     
         <td> {{$object->updated_at}}</td> 
-        <td> {{$object->active==true ?'yes' :'no'}}</td>
+        <td> {{$object->active==true ?'tak' :'nie'}}</td>
         <td> {!! Form::open(['method'=>'get','class'=>'form-horizontal','action'=>['OrderController@showOrderObjectsEditForm',$object->order_id]]) !!} {!!
-          Form::hidden('id',$object->id,['class'=>'form-control']) !!} {!! Form::submit('Edit objects',['class'=>'btn btn-primary']) !!}
+          Form::hidden('id',$object->id,['class'=>'form-control']) !!} {!! Form::submit('Edytuj przedmiot',['class'=>'btn btn-primary']) !!}
           {{ Form::close() }} </a>
         </td>
                 
         <td> {!! Form::open(['method'=>'get','class'=>'form-horizontal','action'=>['TaskController@showTaskForm',$object->id]]) !!} {!!
-          Form::hidden('id',$object->id,['class'=>'form-control']) !!} {!! Form::submit('Send',['class'=>'btn btn-primary']) !!}
+          Form::hidden('id',$object->id,['class'=>'form-control']) !!} {!! Form::submit('Wyślij wiadomość',['class'=>'btn btn-primary']) !!}
           {{ Form::close() }} </a>
         </td>
         <td> {!! Form::open(['method'=>'POST','class'=>'form-horizontal','action'=>['AdminController@deactivateOrderObject',$object->id]])
           !!} {!! Form::hidden('object_id',$object->id,['class'=>'form-control']) !!} {!! Form::hidden('_method','DELETE',['class'=>'form-control'])
-          !!} {!! Form::submit('Deactivate',['class'=>'btn btn-primary']) !!} {{ Form::close() }} </a>
+          !!} {!! Form::submit('Dezaktywuj',['class'=>'btn btn-primary']) !!} {{ Form::close() }} </a>
         </td>
         <td> {!! Form::open(['method'=>'POST','class'=>'form-horizontal','action'=>['AdminController@activateOrderObject',$object->id]])
           !!} {!! Form::hidden('_method','PATCH',['class'=>'form-control']) !!} {!! Form::hidden('object_id',$object->id,['class'=>'form-control'])
-          !!} {!! Form::submit('Activate',['class'=>'btn btn-primary']) !!} {{ Form::close() }} </a>
+          !!} {!! Form::submit('Aktywuj',['class'=>'btn btn-primary']) !!} {{ Form::close() }} </a>
         </td>  
       </tr>
       @endforeach

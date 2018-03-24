@@ -10,7 +10,7 @@
 
                 <div class='form-group'>
                     <div class='col-md-6'>
-                        {!! Form::submit('Edit user',['class'=>'btn btn-info']) !!} {!! Form::close() !!}
+                        {!! Form::submit('Edytuj użytkownika',['class'=>'btn btn-info']) !!} {!! Form::close() !!}
                     </div>
                 </div>
             </div>

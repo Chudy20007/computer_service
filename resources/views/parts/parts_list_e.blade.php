@@ -12,11 +12,11 @@
 
     <thead class="bg-primary text-center">
       <tr>
-        <th scope="col">Category</th>
-        <th scope="col">Name</th>
-        <th scope="col">Count</th>
-        <th scope="col">Price</th>
-        <th scope="col">Updated</th>
+        <th scope="col">Kategoria</th>
+        <th scope="col">Nazwa</th>
+        <th scope="col">Sztuk</th>
+        <th scope="col">Cena</th>
+        <th scope="col">Edytowano</th>
       </tr>
     </thead>
     <tbody>

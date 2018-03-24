@@ -3,7 +3,7 @@
     
     <div class="row">
         <div class='col-md-12 text-center'>
-            <span class="form-header"> User registration </span>
+            <span class="form-header"> Rejestracja użytkownika </span>
         </div>
             <div class='col-md-1'>
                 </div>
@@ -16,7 +16,7 @@
                         {{ csrf_field() }}
 
                         <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
-                            <label for="name" class="col-md-4 control-label label">Name</label>
+                            <label for="name" class="col-md-4 control-label label">Imię i nazwisko</label>
 
                             <div class="col-md-12">
                                 <input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}" required autofocus> @if ($errors->has('name'))
@@ -28,7 +28,7 @@
                         </div>
 
                         <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                            <label for="email" class="col-md-4 control-label label">E-Mail Address</label>
+                            <label for="email" class="col-md-4 control-label label">Adres e-mail</label>
 
                             <div class="col-md-12">
                                 <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required> @if ($errors->has('email'))
@@ -39,7 +39,7 @@
                             </div>
                         </div>
                         <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
-                            <label for="name" class="col-md-4 control-label label">Phone number</label>
+                            <label for="name" class="col-md-4 control-label label">Numer telefonu</label>
 
                             <div class="col-md-12">
                                 <input id="phone" type="text" class="form-control" name="phone" value="{{ old('phone') }}" required autofocus> @if ($errors->has('phone'))
@@ -50,7 +50,7 @@
                             </div>
                         </div>
                         <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                            <label for="password" class="col-md-4 control-label label">Password</label>
+                            <label for="password" class="col-md-4 control-label label">Hasło</label>
 
                             <div class="col-md-12">
                                 <input id="password" type="password" class="form-control" name="password" required> @if ($errors->has('password'))
@@ -62,7 +62,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="password-confirm" class="col-md-4 control-label label">Confirm Password</label>
+                            <label for="password-confirm" class="col-md-4 control-label label">Powtórz hasło</label>
 
                             <div class="col-md-12">
                                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
@@ -71,14 +71,14 @@
 
                                                 
                         <div class="form-group{{ $errors->has('role') ? ' has-error' : '' }}">
-                            <label for="role" class="col-md-4 control-label label">Role</label>
+                            <label for="role" class="col-md-4 control-label label">Rola</label>
 
                             <div class="col-md-12">
                                 <select id="role" type="text" class="form-control" name="role" required autofocus>
-                                   <option value="customer">customer</option>
-                                   <option value="admin">admin</option> 
-                                   <option value="supervisor">supervisor</option> 
-                                   <option value="employee">employee</option> 
+                                   <option value="customer">klient</option>
+                                   <option value="admin">administrator</option> 
+                                   <option value="supervisor">kierownik</option> 
+                                   <option value="employee">pracownik</option> 
                                     </select>   @if ($errors->has('role'))
                                 <span class="help-block">
                                     <strong>{{ $errors->first('role') }}</strong>
@@ -87,7 +87,7 @@
                             </div>
                         </div>
                         <div class="form-group{{ $errors->has('post-code') ? ' has-error' : '' }}">
-                            <label for="post-code" class="col-md-4 control-label label">Post code number</label>
+                            <label for="post-code" class="col-md-4 control-label label">Kod pocztowy</label>
 
                             <div class="col-md-12">
                                 <input id="post-code" type="text" class="form-control" name="post-code"  placeholder="XX-XXX"  value="{{ old('post-code') }}" required autofocus> @if ($errors->has('post-code'))
@@ -99,7 +99,7 @@
                         </div>
 
                         <div class="form-group{{ $errors->has('city') ? ' has-error' : '' }}">
-                            <label for="city" class="col-md-4 control-label label">City</label>
+                            <label for="city" class="col-md-4 control-label label">Miasto</label>
 
                             <div class="col-md-12">
                                 <input id="city" type="text" class="form-control" name="city" value="{{ old('city') }}"  placeholder="city"  required autofocus> @if ($errors->has('city'))
@@ -110,7 +110,7 @@
                             </div>
                         </div>
                         <div class="form-group{{ $errors->has('street') ? ' has-error' : '' }}">
-                                <label for="street" class="col-md-4 control-label label">Street</label>
+                                <label for="street" class="col-md-4 control-label label">Ulica</label>
     
                                 <div class="col-md-12">
                                     <input id="street" type="text" class="form-control" name="street" value="{{ old('street') }}"  placeholder="street"  required autofocus> @if ($errors->has('city'))
@@ -121,7 +121,7 @@
                                 </div>
                             </div>
                         <div class="form-group{{ $errors->has('local-number') ? ' has-error' : '' }}">
-                            <label for="local-number" class="col-md-4 control-label label">Local number</label>
+                            <label for="local-number" class="col-md-4 control-label label">Numer lokalu</label>
 
                             <div class="col-md-12">
                                 <input id="local-number" type="text" class="form-control" name="local-number" placeholder="number"  value="{{ old('local-number') }}" required autofocus> @if ($errors->has('local-number'))
