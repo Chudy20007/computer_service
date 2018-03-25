@@ -58,5 +58,12 @@ class OrderServiceRequest extends FormRequest
             default:break;
         }
     }
+
+    public function messages()
+    {
+        return [
+        'service_id.unique' => "Dana usługa jest już przypisana do zlecenia!"
+    ];
+    }
     
 }

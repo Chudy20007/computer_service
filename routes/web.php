@@ -92,6 +92,7 @@ Route::get('add_services_to_order/{id?}', 'OrderController@showServicesOrderForm
 Route::get('add_parts_to_order/{id?}', 'OrderController@showPartsOrderForm')->middleware('auth');
 Route::post('add_parts_to_order/{id?}', 'OrderController@storeOrderParts')->middleware('auth');
 Route::get('show_orders', 'OrderController@showOrdersList')->middleware('auth');
+Route::post('show_orders', 'OrderController@findOrders');
 Route::get('order/{id}', 'OrderController@showOrder')->middleware('auth');
 Route::get('user/{id}', 'OrderController@showUserOrdersList')->middleware('auth');
 Route::get('edit_order/{id}', 'OrderController@showOrderEditForm')->middleware('auth');
@@ -99,7 +100,11 @@ Route::post('edit_order', 'OrderController@editOrder')->middleware('auth');
 Route::get('show_employees', 'EmployeeController@showEmployeesList')->middleware('auth');
 Route::get('show_parts', 'PartController@showPartsList')->middleware('auth');
 Route::get('show_services', 'ServiceController@showServicesList')->middleware('auth');
+Route::post('show_services', 'ServiceController@findServices');
+Route::post('show_parts','PartController@findParts');
+Route::post('show_employees', 'EmployeeController@findEmployees');
 Route::get('show_categories', 'CategoryController@showCategoriesList')->middleware('auth');
+Route::post('show_categories', 'CategoryController@findCategories');
 Route::get('show_tasks', 'TaskController@showTasksList')->middleware('auth');
 Route::get('edit_task/{id}', 'TaskController@showTaskEditForm')->middleware('auth');
 Route::patch('edit_task', 'TaskController@editTask')->middleware('auth');
@@ -134,6 +139,10 @@ Route::get('/access_denied,', function () {
 
 Route::get('/denied,', function () {
     return view('users.order_closed');
+});
+
+Route::get("/",function(){
+return view("main");
 });
 Route::post('password/email', '\App\Http\Controllers\Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
 Route::get('password/reset', '\App\Http\Controllers\Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');

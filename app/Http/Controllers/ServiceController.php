@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 use Auth;
-
+use Session;
 use App\Service;
 use App\Http\Requests\ServiceRequest;
 use Illuminate\Http\Request;
@@ -11,13 +11,32 @@ class ServiceController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('permissions',['except' => ['showServicesList']]);
+        $this->middleware('permissions',['except' => ['showServicesList','findServices']]);
     }
 
     public function showServiceForm ()
     {  
         return view('services.create_service');
     }
+
+public function findServices()
+{
+    $data = json_decode(file_get_contents('php://input'), true);
+
+        $data['data'] = htmlentities($data['data']);
+        $data['data'] = stripslashes($data['data']);
+        $categories = Service::where('name', 'LIKE', '%' . $data['data'] . '%')->get();
+
+        $content = "";
+        foreach ($categories as $category) {
+            $content .= ("<tr class='table-light'><td>" . $category->name . "</td><td>" . $category->price . "</td></tr>");
+
+        }
+
+        return json_encode($content);
+    
+}
+
     public function showServiceEditForm ($id)
     {  
         $service=Service::where('id',$id)->get()->first();
@@ -34,13 +53,15 @@ class ServiceController extends Controller
         ];
         $id =$request['id'];
         Service::where('id',$id)->update($service);
+        Session::put('message', 'Usługa została pomyślnie zaktualizowana!');
  return redirect("show_services");
     }
     public function storeService (ServiceRequest $request)
     {
  
         Service::create($request->toArray());
-        return view("/");
+        Session::put('message', 'Usługa została pomyślnie dodana!');
+        return redirect("show_services");
     }
 
     public function showServicesList()

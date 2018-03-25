@@ -6,14 +6,39 @@ use App\Http\Requests\EmployeeRequest;
 use App\User;
 use App\Service;
 use Auth;
-
+use Session;
 class EmployeeController extends Controller
 {
 
     public function __construct()
     {
-        $this->middleware('permissions',['except' => ['showEmployeesList']]);
+        $this->middleware('permissions',['except' => ['showEmployeesList','findEmployees']]);
     }
+
+    public function findEmployees()
+    {
+        $data = json_decode(file_get_contents('php://input'), true);
+
+        $data['data'] = htmlentities($data['data']);
+        $data['data'] = stripslashes($data['data']);
+        $users = User::where('name', 'LIKE', '%' . $data['data'] . '%')->get();
+       
+$token=$data['token'];
+        $content = "";
+        foreach ($users as $user) {
+   
+            $content .= ("<tr class='table-light'><td>" . $user->name . "</td>");
+            $content.=("<td>".$user->email."</td><td>".$user->phone."</td>");
+            $content.=("<td><form class='form-horizontal' method='POST' action='http://localhost/computer_service/public/send_message/$user->id'>");
+            $content.=(csrf_field());
+            $content.=("<input class='btn btn-primary' type='submit' value='Wyślij wiadomość e-mail'></form></td></tr>");
+        }
+
+        return json_encode($content);
+    }
+
+
+    
     public function showEmployeesList()
     {
         switch (Auth::user()->getRole())
@@ -72,7 +97,7 @@ class EmployeeController extends Controller
         ];
 
         User::where('id',$request->id)->update($employee);
-
+        Session::put('message', 'Pracownik został pomyślnie zaktualizowany!');
         return redirect ('show_employees');
     }
 }

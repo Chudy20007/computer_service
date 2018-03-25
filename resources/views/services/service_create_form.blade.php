@@ -3,7 +3,7 @@
                 {!! Form::label('name','Nazwa usługi:') !!}
         </div>
         <div class='col-md-12'>
-                {!! Form::text('name',null,['class'=>'form-control']) !!}
+                {!! Form::text('name',null,['class'=>'form-control','required' =>true]) !!}
         </div>
 </div>
 
@@ -14,6 +14,6 @@
                 {!! Form::label('price','Cena:') !!}
         </div>
         <div class='col-md-12 col-sm-12 form-select-control'>
-                {!! Form::text('price',null,['class'=>'form-control']) !!}
+                {!! Form::text('price',null,['class'=>'form-control','required' =>true]) !!}
         </div>
 </div>

@@ -3,7 +3,7 @@
                 {!! Form::label('name','Nazwa części:') !!}
         </div>
         <div class='col-md-12'>
-                {!! Form::text('name',null,['class'=>'form-control']) !!}
+                {!! Form::text('name',null,['class'=>'form-control','required' =>true]) !!}
         </div>
 </div>
 <div class='form-group'>
@@ -11,7 +11,7 @@
                 {!! Form::label('price','Cena:') !!}
         </div>
         <div class='col-md-12 col-sm-12 form-select-control'>
-                {!! Form::text('price',null,['class'=>'form-control']) !!}
+                {!! Form::text('price',null,['class'=>'form-control','required' =>true]) !!}
         </div>
 </div>
 
@@ -20,7 +20,7 @@
                 {!! Form::label('serial_number','Kod produktu (EAN):') !!}
         </div>
         <div class='col-md-12 col-sm-12'>
-                {!! Form::text('serial_number',null,['class'=>'form-control']) !!}
+                {!! Form::text('serial_number',null,['class'=>'form-control','required' =>true]) !!}
         </div>
 </div>
 
@@ -29,7 +29,7 @@
                 {!! Form::label('count','Sztuk:') !!}
         </div>
         <div class='col-md-12 col-sm-12'>
-                {!! Form::text('count',null,['class'=>'form-control']) !!}
+                {!! Form::text('count',null,['class'=>'form-control','required' =>true]) !!}
         </div>
 </div>
 
@@ -39,7 +39,7 @@
         </div>
        
         <div class='col-md-12 col-sm-12 form-select-control'>
-                {{ Form::select('category_id' ,$categories,null,['class'=>'form-select-control']) }}
+                {{ Form::select('category_id' ,$categories,null,['class'=>'form-select-control','required' =>true]) }}
         </div>
 </div>
 

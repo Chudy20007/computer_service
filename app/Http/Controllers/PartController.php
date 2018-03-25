@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Category;
 use App\Http\Requests\PartRequest;
 use App\Part;
+use Session;
 use Auth;
 
 class PartController extends Controller
@@ -16,10 +17,34 @@ class PartController extends Controller
         return view("parts.create_part")->with('categories', $categories);
     }
 
+
+    public function findParts()
+    {
+        $data = json_decode(file_get_contents('php://input'), true);
+
+        $data['data'] = htmlentities($data['data']);
+        $data['data'] = stripslashes($data['data']);
+        $parts = Part::with('category')->where('name', 'LIKE', '%' . $data['data'] . '%')->get();
+       
+$token=$data['token'];
+        $content = "";
+        foreach ($parts as $part) {
+   
+            $content .= ("<tr class='table-light'><td>" . $part->category->name . "</td><td>" . $part->name . "</td>");
+            $content.=("<td>".$part->count."</td><td>".$part->price."</td><td>" . $part->updated_at . "</td></tr>");
+          
+        }
+
+        return json_encode($content);
+    }
+
+
+
     public function storePart(PartRequest $request)
     {
         Part::create($request->toArray());
-        return view("/");
+        Session::put('message', 'Część została pomyślnie dodana!');
+        return redirect("show_parts");
     }
 
     public function showPartsList()

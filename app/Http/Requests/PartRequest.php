@@ -37,12 +37,11 @@ class PartRequest extends FormRequest
                 {
 
                     return [
-                        'name' => ['required', Rule::unique('parts', 'name'),
-                        ],
-                        'serial_number' => ['required', 'regex:/([a-z|A-Z|0-9]{7,20})/', Rule::unique('parts', 'name'),
-                        ], 'count' => ['required', 'regex:/(\d{1,})/'],
+                        'name' => ['required', Rule::unique('parts', 'name')],
+                        'serial_number' => ['required', 'regex:/([a-z|A-Z|0-9]{7,20})/', Rule::unique('parts', 'serial_number')], 
+                        'count' => ['required', 'regex:/(\d{1,})/'],
                         'price' => ['required', 'regex:/(\d{1,}).(\d{2})/'],
-                        'category_id' => ['required'],
+                        'category_id' => ['required']
 
                     ];
                 }
@@ -55,7 +54,7 @@ class PartRequest extends FormRequest
 
                     return [
                         'serial_number' => ['required', 'regex:/([a-z|A-Z|0-9]{7,20})/', Rule::unique('parts', 'serial_number')->ignore($part['id'])],
-                        'count' => ['required', 'regex:/(\d{1,})/'],
+                        'count' => ['required', 'regex:/([0-9]{1,})/'],
                         'price' => ['required', 'regex:/^([1-9][0-9]*|0)(\.[0-9]{2})?$/'],
                         'category_id' => ['required'],
                         'name' => ['required', Rule::unique('parts', 'name')->ignore($part['id'])],
@@ -66,6 +65,21 @@ class PartRequest extends FormRequest
             default:break;
         }
 
+    }
+
+    public function messages()
+    {
+     
+            return [
+                'serial_number.unique' => 'Kod produktu już jest zajęty!',
+                'serial_number.regex' => 'Zły kod produktu!',              
+                'name.unique' => 'Dana część już istnieje!',
+                'count.regex' => 'Podaj poprawną ilość sztuk!',
+                'price.regex' => 'Podaj poprawną cenę!'
+
+                
+            ];
+        
     }
 
 }

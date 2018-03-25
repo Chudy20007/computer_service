@@ -1,11 +1,5 @@
 @extends('main') @section('content') 
-@if (Session::has('account_updated'))
-<div class='row alert alert-success card'>
-  <div class='col-md-12 text-center'>
-  <b>  {{Session::get('account_updated')}} </b>
-  </div>
-</div>
-@endif
+@include ("pictures.success_form")
 <div class="table-responsive">
   <table class="table table- bordered table-hover">
 
@@ -25,7 +19,7 @@
         <td> {{$services->price}}</td>
         <td> {{$services->created_at}}</td>   
         <td> {!! Form::open(['method'=>'get','class'=>'form-horizontal','action'=>['ServiceController@showServiceEditForm',$services->id]]) !!} {!!
-            Form::hidden('id',$services->id,['class'=>'form-control']) !!} {!! Form::submit('Edit',['class'=>'btn btn-primary']) !!}
+            Form::hidden('id',$services->id,['class'=>'form-control']) !!} {!! Form::submit('Edytuj',['class'=>'btn btn-primary']) !!}
             {{ Form::close() }} </a>
           </td>
       </tr>

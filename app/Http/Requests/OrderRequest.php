@@ -37,10 +37,14 @@ class OrderRequest extends FormRequest
 
     public function messages()
     {
-        return [
-            'name.required' => 'A name to create order is required',
-            'email.required'  => 'A email is required to create order is required',
-            'phone.required'  => 'A phone is required to create order is required',
-        ];
+     
+            return [
+                'name.regex' => 'Podaj poprawne imię i nazwisko!',
+                'email.regex' => 'Podaj poprawny adres e-mail!',
+                'phone.regex' => 'Podaj poprawny numer telefonu!',
+                'post-code.regex' => 'Podaj poprawny kod pocztowy!'
+                
+            ];
+        
     }
 }

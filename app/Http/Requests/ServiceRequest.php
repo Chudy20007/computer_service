@@ -62,6 +62,16 @@ class ServiceRequest extends FormRequest
             default:break;
         }
     }
+
+    public function messages()
+    {
+     
+            return [
+                'price.regex' => 'Podaj poprawną cenę!',   
+                'name.unique' => 'Dana usługa już istnieje!'             
+            ];
+        
+    }
 }
  
 

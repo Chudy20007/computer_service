@@ -17,6 +17,7 @@ use File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use Mail;
+use Session;
 use Swift_Attachment;
 
 class OrderController extends Controller
@@ -24,8 +25,56 @@ class OrderController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth', ['except' => ['sendBasicMail', 'showMessageForm', 'sendMessage', 'storeOrderServices']]);
+        $this->middleware('auth', ['except' => ['sendBasicMail','findOrders', 'showMessageForm', 'sendMessage', 'storeOrderServices']]);
     }
+
+
+public function findOrders()
+{
+    $data = json_decode(file_get_contents('php://input'), true);
+
+    $data['data'] = htmlentities($data['data']);
+    $data['data'] = stripslashes($data['data']);
+    $orders = Order::with('customer','employee')->leftJoin('users','orders.customer_id','=','users.id')->where('users.name', 'LIKE', '%' . $data['data'] . '%')->get();
+
+$token=$data['token'];
+    $content = "";
+
+
+
+
+    foreach ($orders as $order) {
+        $employee_name = $order->employee->name;
+      $customer_name = $order->customer->name;
+$content.=("
+<tr class='table-light'>
+<td>
+  <a href='http://localhost/computer_service/public/order/$order->id'>$order->id</a>
+</td>
+<td>
+  <a href='ttp://localhost/computer_service/public/user/$order->customer_id'>$customer_name</a>
+</td>
+<td>$order->email</td>
+<td> $order->phone</td>
+<td> $order->status</td>
+<td> $order->description</td>
+<td> $employee_name</td>
+<td> <form method='GET' action='http://localhost/computer_service/public/edit_order/$order->id' accept-charset='UTF-8' class='form-horizontal'> <input class='form-control' name='id' type='hidden' value='$order->id'> <input class='btn btn-primary' type='submit' value='Edytuj zlecenie'> </form> </a>
+</td>
+<td> <form method='GET action='http://localhost/computer_service/public/show_order_services/$order->id' accept-charset='UTF-8' class='form-horizontal'> <input class='form-contro'' name='id' type='hidden' value='$order->id'> <input class='btn btn-primary' type='submit' value='Pokaż usługi'> </form> </a>
+  </td>
+  <td> <form method='GET' action='http://localhost/computer_service/public/show_order_parts/$order->id' accept-charset='UTF-8' class='form-horizontal'> <input class='form-control' name='id' type='hidden' value='$order->id'> <input class='btn btn-primary' type='submit' value='Pokaż części'> </form> </a>
+  </td>
+  <td> <form method='GET' action='http://localhost/computer_service/public/show_order_objects/$order->id' accept-charset='UTF-8' class='form-horizontal'> <input class='form-control' name='id' type='hidden' value='$order->id'> <input class='btn btn-primary' type='submit' value='Pokaż przedmioty'> </form> </a>
+  </td>
+</tr>
+
+
+");
+    }
+
+    return json_encode($content);
+}
 
     public function storeOrder(OrderRequest $request)
     {
@@ -48,27 +97,35 @@ class OrderController extends Controller
             $user->id = $user[0]->id;
         }
 
-        $order = new Order;
-        $order->customer_id = $user->id;
-        $order->employee_id = 1;
-        $order->description = $request['description'];
-        $order->updated_at = date('Y-m-d H:i:s');
-        $order->created_at = date('Y-m-d H:i:s');
-
-        $order->save();
-
         foreach ($request['device'] as $device) {
-            $devices[] =
+            $orders[] =
                 [
-                'order_id' => $order->id,
-                'name' => $device,
+                'customer_id' => $user->id,
+                'employee_id' => 1,
+                'description' => $request['description'],
                 'updated_at' => date('Y-m-d H:i:s'),
                 'created_at' => date('Y-m-d H:i:s'),
             ];
         }
+        Order::insert($orders);
+        $order_id = Order::get(['id'])->last();
+
+        $order_id = $order_id->id - count($request['device']) + 1;
+
+        foreach ($request['device'] as $device) {
+            $devices[] =
+                [
+                'order_id' => $order_id,
+                'name' => $device,
+                'updated_at' => date('Y-m-d H:i:s'),
+                'created_at' => date('Y-m-d H:i:s'),
+            ];
+
+            $order_id++;
+        }
 
         OrderObject::insert($devices);
-
+        Session::put('message', 'Zlecenie zostało pomyślnie utworzone!');
         return view("main");
 
     }
@@ -295,7 +352,7 @@ class OrderController extends Controller
         $orders = Order::with('customer', 'employee', 'order_object', 'order_part', 'order_service')
             ->where('status', '=', 'active')
             ->get(['status', 'employee_id', 'customer_id', 'description', 'updated_at', 'created_at', 'id']);
-
+        Session::put('message', 'Zlecenie zostało pomyślnie dodane!');
         return view('orders.show_order')->with('orders', $orders);
     }
 
@@ -310,7 +367,7 @@ class OrderController extends Controller
     public function editOrderObjects(Request $request)
     {$data = $request->all();
         $ob = OrderObject::where('order_id', '=', $data['id'])->get()->first();
-        $ob_id= $ob->id;
+        $ob_id = $ob->id;
 
         do {
             if (isset($data['object_id' . $ob_id])) {
@@ -328,8 +385,8 @@ class OrderController extends Controller
         $orders = Order::with('customer', 'employee', 'order_object', 'order_part', 'order_service')
             ->where('status', '=', 'active')
             ->where('id', '=', $data['id'])->get();
-
-        return redirect ('show_order_objects/'.$data['id'])->with('id', $data['id']);
+        Session::put('message', 'Przedmioty zostały zaktualizowane!');
+        return redirect('show_order_objects/' . $data['id'])->with('id', $data['id']);
     }
     public function showOrderObjectsList($id)
     {
@@ -486,6 +543,8 @@ class OrderController extends Controller
                 return view("main");
             });
         }
+        Session::put('message', 'Wiadomość została pomyślnie wysłana!');
+        return view("main");
     }
 
 }

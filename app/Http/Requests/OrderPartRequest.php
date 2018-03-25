@@ -55,4 +55,13 @@ class OrderPartRequest extends FormRequest
         }
         
     }
+    public function messages()
+    {
+     
+            return [
+                'part_id.required' => 'Pole z częścią jest wymagane!',
+                'order_id.required' => 'Pole ze zleceniem jest wymagane!'             
+            ];
+        
+    }
 }

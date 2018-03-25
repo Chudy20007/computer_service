@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Auth;
-
+use Session;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
@@ -23,9 +23,14 @@ class LoginController extends Controller
     /**
      * Where to redirect users after login.
      *
-     * @var string
+     
      */
-    protected $redirectTo = '/';
+    
+    protected function redirectTo()
+{
+    Session::put('message','Użytkownik zalogowany pomyślnie!');
+    return ("/");
+}
 
     /**
      * Create a new controller instance.
@@ -35,5 +40,6 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+       
     }
 }

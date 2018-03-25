@@ -1,11 +1,5 @@
 @extends('main') @section('content') 
-@if (Session::has('account_updated'))
-<div class='row alert alert-success card'>
-  <div class='col-md-12 text-center'>
-  <b>  {{Session::get('account_updated')}} </b>
-  </div>
-</div>
-@endif
+@include ("pictures.success_form")
 <div class="table-responsive">
   <table class="table table- bordered table-hover">
 

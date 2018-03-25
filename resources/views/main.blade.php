@@ -26,6 +26,7 @@
 
       @endswitch
 @endif
+@include("pictures.success_form")
   <div class='container' id='container'>
      
       <div style='margin-top:2rem; margin-bottom:2rem;' class='row'>

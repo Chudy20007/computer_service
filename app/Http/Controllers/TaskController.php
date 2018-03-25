@@ -7,6 +7,7 @@ use App\OrderObject;
 use App\Task;
 use App\TaskMessage;
 use App\User;
+use Session;
 use App\Order;
 use Auth;
 use Illuminate\Http\Request;
@@ -19,10 +20,10 @@ class TaskController extends Controller
         $this->middleware('permissions', ['except' => ['storeTaskMessage', 'refreshTaskMessages', 'showTasksList', 'showTaskDetails']]);
     }
 
-    public function showTaskForm($id = null)
+    public function showTaskForm($id)
     {
-        $order = Order::where('id',$id)->get()->first();
-      
+        $order = Order::where('id','=',$id)->get()->first();
+     
         if ($order->status=="closed")
         {
             return view ("user.order_closed");
@@ -55,6 +56,7 @@ class TaskController extends Controller
         ];
 
         Task::where('id', $id)->update($task);
+        Session::put('message', 'Wątek został pomyślnie zaktualizowany!');
         return redirect("show_tasks");
     }
 
@@ -63,7 +65,8 @@ class TaskController extends Controller
 
         $request->request->add(['supervisor_id' => Auth::id()]);
         $task = Task::create($request->toArray());
-        return ("Success!");
+        Session::put('message', 'Wątek została pomyślnie dodany!');
+        return redirect ("show_tasks");
     }
 
     public function showTasksList()

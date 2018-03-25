@@ -85,5 +85,6 @@ class RegisterController extends Controller
             'post_code' => $data['post-code'],
             'password' => bcrypt($data['password']),
         ]);
+        Session::put('message', 'Użytkownik został pomyślnie zarejestrowany!');
     }
 }

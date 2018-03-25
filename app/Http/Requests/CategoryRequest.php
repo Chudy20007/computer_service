@@ -55,4 +55,16 @@ class CategoryRequest extends FormRequest
         }
 
     }
+
+    public function messages()
+    {
+     
+            return [
+                'name.regex' => 'Podaj poprawną nazwę dla kategorii!',
+                'name.unique' => 'Dana kategoria już istnieje!'
+
+                
+            ];
+        
+    }
 }

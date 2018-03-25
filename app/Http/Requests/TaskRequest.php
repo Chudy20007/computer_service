@@ -61,4 +61,19 @@ class TaskRequest extends FormRequest
         }
        
     }
+
+    public function messages()
+    {
+     
+            return [
+                'title.regex' => 'Podaj poprawny tytuł!',
+                'title.required' => 'Podaj tytuł!',
+                'message.required' => 'Podaj treść wiadomości!',
+                'order_id.required' => 'Podaj numer zlecenia!',
+                'employee_id.required' => 'Wybierz pracownika!'
+                
+                
+            ];
+        
+    }
 }

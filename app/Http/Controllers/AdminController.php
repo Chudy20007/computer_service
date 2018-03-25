@@ -11,6 +11,7 @@ use App\OrderObject;
 use App\OrderPart;
 use App\OrderService;   
 use App\Invoice;
+use Session;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -27,7 +28,7 @@ class AdminController extends Controller
             'active'=>false,
             'status'=>'closed'
         ]);  
-
+        Session::put('message', 'Zlecenie zostało pomyślnie zdezaktywowane!');
         return redirect('show_orders');
     }
 
@@ -49,7 +50,7 @@ class AdminController extends Controller
         Category::where('id', '=', $id)->update([
             'active'=>false
         ]);  
-
+        Session::put('message', 'Kategoria została pomyślnie zdezaktywowana!');
         return redirect('show_categories');
     }
 
@@ -59,7 +60,7 @@ class AdminController extends Controller
         Category::where('id', '=', $id)->update([
             'active'=>true
         ]);  
-
+        Session::put('message', 'Kategoria została pomyślnie aktywowana!');
         return redirect('show_categories');
     }
 
@@ -69,7 +70,7 @@ class AdminController extends Controller
         Service::where('id', '=', $id)->update([
             'active'=>false
         ]);  
-
+        Session::put('message', 'Usługa została pomyślnie zdezaktywowana!');
         return redirect('show_services');
     }
 
@@ -79,7 +80,7 @@ class AdminController extends Controller
         Service::where('id', '=', $id)->update([
             'active'=>true
         ]);  
-
+        Session::put('message', 'Usługa została pomyślnie aktywowana!');
         return redirect('show_services');
     }
 
@@ -88,7 +89,8 @@ class AdminController extends Controller
         $id= $request->id;
         User::where('id', '=', $id)->update([
             'active'=>false
-        ]);  
+        ]); 
+        Session::put('message', 'Pracownik został pomyślnie zdezaktywowany!'); 
         return redirect('show_employees');
     }
 
@@ -98,6 +100,7 @@ class AdminController extends Controller
         User::where('id', '=', $id)->update([
             'active'=>true
         ]);  
+        Session::put('message', 'Pracownik został pomyślnie aktywowana!');
         return redirect('show_employees');
     }
     public function deactivatePart(Request $request)
@@ -106,6 +109,7 @@ class AdminController extends Controller
         Part::where('id', '=', $id)->update([
             'active'=>false
         ]);  
+        Session::put('message', 'Część została pomyślnie zdezaktywowana!');
         return redirect('show_parts');
     }
 
@@ -114,7 +118,8 @@ class AdminController extends Controller
         $id= $request->id;
         Part::where('id', '=', $id)->update([
             'active'=>true
-        ]);  
+        ]);
+        Session::put('message', 'Część została pomyślnie aktywowana!');  
         return redirect('show_parts');
     }
 
@@ -124,6 +129,7 @@ class AdminController extends Controller
         Task::where('id', '=', $id)->update([
             'active'=>false
         ]);  
+        Session::put('message', 'Wątek została pomyślnie zdezaktywowany!');
         return redirect('show_tasks');
     }
 
@@ -133,6 +139,7 @@ class AdminController extends Controller
         Task::where('id', '=', $id)->update([
             'active'=>true
         ]);  
+        Session::put('message', 'Wątek została pomyślnie aktywowany!');
         return redirect('show_tasks');
     }
 
@@ -152,7 +159,7 @@ class AdminController extends Controller
         OrderService::where('id', '=', $id)->update([
             'active'=>false
         ]);
-        
+        Session::put('message', 'Usługa dla zlecenia została pomyślnie zdezaktywowana!');
         return redirect('show_services');
     }
 
@@ -163,7 +170,7 @@ class AdminController extends Controller
         OrderService::where('id', '=', $id)->update([
             'active'=>true
         ]);  
-
+        Session::put('message', 'Usługa dla zlecenia została pomyślnie aktywowana!');
         return redirect('show_services');
     }
 
@@ -173,7 +180,7 @@ class AdminController extends Controller
         OrderPart::where('id', '=', $id)->update([
             'active'=>false
         ]);  
-
+        Session::put('message', 'Część dla została pomyślnie zdezaktywowana!');
         return redirect('show_parts');
     }
 
@@ -183,7 +190,7 @@ class AdminController extends Controller
         OrderPart::where('id', '=', $id)->update([
             'active'=>true
         ]);  
-
+        Session::put('message', 'Część dla zlecenia została pomyślnie aktywowana!');
         return redirect('show_parts');
     }
 
@@ -193,7 +200,7 @@ class AdminController extends Controller
         OrderObject::where('id', '=', $id)->update([
             'active'=>false
         ]);  
-
+        Session::put('message', 'Przedmiot dla zlecenia został pomyślnie zdezaktywowany!');
         return redirect('show_objects');
     }
 
@@ -203,7 +210,7 @@ class AdminController extends Controller
         OrderObject::where('id', '=', $id)->update([
             'active'=>true
         ]);  
-
+        Session::put('message', 'Przedmiot dla zlecenia został pomyślnie aktywowany!');
         return redirect('show_objects');
     }
 
