@@ -19,7 +19,7 @@
       <tr class="table-light">
         <td> <a href="{{URL::asset('order/'.$service->order_id)}}"> {{$service->order_id}}</a></td>
         <td>{{$service->service->name}}</td>
-        <td>{{$service->service->price}}</td>
+        <td>{{number_format($service->service->price,2)}} PLN</td>
         <td> {{$service->active==true ?'tak' :'nie'}}</td>
         <td> {!! Form::open(['method'=>'POST','class'=>'form-horizontal','action'=>['AdminController@deactivateOrderService',$service->id]])
           !!} {!! Form::hidden('service_id',$service->id,['class'=>'form-control']) !!} {!! Form::hidden('_method','DELETE',['class'=>'form-control'])

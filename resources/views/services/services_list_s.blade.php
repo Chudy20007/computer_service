@@ -16,7 +16,7 @@
       @foreach($services as $services)
       <tr class="table-light">
         <td>{{$services->name}}</td>
-        <td> {{$services->price}}</td>
+        <td>{{number_format($services->price,2)}}</td>
         <td> {{$services->created_at}}</td>   
         <td> {!! Form::open(['method'=>'get','class'=>'form-horizontal','action'=>['ServiceController@showServiceEditForm',$services->id]]) !!} {!!
             Form::hidden('id',$services->id,['class'=>'form-control']) !!} {!! Form::submit('Edytuj',['class'=>'btn btn-primary']) !!}

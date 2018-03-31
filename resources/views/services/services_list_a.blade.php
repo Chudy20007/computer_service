@@ -19,7 +19,7 @@
       @foreach($services as $services)
       <tr class="table-light">
         <td>{{$services->name}}</td>
-        <td> {{$services->price}}</td>
+        <td>{{number_format($services->price,2)}} PLN</td>
         <td> {{$services->created_at}}</td>
         <td> {{$services->active == 1 ? 'yes' : 'no'}}</td>
         <td> {!! Form::open(['method'=>'get','class'=>'form-horizontal','action'=>['ServiceController@showServiceEditForm',$services->id]])

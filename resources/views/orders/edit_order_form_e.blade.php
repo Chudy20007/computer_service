@@ -2,7 +2,7 @@
         {!! Form::hidden('employee_id' ,$order[0]->employee_id,['class'=>'form-select-control', /*'multiple'=>'multiple' */]) !!}
         {!! Form::hidden('customer_id' ,$order[0]->customer_id,['class'=>'form-select-control', /*'multiple'=>'multiple' */]) !!}
     <div class='col-md-4 control-label'>
-        {!! Form::label('status','Order status:') !!}
+        {!! Form::label('status','Status zamówienia:') !!}
 </div>
     <div class='col-md-12 col-sm-12 form-select-control'>
         {!! Form::select('status' ,array('active'=>'aktywne','pause'=>'wstrzymane','closed'=>'zamknięte','in_progress'=>'w trakcie realizacji'),['class'=>'form-select-control']) !!}

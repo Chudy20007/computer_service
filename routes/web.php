@@ -31,8 +31,8 @@ Route::middleware('permissions')->group(function () {
     Route::patch('edit_service', 'ServiceController@editService');
     Route::get('edit_employee/{id}', 'EmployeeController@showEmployeeEditForm');
     Route::patch('edit_employee', 'EmployeeController@editEmployee');
-    Route::delete('deactivate_order}', 'AdminController@deactivateOrder');
-    Route::patch('activate_order}', 'AdminController@activateOrder');
+    Route::delete('deactivate_order', 'AdminController@deactivateOrder');
+    Route::patch('activate_order', 'AdminController@activateOrder');
     Route::delete('deactivate_part', 'AdminController@deactivatePart');
     Route::patch('activate_part', 'AdminController@activatePart');
     Route::delete('deactivate_category}', 'AdminController@deactivateCategory');

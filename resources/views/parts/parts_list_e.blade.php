@@ -19,7 +19,7 @@
         <td>{{$part->category->name}}</td>
         <td>{{$part->name}}</td>
         <td> {{$part->count}}</td>
-        <td> {{$part->price}}</td>
+        <td> {{number_format($part->price,2)}} PLN</td>
         <td> {{$part->updated_at}}</td>
       </tr>
       @endforeach

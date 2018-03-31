@@ -25,7 +25,7 @@ class OrderController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth', ['except' => ['sendBasicMail','findOrders', 'showMessageForm', 'sendMessage', 'storeOrderServices']]);
+        $this->middleware('auth', ['except' => ['sendBasicMail','findOrders', 'showMessageForm', 'sendMessage', 'storeOrderServices','storeOrder']]);
     }
 
 
@@ -36,13 +36,46 @@ public function findOrders()
     $data['data'] = htmlentities($data['data']);
     $data['data'] = stripslashes($data['data']);
     $orders = Order::with('customer','employee')->leftJoin('users','orders.customer_id','=','users.id')->where('users.name', 'LIKE', '%' . $data['data'] . '%')->get();
-
 $token=$data['token'];
     $content = "";
 
 
+    switch (Auth::user()->getRole())
+    {
+        case "admin":
+        {
+            $content = $this->getSearchingResultsAdmin($orders);
+            return json_encode($content);
+        }
+
+        case "supervisor":
+        {
+            $content = $this->getSearchingResultsSupervisor($orders);
+            return json_encode($content);
+        }
+
+        case "employee":
+        {
+            $content = $this->getSearchingResultsEmployee($orders);
+            return json_encode($content);
+        }
+        case "customer":
+        {
+            $content = $this->getSearchingResultsCustomer($orders);
+            return json_encode($content);
+        }
+    }
 
 
+    
+    
+
+}
+
+
+public function getSearchingResultsSupervisor($orders)
+{
+    $content="";
     foreach ($orders as $order) {
         $employee_name = $order->employee->name;
       $customer_name = $order->customer->name;
@@ -59,9 +92,42 @@ $content.=("
 <td> $order->status</td>
 <td> $order->description</td>
 <td> $employee_name</td>
-<td> <form method='GET' action='http://localhost/computer_service/public/edit_order/$order->id' accept-charset='UTF-8' class='form-horizontal'> <input class='form-control' name='id' type='hidden' value='$order->id'> <input class='btn btn-primary' type='submit' value='Edytuj zlecenie'> </form> </a>
+<td> <form method='GET' action='http://localhost/computer_service/public/create_task/$order->id' accept-charset='UTF-8' class='form-horizontal'> <input class='form-control' name='id' type='hidden' value='$order->id'> <input class='btn btn-primary' type='submit' value=Utwórz wątek> </form> </a>
+    </td>
+  <td> <form method='GET' action='http://localhost/computer_service/public/edit_order/$order->id' accept-charset='UTF-8' class='form-horizontal'> <input class='form-control' name='id' type='hidden' value='$order->id'> <input class='btn btn-primary' type='submit' value='Edytuj zlecenie'> </form> </a>
+   
+    </td>
+</tr>
+
+
+");
+
+  }
+  return $content;
+}
+public function getSearchingResultsEmployee($orders)
+{
+    $content="";
+    foreach ($orders as $order) {
+        $employee_name = $order->employee->name;
+      $customer_name = $order->customer->name;
+$content.=("
+<tr class='table-light'>
+<td>
+  <a href='http://localhost/computer_service/public/order/$order->id'>$order->order_id</a>
 </td>
-<td> <form method='GET action='http://localhost/computer_service/public/show_order_services/$order->id' accept-charset='UTF-8' class='form-horizontal'> <input class='form-contro'' name='id' type='hidden' value='$order->id'> <input class='btn btn-primary' type='submit' value='Pokaż usługi'> </form> </a>
+<td>
+  <a href='http://localhost/computer_service/public/user/$order->customer_id'>$customer_name</a>
+</td>
+<td>$order->email</td>
+<td> $order->phone</td>
+<td> $order->status</td>
+<td> $order->description</td>
+<td> $employee_name</td>
+<td> <form method='GET' action='http://localhost/computer_service/public/edit_order/$order->id' accept-charset='UTF-8' class='form-horizontal'> <input class='form-control' name='id' type='hidden' value='$order->id'> <input class='btn btn-primary' type='submit' value='Edytuj zlecenie'> </form> </a>
+   
+    </td>
+<td> <form method='GET' action='http://localhost/computer_service/public/show_order_services/$order->id' accept-charset='UTF-8' class='form-horizontal'> <input class='form-contro'' name='id' type='hidden' value='$order->id'> <input class='btn btn-primary' type='submit' value='Pokaż usługi'> </form> </a>
   </td>
   <td> <form method='GET' action='http://localhost/computer_service/public/show_order_parts/$order->id' accept-charset='UTF-8' class='form-horizontal'> <input class='form-control' name='id' type='hidden' value='$order->id'> <input class='btn btn-primary' type='submit' value='Pokaż części'> </form> </a>
   </td>
@@ -71,11 +137,87 @@ $content.=("
 
 
 ");
-    }
 
-    return json_encode($content);
+  }
+  return $content;
 }
 
+public function getSearchingResultsCustomer($orders)
+{
+    $content="";
+    foreach ($orders as $order) {
+        $employee_name = $order->employee->name;
+      $customer_name = $order->customer->name;
+$content.=("
+<tr class='table-light'>
+<td>
+  <a href='http://localhost/computer_service/public/order/$order->id'>$order->order_id</a>
+</td>
+<td> $order->status</td>
+<td> $order->description</td>
+<td> $employee_name</td>
+<td> $order->created_at</td>
+<td> $order->updated_at</td>
+<td> <form method='GET' action='http://localhost/computer_service/public/show_order_services/$order->id' accept-charset='UTF-8' class='form-horizontal'> <input class='form-contro'' name='id' type='hidden' value='$order->id'> <input class='btn btn-primary' type='submit' value='Pokaż usługi'> </form> </a>
+  </td>
+  <td> <form method='GET' action='http://localhost/computer_service/public/show_order_parts/$order->id' accept-charset='UTF-8' class='form-horizontal'> <input class='form-control' name='id' type='hidden' value='$order->id'> <input class='btn btn-primary' type='submit' value='Pokaż części'> </form> </a>
+  </td>
+  <td> <form method='GET' action='http://localhost/computer_service/public/show_order_objects/$order->id' accept-charset='UTF-8' class='form-horizontal'> <input class='form-control' name='id' type='hidden' value='$order->id'> <input class='btn btn-primary' type='submit' value='Pokaż przedmioty'> </form> </a>
+  </td>
+</tr>
+
+
+");
+
+  }
+  return $content;
+}
+
+public function getSearchingResultsAdmin($orders)
+{
+    $content="";
+    foreach ($orders as $order) {
+        $employee_name = $order->employee->name;
+      $customer_name = $order->customer->name;
+$content.=("
+<tr class='table-light'>
+<td>
+  <a href='http://localhost/computer_service/public/order/$order->id'>$order->id</a>
+</td>
+<td>
+  <a href='ttp://localhost/computer_service/public/user/$order->customer_id'>$customer_name</a>
+</td>
+<td>$order->email</td>
+<td> $order->phone</td>
+<td> $order->status</td>
+<td> $order->active</td>
+<td> $order->description</td>
+<td> $employee_name</td>
+<td> <form method='GET' action='http://localhost/computer_service/public/create_task/$order->id' accept-charset='UTF-8' class='form-horizontal'> <input class='form-control' name='id' type='hidden' value='$order->id'> <input class='btn btn-primary' type='submit' value='Wyślij wiadomość'> </form> </a>
+    </td>
+
+<td> <form method='GET action='http://localhost/computer_service/public/show_order_services/$order->id' accept-charset='UTF-8' class='form-horizontal'> <input class='form-contro'' name='id' type='hidden' value='$order->id'> <input class='btn btn-primary' type='submit' value='Pokaż usługi'> </form> </a>
+  </td>
+  <td> <form method='GET' action='http://localhost/computer_service/public/show_order_parts/$order->id' accept-charset='UTF-8' class='form-horizontal'> <input class='form-control' name='id' type='hidden' value='$order->id'> <input class='btn btn-primary' type='submit' value='Pokaż części'> </form> </a>
+  </td>
+  <td> <form method='GET' action='http://localhost/computer_service/public/show_order_objects/$order->id' accept-charset='UTF-8' class='form-horizontal'> <input class='form-control' name='id' type='hidden' value='$order->id'> <input class='btn btn-primary' type='submit' value='Pokaż przedmioty'> </form> </a>
+  </td>
+  <td> <form method='GET' action='http://localhost/computer_service/public/edit_order/$order->id' accept-charset='UTF-8' class='form-horizontal'> <input class='form-control' name='id' type='hidden' value='$order->id'> <input class='btn btn-primary' type='submit' value='Edytuj zlecenie'> </form> </a>
+   
+    </td>
+    <td> <form method='POST' action='http://localhost/computer_service/public/activate_order' accept-charset='UTF-8' class='form-horizontal'> <input class='form-control' name='id' type='hidden' value='$order->id'><input class='form-control' name='_method' type='hidden' value='PATCH'> <input class='btn btn-primary' type='submit' value='Aktywuj zlecenie'> </form> </a>
+     
+        </td>
+        <td> <form method='POST' action='http://localhost/computer_service/public/deactivate_order' accept-charset='UTF-8' class='form-horizontal'> <input class='form-control' name='id' type='hidden' value='$order->id'><input class='form-control' name='_method' type='hidden' value='DELETE'> <input class='btn btn-primary' type='submit' value='Usuń zlecenie'> </form> </a>
+            </td>
+</tr>
+
+
+");
+
+  }
+  return $content;
+}
     public function storeOrder(OrderRequest $request)
     {
 
@@ -96,12 +238,14 @@ $content.=("
         } else {
             $user->id = $user[0]->id;
         }
-
+if (Auth::user()->getRole()==="employee")
+$user_id = Auth::id();
+else $user_id=1;
         foreach ($request['device'] as $device) {
             $orders[] =
                 [
                 'customer_id' => $user->id,
-                'employee_id' => 1,
+                'employee_id' => $user_id,
                 'description' => $request['description'],
                 'updated_at' => date('Y-m-d H:i:s'),
                 'created_at' => date('Y-m-d H:i:s'),
@@ -231,7 +375,13 @@ $content.=("
 
                     return view('orders.orders_list_a')->with('orders', $orders);
                 }
+                case "customer":
+                {
+                    $orders = Order::with('customer', 'employee', 'order_object', 'order_part', 'order_service')->where('orders.customer_id','=',Auth::id())
+                        ->get(['status', 'employee_id', 'customer_id', 'description', 'updated_at', 'created_at', 'id']);
 
+                    return view('orders.orders_list_c')->with('orders', $orders);
+                }
             default:
                 {
                     return view('pictures.access_denied');
@@ -251,6 +401,7 @@ $content.=("
                     /*  ->where('status', '!=', 'closed') */
                         ->where('id', '=', $id)
                         ->where('employee_id', '=', Auth::id())->latest()->get();
+                        
                     if ($orders->isEmpty()) {
                         return view('user.access_denied');
                     } else {
@@ -275,6 +426,13 @@ $content.=("
                         ->where('id', '=', $id)->get();
 
                     return view('orders.show_order')->with('orders', $orders);
+                }
+                case "customer":
+                {
+                    $orders = Order::with('customer', 'employee', 'order_object', 'order_part', 'order_service')
+
+                        ->where('id', '=', $id)->where('customer_id','=',Auth::id())->get();
+                    return view('orders.show_order_c')->with('orders', $orders);
                 }
 
             default:
@@ -413,6 +571,19 @@ $content.=("
                     return view('orders.order_objects_list')->with('objects', $objects);
                     break;
                 }
+
+                case "customer":
+                {
+                    $objects = OrderObject::where('order_id', '=', $id)->get();
+
+                    return view('orders.order_objects_list_c')->with('objects', $objects);
+                    break;
+                }
+
+                default:
+                {
+                    return view('users.access_denied');
+                }
         }
 
     }
@@ -442,6 +613,19 @@ $content.=("
                     return view('orders.order_parts_list')->with('parts', $parts);
                     break;
                 }
+                
+            case "customer":
+            {
+                $parts = OrderPart::with('part')->where('order_id', '=', $id)->get();
+
+                return view('orders.order_parts_list_c')->with('parts', $parts);
+                break;
+            }
+
+            default:
+            {
+                return view('users.access_denied');
+            }
         }
 
     }
@@ -466,6 +650,12 @@ $content.=("
                 {
                     $services = OrderService::with('service')->where('order_id', '=', $id)->get();
                     return view('orders.order_services_list')->with('services', $services);
+                    break;
+                }
+                case "customer":
+                {
+                    $services = OrderService::with('service')->where('order_id', '=', $id)->get();
+                    return view('orders.order_services_list_c')->with('services', $services);
                     break;
                 }
         }

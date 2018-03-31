@@ -85,7 +85,11 @@ public function findServices()
                 $services = Service::all();
                 return view ('services.services_list_a')->with('services',$services);                  
             }
-
+            case "customer":
+            {
+                $services = Service::all();
+                return view ('services.services_list_c')->with('services',$services);                  
+            }
             default:
             {
                 $services = Service::where('active','=',true)->get();

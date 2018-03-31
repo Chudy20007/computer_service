@@ -18,6 +18,10 @@
     @if (Auth::user()!=null && Auth::user()->isEmployee())
     @include('partial_views.employee_panel')
   @endif
+
+  @if (Auth::user()!=null && Auth::user()->isCustomer())
+  @include('partial_views.customer_panel')
+@endif
  @if (Auth::user()) @php $src =explode("@",Auth::user()->id); @endphp
 
   <a class='menuOptionRight' href="{{URL::asset('logout')}}">

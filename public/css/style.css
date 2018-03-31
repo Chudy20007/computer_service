@@ -73,11 +73,7 @@ select {
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
-option {
-  border: 1px solid darkblue;
-  background-color: #0069d9;
-  color: white;
-}
+
 
 .form-header {
   font-size: 26px;
@@ -150,7 +146,16 @@ option {
 
 .small-img2 {
   border: none;
+  margin-left:1rem;
   background: url("http://localhost/computer_service/public/css/img/plus.jpg");
+  width: 38px;
+  height: 38px;
+}
+
+.small-img3 {
+  border: none;
+  margin-left:1.5rem;
+  background: url("http://localhost/computer_service/public/css/img/minus.jpg");
   width: 38px;
   height: 38px;
 }

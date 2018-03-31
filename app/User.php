@@ -46,6 +46,13 @@ class User extends Authenticatable
         else return false;
     }
 
+    public function isCustomer()
+    {
+        if($this->role==="customer")
+        return true;
+        else return false;
+    }
+
     public function getName()
     {
         return $this->name;

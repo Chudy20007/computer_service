@@ -21,7 +21,7 @@
         <td>{{$part->category->name}}</td>
         <td>{{$part->name}}</td>
         <td> {{$part->count}}</td>
-        <td> {{$part->price}}</td>
+        <td> {{number_format($part->price,2)}} PLN</td>
         <td> {{$part->created_at}}</td>
         <td> {{$part->updated_at}}</td>     
         <td> {!! Form::open(['method'=>'GET','class'=>'form-horizontal','action'=>['PartController@showPartEditForm',$part->id]]) !!} {!!
