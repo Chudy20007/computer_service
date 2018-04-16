@@ -47,6 +47,125 @@ $token=$data['token'];
         return redirect("show_parts");
     }
 
+    public function sortParts()
+    {
+        $data = json_decode(file_get_contents('php://input'), true); 
+        $data['column_name'] = htmlentities($data['column_name']);
+        $data['column_name'] = stripslashes($data['column_name']);
+        $data['table_name'] = htmlentities($data['table_name']);
+        $data['table_name'] = stripslashes($data['table_name']);
+        $data['data_sort'] = htmlentities($data['data_sort']);
+        $data['data_sort'] = stripslashes($data['data_sort']);
+
+        
+        switch(Auth::user()->getRole())
+        {
+            case 'admin':
+            {
+                $parts = Part::with('category')->orderBy('parts.'.$data['column_name'],$data['data_sort'])->get();
+                $content=$this->getSearchingResultsAdmin($parts);
+                break;
+            }
+            case 'employee':
+            {
+                $parts = Part::with('category')->where('active',true)->orderBy('parts.'.$data['column_name'],$data['data_sort'])->get();
+                $content=$this->getSearchingResultsEmployee($parts);
+                break;
+            }
+            case 'supervisor':
+            {
+                $parts = Part::with('category')->orderBy('parts.'.$data['column_name'],$data['data_sort'])->get();
+                $content=$this->getSearchingResultsSupervisor($parts);
+                break;
+            }
+    
+            default:
+            {
+                return;
+            }
+        }
+
+
+        return json_encode($content);
+    }
+
+    public function getSearchingResultsSupervisor($parts)
+    {
+        $content = "";
+        foreach ($parts as $part) {
+            $category=$part->category->name;
+            $content .= ("<tr class='table-light'>
+            <td>$category</td>
+            <td>$part->name</td>
+            <td>$part->count</td>
+            <td>".number_format($part->price,2)." PLN</td>
+            <td>$part->created_at</td>
+            <td>$part->updated_at</td>
+            <td>".($part->active ? 'tak' : 'nie')."</td>
+            <td> <form method='GET' action='http://localhost/computer_service/public/edit_part/$part->id' 
+                accept-charset='UTF-8' class='form-horizontal'> 
+                <input class='form-control' name='id' type='hidden' value='$part->id'>
+                 <input class='btn btn-primary' type='submit' value='Edytuj'> </form> </a>
+                 <input type='hidden'name='_token' value=".csrf_token()."> </form> </a>
+                 </td> 
+                 </tr>");
+        }
+        return $content;
+    }
+    public function getSearchingResultsEmployee($parts)
+    {
+        $content = "";
+        foreach ($parts as $part) {
+            $category=$part->category->name;
+            $content .= ("<tr class='table-light'>
+            <td>$category</td>
+            <td>$part->name</td>
+            <td>$part->count</td>
+            <td>".number_format($part->price,2)." PLN</td>
+            <td>$part->updated_at</td>
+                 </tr>");
+        }
+        return $content;
+    }
+
+    public function getSearchingResultsAdmin($parts)
+    {
+        $content = "";
+        foreach ($parts as $part) {
+            $category=$part->category->name;
+            $content .= ("<tr class='table-light'>
+            <td>$category</td>
+            <td>$part->name</td>
+            <td>$part->count</td>
+            <td>".number_format($part->price,2)." PLN</td>
+            <td>$part->created_at</td>
+            <td>$part->updated_at</td>
+            <td>".($part->active ? 'tak' : 'nie')."</td>
+            <td> <form method='GET' action='http://localhost/computer_service/public/edit_part/$part->id' 
+                accept-charset='UTF-8' class='form-horizontal'> 
+                <input class='form-control' name='id' type='hidden' value='$part->id'>
+                 <input class='btn btn-primary' type='submit' value='Edytuj'> </form> </a>
+                 <input type='hidden'name='_token' value=".csrf_token()."> </form> </a>
+                 </td>
+                 <td> <form method='POST' action='http://localhost/computer_service/public/deactivate_part' 
+                    accept-charset='UTF-8' class='form-horizontal'> 
+                    <input class='form-control' name='id' type='hidden' value='$part->id'>
+                     <input class='btn btn-primary' type='submit' value='Dezaktywuj'>
+                     <input class='form-control' name='_method' type='hidden' value='DELETE'> </form> </a>
+                     <input type='hidden'name='_token' value=".csrf_token()."> </form> </a>
+                     </td>    
+                     <td> <form method='POST' action='http://localhost/computer_service/public/activate_part' 
+                        accept-charset='UTF-8' class='form-horizontal'> 
+                        <input class='form-control' name='id' type='hidden' value='$part->id'>
+                        <input class='form-control' name='_method' type='hidden' value='PATCH'>
+                         <input class='btn btn-primary' type='submit' value='Aktywuj'> </form> </a>
+                         <input type='hidden'name='_token' value=".csrf_token()."> </form> </a>
+                         </td>  
+                 </tr>");
+        }
+        return $content;
+    }
+
     public function showPartsList()
     {
 

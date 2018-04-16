@@ -11,14 +11,14 @@
 
 
     <thead class="bg-primary text-center">
-      <tr>
-        <th scope="col">Zamówienie</th>
-        <th scope="col">Tytuł</th>
-        <th scope="col">Kierownik</th>
-        <th scope="col">Pracownik</th>
-        <th scope="col">Wiadomość</th>
-        <th scope="col">Utworzono</th>
-        <th scope="col">Zaktualizowano</th>
+      <tr data-table='tasks_s'>>
+        <th scope="col" data-name="order_id" data-sort="asc">Zamówienie</th>
+        <th scope="col" data-name="title" data-sort="asc">Tytuł</th>
+        <th scope="col" data-name="supervisor_id" data-sort="asc">Kierownik</th>
+        <th scope="col" data-name="employee_id" data-sort="asc">Pracownik</th>
+        <th scope="col" data-name="message" data-sort="asc">Wiadomość</th>
+        <th scope="col" data-name="created_at" data-sort="asc">Utworzono</th>
+        <th scope="col" data-name="updated_at" data-sort="asc">Zaktualizowano</th>
         <th scope="col">Szczegóły</th>
         <th scope="col">Edytuj</th>
       </tr>

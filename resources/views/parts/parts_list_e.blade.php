@@ -5,12 +5,12 @@
 
 
     <thead class="bg-primary text-center">
-      <tr>
-        <th scope="col">Kategoria</th>
-        <th scope="col">Nazwa</th>
-        <th scope="col">Sztuk</th>
-        <th scope="col">Cena</th>
-        <th scope="col">Edytowano</th>
+      <tr data-table='parts_e'>
+        <th scope="col" data-name="category" data-sort="asc">Kategoria</th>
+        <th scope="col" data-name="name" data-sort="asc">Nazwa</th>
+        <th scope="col" data-name="count" data-sort="asc">Sztuk</th>
+        <th scope="col" data-name="price" data-sort="asc">Cena</th>
+        <th scope="col" data-name="updated_at" data-sort="asc">Edytowano</th>
       </tr>
     </thead>
     <tbody>

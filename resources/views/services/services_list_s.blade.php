@@ -5,10 +5,10 @@
 
 
     <thead class="bg-primary text-center">
-      <tr>
-        <th scope="col">Nazwa</th>
-        <th scope="col">Cena</th>
-        <th scope="col">Utworzono</th>
+      <tr data-table='services_s'>
+        <th scope="col" data-name="name" data-sort="asc">Nazwa</th>
+        <th scope="col" data-name="price" data-sort="asc">Cena</th>
+        <th scope="col" data-name="created_at" data-sort="asc">Utworzono</th>
         <th scope="col">Edytuj</th>
       </tr>
     </thead>

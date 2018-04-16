@@ -43,4 +43,9 @@ class Order extends Model
     {
         return $this->hasMany('App\OrderPart','order_id');
     }
+
+    public function order_id()
+    {
+        return $this->id;
+    }
 }

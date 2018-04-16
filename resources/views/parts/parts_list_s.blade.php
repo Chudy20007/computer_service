@@ -5,13 +5,13 @@
 
 
     <thead class="bg-primary text-center">
-      <tr>
-        <th scope="col">Kategoria</th>
-        <th scope="col">Nazwa</th>
-        <th scope="col">Sztuk</th>
-        <th scope="col">Cena</th>
-        <th scope="col">Utworzono</th>
-        <th scope="col">Edytowano</th>
+      <tr data-table='parts_s'>
+        <th scope="col" data-name="category" data-sort="asc">Kategoria</th>
+        <th scope="col" data-name="name" data-sort="asc">Nazwa</th>
+        <th scope="col" data-name="count" data-sort="asc">Sztuk</th>
+        <th scope="col" data-name="price" data-sort="asc">Cena</th>
+        <th scope="col" data-name="created_at" data-sort="asc">Utworzono</th>
+        <th scope="col" data-name="updated_at" data-sort="asc">Edytowano</th>
         <th scope="col">Edytuj</th>
       </tr>
     </thead>
@@ -25,7 +25,7 @@
         <td> {{$part->created_at}}</td>
         <td> {{$part->updated_at}}</td>     
         <td> {!! Form::open(['method'=>'GET','class'=>'form-horizontal','action'=>['PartController@showPartEditForm',$part->id]]) !!} {!!
-          Form::hidden('part_id',$part->id,['class'=>'form-control']) !!} {!! Form::submit('Edit',['class'=>'btn btn-primary']) !!}
+          Form::hidden('part_id',$part->id,['class'=>'form-control']) !!} {!! Form::submit('Edytuj',['class'=>'btn btn-primary']) !!}
           {{ Form::close() }} </a>
         </td>
       </tr>

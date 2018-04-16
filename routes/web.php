@@ -35,8 +35,8 @@ Route::middleware('permissions')->group(function () {
     Route::patch('activate_order', 'AdminController@activateOrder');
     Route::delete('deactivate_part', 'AdminController@deactivatePart');
     Route::patch('activate_part', 'AdminController@activatePart');
-    Route::delete('deactivate_category}', 'AdminController@deactivateCategory');
-    Route::patch('activate_category}', 'AdminController@activateCategory');
+    Route::delete('deactivate_category', 'AdminController@deactivateCategory');
+    Route::patch('activate_category', 'AdminController@activateCategory');
     Route::delete('deactivate_task', 'AdminController@deactivateTask');
     Route::patch('activate_task', 'AdminController@activateTask');
     Route::delete('deactivate_service}', 'AdminController@deactivateService');
@@ -93,6 +93,33 @@ Route::get('add_parts_to_order/{id?}', 'OrderController@showPartsOrderForm')->mi
 Route::post('add_parts_to_order/{id?}', 'OrderController@storeOrderParts')->middleware('auth');
 Route::get('show_orders', 'OrderController@showOrdersList')->middleware('auth');
 Route::post('show_orders', 'OrderController@findOrders');
+Route::post('show_orders/orders_c', 'OrderController@sortOrders');
+Route::post('show_orders/orders_s', 'OrderController@sortOrders');
+Route::post('show_orders/orders_e', 'OrderController@sortOrders');
+Route::post('show_orders/orders_a', 'OrderController@sortOrders');
+
+Route::post('show_services/services_a', 'ServiceController@sortServices');
+Route::post('show_services/services_c', 'ServiceController@sortServices');
+Route::post('show_services/services_s', 'ServiceController@sortServices');
+Route::post('show_services/services_e', 'ServiceController@sortServices');
+
+Route::post('show_employees/employees_a', 'EmployeeController@sortEmployees');
+Route::post('show_employees/employees_e', 'EmployeeController@sortEmployees');
+Route::post('show_employees/employees_s', 'EmployeeController@sortEmployees');
+
+Route::post('show_categories/categories_s', 'CategoryController@sortCategories');
+Route::post('show_categories/categories_e', 'CategoryController@sortCategories');
+Route::post('show_categories/categories_a', 'CategoryController@sortCategories');
+
+Route::post('show_parts/parts_s', 'PartController@sortParts');
+Route::post('show_parts/parts_e', 'PartController@sortParts');
+Route::post('show_parts/parts_a', 'PartController@sortParts');
+
+
+Route::post('show_tasks/tasks_s', 'TaskController@sortTasks');
+Route::post('show_tasks/tasks_e', 'TaskController@sortTasks');
+Route::post('show_tasks/tasks_a', 'TaskController@sortTasks');
+
 Route::get('order/{id}', 'OrderController@showOrder')->middleware('auth');
 Route::get('user/{id}', 'OrderController@showUserOrdersList')->middleware('auth');
 Route::get('edit_order/{id}', 'OrderController@showOrderEditForm')->middleware('auth');
@@ -118,8 +145,8 @@ Route::patch('edit_part', 'PartController@editPart')->middleware('auth');
 Route::get('show_task_details/{id?}', 'TaskController@showTaskDetails');
 Route::post('get_messages', 'TaskController@refreshTaskMessages');
 Route::post('show_task_details/{id?}', 'TaskController@storeTaskMessage');
-Route::get('/', function () {
-    return view('main');
+Route::get('/index', function () {
+    return view('static_views.home');
 });
 
 Route::get('/add_order', function () {
@@ -144,6 +171,12 @@ Route::get('/denied,', function () {
 Route::get("/",function(){
 return view("main");
 });
+Route::get('password/email', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.email');
+Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail');
+
+// Password reset routes...
+Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.request');
+Route::post('password/reset', 'Auth\ResetPasswordController@postReset')->name('password.reset');
 Route::post('password/email', '\App\Http\Controllers\Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
 Route::get('password/reset', '\App\Http\Controllers\Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
 Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');

@@ -5,11 +5,11 @@
 
 
     <thead class="bg-primary text-center">
-      <tr>
-        <th scope="col">Nazwa</th>
-        <th scope="col">Cena</th>
-        <th scope="col">Utworzono</th>
-        <th scope="col">Aktywny</th>
+      <tr data-table='services_a'>
+        <th scope="col" data-name="name" data-sort="asc">Nazwa</th>
+        <th scope="col" data-name="price" data-sort="asc">Cena</th>
+        <th scope="col" data-name="created_at" data-sort="asc">Utworzono</th>
+        <th scope="col" data-name="active" data-sort="asc">Aktywny</th>
         <th scope="col">Edytuj</th>
         <th scope="col">Dezaktywuj</th>
         <th scope="col">Aktywuj</th>

@@ -5,14 +5,14 @@
 
 
     <thead class="bg-primary text-center">
-      <tr>
-        <th scope="col">ID</th>
-        <th scope="col">Klient</th>
-        <th scope="col">E-mail</th>
-        <th scope="col">Telefon</th>
-        <th scope="col">Status zamówienia</th>
-        <th scope="col">Opis</th>
-        <th scope="col">Pracownik</th>
+      <tr data-table='orders_e'>
+        <th scope="col" data-name="id" data-sort="asc">ID</th>
+        <th scope="col" data-name="customer_id" data-sort="asc">Klient</th>
+        <th scope="col" data-name="email" data-sort="asc">E-mail</th>
+        <th scope="col" data-name="phone" data-sort="asc">Telefon</th>
+        <th scope="col" data-name="status" data-sort="asc">Status zamówienia</th>
+        <th scope="col" data-name="description" data-sort="asc">Opis</th>
+        <th scope="col" data-name="employee_id" data-sort="asc">Pracownik</th>
         <th scope="col">Edytuj</th>
         <th scope="col">Usługi</th>
         <th scope="col">Części</th>

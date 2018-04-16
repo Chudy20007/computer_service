@@ -5,15 +5,15 @@
 
 
     <thead class="bg-primary text-center">
-      <tr>
-        <th scope="col">Numer przedmiotu</th>
-        <th scope="col">Numer zlecenia</th>
-        <th scope="col">Nazwa</th>
-        <th scope="col">Kod produktu</th>
-        <th scope="col">Diagnoza</th>
-        <th scope="col">Naprawiono</th>
-        <th scope="col">Utworzono</th>
-        <th scope="col">Edytowano</th>
+      <tr data-table='order_objects_s'>
+        <th scope="col" data-name="id" data-sort="asc">Numer przedmiotu</th>
+        <th scope="col" data-name="order_id" data-sort="asc">Numer zlecenia</th>
+        <th scope="col" data-name="name" data-sort="asc">Nazwa</th>
+        <th scope="col" data-name="serial_number" data-sort="asc">Kod produktu</th>
+        <th scope="col" data-name="diagnosis" data-sort="asc">Diagnoza</th>
+        <th scope="col" data-name="fixed" data-sort="asc">Naprawiono</th>
+        <th scope="col" data-name="created_at" data-sort="asc">Utworzono</th>
+        <th scope="col" data-name="updated_at" data-sort="asc">Edytowano</th>
 
       </tr>
     </thead>

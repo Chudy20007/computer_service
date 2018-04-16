@@ -35,8 +35,21 @@ public function findOrders()
 
     $data['data'] = htmlentities($data['data']);
     $data['data'] = stripslashes($data['data']);
-    $orders = Order::with('customer','employee')->leftJoin('users','orders.customer_id','=','users.id')->where('users.name', 'LIKE', '%' . $data['data'] . '%')->get();
-$token=$data['token'];
+    if (Auth::user()->isCustomer())
+    {
+    $orders = Order::with('customer','employee')->leftJoin('users','orders.customer_id','=','users.id')
+    ->where('orders.customer_id','=',Auth::id())->where('orders.id', '=' ,$data['data'])->get();
+    $orders_id = Order::where('orders.id', 'LIKE', '%' . $data['data'] . '%')->get(['id','created_at','updated_at']);
+
+    $orders[0]->id = $orders_id[0]->id;
+    $orders[0]->created_at = $orders_id[0]->created_at;
+    $orders[0]->updated_at = $orders_id[0]->updated_at;
+    }
+    else
+   $orders = Order::with('customer','employee')->leftJoin('users','orders.customer_id','=','users.id')
+   ->where('users.name', 'LIKE', '%' . $data['data'] . '%')->get();  
+
+    $token=$data['token'];
     $content = "";
 
 
@@ -66,10 +79,80 @@ $token=$data['token'];
         }
     }
 
+}
 
-    
-    
 
+public function sortOrders()
+{
+    $data = json_decode(file_get_contents('php://input'), true); 
+    $data['column_name'] = htmlentities($data['column_name']);
+    $data['column_name'] = stripslashes($data['column_name']);
+    $data['table_name'] = htmlentities($data['table_name']);
+    $data['table_name'] = stripslashes($data['table_name']);
+    $data['data_sort'] = htmlentities($data['data_sort']);
+    $data['data_sort'] = stripslashes($data['data_sort']);
+    if (Auth::user()->isCustomer())
+    {
+        $orders = Order::with('customer', 'employee', 'order_object', 'order_part', 'order_service')->where('orders.customer_id','=',Auth::id())
+        ->orderBy('orders.'.$data['column_name'], $data['data_sort'])
+        ->get(['status', 'employee_id', 'customer_id', 'description', 'updated_at', 'created_at', 'id']);
+    }
+    if(Auth::user()->isSupervisor() || Auth::user()->isAdmin())
+    {
+       if($data['column_name']=='email' || $data['column_name']=='phone' 
+       || $data['column_name']=='employee_id' || $data['column_name']=='cusotomer_id')
+           $sort='users.';
+        else
+        $sort='orders.';
+   $orders = Order::with('customer','employee')
+   ->leftJoin('users','orders.customer_id','=','users.id')
+   ->orderBy($sort.$data['column_name'], $data['data_sort'])
+   ->get(['status', 'employee_id', 'customer_id', 'description','email','phone', 'orders.updated_at', 'orders.created_at', 'orders.id']); 
+
+
+    }
+
+    if(Auth::user()->isEmployee())
+    {
+       if($data['column_name']=='email' || $data['column_name']=='phone' 
+       || $data['column_name']=='employee_id' || $data['column_name']=='cusotomer_id')
+           $sort='users.';
+        else
+        $sort='orders.';
+   $orders = Order::with('customer','employee')
+   ->leftJoin('users','orders.customer_id','=','users.id')
+   ->where('employee_id','=',Auth::id())
+   ->where('status','!=','closed')
+   ->orderBy($sort.$data['column_name'], $data['data_sort'])
+   ->get(['status', 'employee_id', 'customer_id', 'description','email','phone', 'orders.updated_at', 'orders.created_at', 'orders.id']); 
+
+
+    }
+    switch (Auth::user()->getRole())
+    {
+        case "admin":
+        {
+            $content = $this->getSearchingResultsAdmin($orders);
+            return json_encode($content);
+        }
+
+        case "supervisor":
+        {
+            $content = $this->getSearchingResultsSupervisor($orders);
+            return json_encode($content);
+        }
+
+        case "employee":
+        {
+            $content = $this->getSearchingResultsEmployee($orders);
+            return json_encode($content);
+        }
+        case "customer":
+        {
+            $content = $this->getSearchingResultsCustomer($orders);
+            return json_encode($content);
+        }
+    }
 }
 
 
@@ -114,7 +197,7 @@ public function getSearchingResultsEmployee($orders)
 $content.=("
 <tr class='table-light'>
 <td>
-  <a href='http://localhost/computer_service/public/order/$order->id'>$order->order_id</a>
+  <a href='http://localhost/computer_service/public/order/$order->id'>$order->id</a>
 </td>
 <td>
   <a href='http://localhost/computer_service/public/user/$order->customer_id'>$customer_name</a>
@@ -144,6 +227,7 @@ $content.=("
 
 public function getSearchingResultsCustomer($orders)
 {
+   
     $content="";
     foreach ($orders as $order) {
         $employee_name = $order->employee->name;
@@ -151,7 +235,7 @@ public function getSearchingResultsCustomer($orders)
 $content.=("
 <tr class='table-light'>
 <td>
-  <a href='http://localhost/computer_service/public/order/$order->id'>$order->order_id</a>
+  <a href='http://localhost/computer_service/public/order/$order->id'>$order->id</a>
 </td>
 <td> $order->status</td>
 <td> $order->description</td>

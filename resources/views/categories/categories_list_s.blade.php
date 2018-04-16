@@ -11,10 +11,10 @@
 
 
     <thead class="bg-primary text-center">
-      <tr>
-        <th scope="col">Nazwa</th>
-        <th scope="col">Utworzono</th>
-        <th scope="col">Zaktualizowo</th>
+      <tr data-table='categories_s'>
+        <th scope="col" data-name="name" data-sort="asc">Nazwa</th>
+        <th scope="col" data-name="created_at" data-sort="asc">Utworzono</th>
+        <th scope="col" data-name="updated_at" data-sort="asc">Zaktualizowo</th>
         <th scope="col">Edytuj</th>
       </tr>
     </thead>
@@ -25,7 +25,7 @@
         <td> {{$category->created_at}}</td>
         <td> {{$category->updated_at}}</td>
         <td> {!! Form::open(['method'=>'GET','class'=>'form-horizontal','action'=>['CategoryController@showCategoryEditForm',$category->id]]) !!} {!!
-            Form::hidden('id',$category->id,['class'=>'form-control']) !!} {!! Form::submit('Edit',['class'=>'btn btn-primary']) !!}
+            Form::hidden('id',$category->id,['class'=>'form-control']) !!} {!! Form::submit('Edytuj',['class'=>'btn btn-primary']) !!}
             {{ Form::close() }} </a>
           </td>
       </tr>

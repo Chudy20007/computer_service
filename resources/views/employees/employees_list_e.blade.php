@@ -5,11 +5,11 @@
 
 
     <thead class="bg-primary text-center">
-      <tr>
-        <th scope="col">Imię i nazwisko</th>
-        <th scope="col">E-mail</th>
-        <th scope="col">Telefon</th>
-        <th scope="col">Wyślij wiadomość</th>
+      <tr data-table='employees_e'>
+        <th scope="col" data-name="name" data-sort="asc">Imię i nazwisko</th>
+        <th scope="col" data-name="email" data-sort="asc">E-mail</th>
+        <th scope="col" data-name="phone" data-sort="asc">Telefon</th>
+        <th scope="col" >Wyślij wiadomość</th>
 
       </tr>
     </thead>

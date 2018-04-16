@@ -5,9 +5,9 @@
 
 
     <thead class="bg-primary text-center">
-      <tr>
-        <th scope="col">Nazwa</th>
-        <th scope="col">Cena</th>
+      <tr data-table='services_c'>
+        <th scope="col" data-name="name" data-sort="asc">Nazwa</th>
+        <th scope="col" data-name="price" data-sort="asc">Cena</th>
       </tr>
     </thead>
     <tbody>

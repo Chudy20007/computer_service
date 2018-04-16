@@ -11,15 +11,15 @@
 
 
     <thead class="bg-primary text-center">
-      <tr>
-        <th scope="col">Zamówienie </th>
-        <th scope="col">Tytuł</th>
-        <th scope="col">Kierownik</th>
-        <th scope="col">Pracownik</th>
-        <th scope="col">Wiadomość</th>
-        <th scope="col">Utworzono</th>
-        <th scope="col">Zaktualizowano</th>
-        <th scope="col">Aktywny</th>
+      <tr data-table='tasks_a'>
+        <th scope="col" data-name="order_id" data-sort="asc">Zamówienie </th>
+        <th scope="col" data-name="title" data-sort="asc">Tytuł</th>
+        <th scope="col" data-name="supervisor_id" data-sort="asc">Kierownik</th>
+        <th scope="col" data-name="employee_id" data-sort="asc">Pracownik</th>
+        <th scope="col" data-name="message" data-sort="asc">Wiadomość</th>
+        <th scope="col" data-name="created_at" data-sort="asc">Utworzono</th>
+        <th scope="col" data-name="updated_at" data-sort="asc">Zaktualizowano</th>
+        <th scope="col" data-name="active" data-sort="asc">Aktywny</th>
         <th scope="col">Szczegóły</th>
         <th scope="col">Edytuj</th>
         <th scope="col">Dezaktywuj</th>
@@ -36,7 +36,7 @@
         <td> {{$task->message}}</td>
         <td> {{$task->created_at}}</td>
         <td> {{$task->updated_at}}</td>     
-        <td> {{$task->active == 1 ? 'yes' : 'no'}}</td> 
+        <td> {{$task->active == 1 ? 'tak' : 'nie'}}</td> 
         <td> {!! Form::open(['method'=>'get','class'=>'form-horizontal','action'=>['TaskController@showTaskDetails',$task->id]]) !!}
          {!! Form::submit('Szczegóły',['class'=>'btn btn-primary']) !!}
           {{ Form::close() }} </a>

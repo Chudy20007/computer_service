@@ -10,16 +10,16 @@
 
 
     <thead class="bg-primary text-center">
-      <tr>
-        <th scope="col">Numer zlecenia</th>
-        <th scope="col">Status zlecenia</th>
-        <th scope="col">Opis</th>
-        <th scope="col">Pracownik</th>
-        <th scope="col">Utworzono</th>
-        <th scope="col">Edytowano</th>
-        <th scope="col">Usługi</th>
-        <th scope="col">Części</th>
-        <th scope="col">Przedmioty</th>
+      <tr data-table='orders_c'>
+        <th scope="col" data-name="id" data-sort="asc">Numer zlecenia</th>
+        <th scope="col" data-name="status" data-sort="asc">Status zlecenia</th>
+        <th scope="col" data-name="description" data-sort="asc">Opis</th>
+        <th scope="col" data-name="employee_id" data-sort="asc">Pracownik</th>
+        <th scope="col" data-name="created_at" data-sort="asc">Utworzono</th>
+        <th scope="col" data-name="updated_at" data-sort="asc">Edytowano</th>
+        <th scope="col" data-name="services" data-sort="asc">Usługi</th>
+        <th scope="col" data-name="parts" data-sort="asc">Części</th>
+        <th scope="col" data-name="objects" data-sort="asc">Przedmioty</th>
         
     {{--    <th scope="col">Wyślij wiadomość</th> --}}
       </tr>

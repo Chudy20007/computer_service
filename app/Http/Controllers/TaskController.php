@@ -17,7 +17,7 @@ class TaskController extends Controller
 
     public function __construct()
     {
-        $this->middleware('permissions', ['except' => ['storeTaskMessage', 'refreshTaskMessages', 'showTasksList', 'showTaskDetails']]);
+        $this->middleware('permissions', ['except' => ['sortTasks','storeTaskMessage', 'refreshTaskMessages', 'showTasksList', 'showTaskDetails']]);
     }
 
     public function showTaskForm($id)
@@ -168,6 +168,157 @@ class TaskController extends Controller
 
     </div>");
 
+    }
+    public function sortTasks()
+    {
+        $data = json_decode(file_get_contents('php://input'), true); 
+        $data['column_name'] = htmlentities($data['column_name']);
+        $data['column_name'] = stripslashes($data['column_name']);
+        $data['table_name'] = htmlentities($data['table_name']);
+        $data['table_name'] = stripslashes($data['table_name']);
+        $data['data_sort'] = htmlentities($data['data_sort']);
+        $data['data_sort'] = stripslashes($data['data_sort']);
+
+
+         $sort='tasks.';
+        switch(Auth::user()->getRole())
+        {
+            case 'admin':
+            {
+                $tasks = Task::with('order','employee','supervisor')->orderBy($sort.$data['column_name'],$data['data_sort'])->get();
+                $content=$this->getSearchingResultsAdmin($tasks);
+                break;
+            }
+            case 'employee':
+            {
+                $tasks = Task::with('order','employee','supervisor')->where('active',true)->orderBy($sort.$data['column_name'],$data['data_sort'])->get();
+                $content=$this->getSearchingResultsEmployee($tasks);
+                break;
+            }
+            case 'supervisor':
+            {
+                $tasks = Task::with('order','employee','supervisor')->orderBy($sort.$data['column_name'],$data['data_sort'])->get();
+                $content=$this->getSearchingResultsSupervisor($tasks);
+                break;
+            }
+    
+            default:
+            {
+                return;
+            }
+        }
+
+
+        return json_encode($content);
+    }
+
+    public function getSearchingResultsAdmin($tasks)
+    {
+        $content = "";
+        foreach ($tasks as $task) {
+            $supervisor=$task->supervisor->name;
+            $employee=$task->employee->name;
+            $order=$task->order->id;
+            $employee=$task->employee->name;
+            $content .= ("<tr class='table-light'>
+            <td><a href='http://localhost/computer_service/public/order/$order'>$order</a></td>
+            <td>$task->title</td>
+            <td>$supervisor</td>
+            <td>$employee</td>
+            <td>$task->message</td>
+            <td>$task->created_at</td>
+            <td>$task->updated_at</td>
+            <td>".($task->active ? 'tak' : 'nie')."</td>
+            <td> <form method='GET' action='http://localhost/computer_service/public/show_task_details/$task->id' 
+                accept-charset='UTF-8' class='form-horizontal'> 
+                <input class='form-control' name='id' type='hidden' value='$task->id'>
+                 <input class='btn btn-primary' type='submit' value='Szczegóły'> </form> </a>
+                 <input type='hidden'name='_token' value=".csrf_token()."> </form> </a>
+                 </td>
+            <td> <form method='GET' action='http://localhost/computer_service/public/edit_task/$task->id' 
+                accept-charset='UTF-8' class='form-horizontal'> 
+                <input class='form-control' name='id' type='hidden' value='$task->id'>
+                 <input class='btn btn-primary' type='submit' value='Edytuj'> </form> </a>
+                 <input type='hidden'name='_token' value=".csrf_token()."> </form> </a>
+                 </td> 
+                 <td> <form method='POST' action='http://localhost/computer_service/public/deactivate_task' 
+                    accept-charset='UTF-8' class='form-horizontal'> 
+                    <input class='form-control' name='id' type='hidden' value='$task->id'>
+                     <input class='btn btn-primary' type='submit' value='Dezaktywuj'>
+                     <input class='form-control' name='_method' type='hidden' value='DELETE'> </form> </a>
+                     <input type='hidden'name='_token' value=".csrf_token()."> </form> </a>
+                     </td>    
+                     <td> <form method='POST' action='http://localhost/computer_service/public/activate_task' 
+                        accept-charset='UTF-8' class='form-horizontal'> 
+                        <input class='form-control' name='id' type='hidden' value='$task->id'>
+                        <input class='form-control' name='_method' type='hidden' value='PATCH'>
+                         <input class='btn btn-primary' type='submit' value='Aktywuj'> </form> </a>
+                         <input type='hidden'name='_token' value=".csrf_token()."> </form> </a>
+                         </td>  
+                 </tr>");
+        }
+        return $content;
+    }
+
+    public function getSearchingResultsSupervisor($tasks)
+    {
+        $content = "";
+        foreach ($tasks as $task) {
+            $supervisor=$task->supervisor->name;
+            $employee=$task->employee->name;
+            $order=$task->order->id;
+            $employee=$task->employee->name;
+            $content .= ("<tr class='table-light'>
+            <td><a href='http://localhost/computer_service/public/order/$order'>$order</a></td>
+            <td>$task->title</td>
+            <td>$supervisor</td>
+            <td>$employee</td>
+            <td>$task->message</td>
+            <td>$task->created_at</td>
+            <td>$task->updated_at</td>
+            <td> <form method='GET' action='http://localhost/computer_service/public/show_task_details/$task->id' 
+                accept-charset='UTF-8' class='form-horizontal'> 
+                <input class='form-control' name='id' type='hidden' value='$task->id'>
+                 <input class='btn btn-primary' type='submit' value='Szczegóły'> </form> </a>
+                 <input type='hidden'name='_token' value=".csrf_token()."> </form> </a>
+                 </td>
+            <td> <form method='GET' action='http://localhost/computer_service/public/edit_task/$task->id' 
+                accept-charset='UTF-8' class='form-horizontal'> 
+                <input class='form-control' name='id' type='hidden' value='$task->id'>
+                 <input class='btn btn-primary' type='submit' value='Edytuj'> </form> </a>
+                 <input type='hidden'name='_token' value=".csrf_token()."> </form> </a>
+                 </td> 
+            
+                 </tr>");
+        }
+        return $content;
+    }
+
+    public function getSearchingResultsEmployee($tasks)
+    {
+        $content = "";
+        foreach ($tasks as $task) {
+            $supervisor=$task->supervisor->name;
+            $employee=$task->employee->name;
+            $order=$task->order->id;
+            $employee=$task->employee->name;
+            $content .= ("<tr class='table-light'>
+            <td><a href='http://localhost/computer_service/public/order/$order'>$order</a></td>
+            <td>$task->title</td>
+            <td>$supervisor</td>
+            <td>$employee</td>
+            <td>$task->message</td>
+            <td>$task->created_at</td>
+            <td>$task->updated_at</td>
+            <td> <form method='GET' action='http://localhost/computer_service/public/show_task_details/$task->id' 
+                accept-charset='UTF-8' class='form-horizontal'> 
+                <input class='form-control' name='id' type='hidden' value='$task->id'>
+                 <input class='btn btn-primary' type='submit' value='Szczegóły'> </form> </a>
+                 <input type='hidden'name='_token' value=".csrf_token()."> </form> </a>
+                 </td>
+                 </tr>");
+        }
+        return $content;
     }
 
     public function refreshTaskMessages(Request $request)

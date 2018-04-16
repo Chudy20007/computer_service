@@ -13,6 +13,50 @@ $(function () {
         }
     }
 
+$('th').on('click',function(){
+    let token = $('meta[name="csrf_token"]').attr('content');
+    let url = window.location.href;
+var datas = {
+    token: token,
+    table_name:$(this).parent().attr('data-table'),
+    column_name:$(this).attr('data-name'),
+    data_sort:$(this).attr('data-sort')
+}
+$.ajax({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    },
+    url: (url+'/'+datas['table_name']),
+    type: "post", //typ połączenia
+    contentType: 'aplication/json', //gdy wysyłamy dane czasami chcemy ustawić ich typ
+    dataType: 'json', //typ danych jakich oczekujemy w odpowiedzi
+    beforeSend: function (xhr) {
+        var token = $('meta[name="csrf_token"]').attr('content');
+
+        if (token) {
+            return xhr.setRequestHeader('X-CSRF-TOKEN', token);
+        }
+    },
+    data: JSON.stringify(datas),
+}).done(function (response) {
+  
+
+    $('tbody').children().remove();
+    $('tbody').append(response);
+
+    $('th').each(function( index ) {
+        console.log($(this).attr('data-name'));
+        if($(this).attr('data-sort')=='asc')
+        $(this).attr('data-sort','desc')
+        else
+        $(this).attr('data-sort','asc')
+      });
+
+});
+});
+
+
+
 
     $('#find-button').on('click', function () {
 
@@ -28,7 +72,7 @@ $(function () {
 
         var task_message = {
             token: token,
-            data: t_message
+            data: t_message,
         }
 
         let url = window.location.href;

@@ -5,14 +5,14 @@
 
 
     <thead class="bg-primary text-center">
-      <tr>
-        <th scope="col">Kategoria</th>
-        <th scope="col">Nazwa</th>
-        <th scope="col">Sztuk</th>
-        <th scope="col">Cena</th>
-        <th scope="col">Utworzono</th>
-        <th scope="col">Edytowano</th>
-        <th scope="col">Aktywne</th>
+      <tr data-table='parts_a'>
+        <th scope="col" data-name="category" data-sort="asc">Kategoria</th>
+        <th scope="col" data-name="name" data-sort="asc">Nazwa</th>
+        <th scope="col" data-name="count" data-sort="asc">Sztuk</th>
+        <th scope="col" data-name="price" data-sort="asc">Cena</th>
+        <th scope="col" data-name="created_at" data-sort="asc">Utworzono</th>
+        <th scope="col" data-name="updated_at" data-sort="asc">Edytowano</th>
+        <th scope="col" data-name="active" data-sort="asc">Aktywne</th>
         <th scope="col">Edytuj</th>
         <th scope="col">Dezaktywuj</th>
         <th scope="col">Aktywuj</th>
@@ -30,19 +30,19 @@
         <td> {{$part->active==1 ? 'yes' : 'no'}}</td>     
         <td> {!! Form::open(['method'=>'GET','class'=>'form-horizontal','action'=>['PartController@showPartEditForm',$part->id]]) !!} {!!
           Form::hidden('id',$part->id,['class'=>'form-control']) !!} 
-          {!! Form::submit('Edit',['class'=>'btn btn-primary']) !!}
+          {!! Form::submit('Edytuj',['class'=>'btn btn-primary']) !!}
           {{ Form::close() }} </a>
         </td>
         <td> {!! Form::open(['method'=>'POST','class'=>'form-horizontal','action'=>['AdminController@deactivatePart',$part->id]]) !!}
           {!! Form::hidden('id',$part->id,['class'=>'form-control']) !!} 
           {!! Form::hidden('_method','DELETE',['class'=>'form-control'])
-          !!} {!! Form::submit('Deactivate',['class'=>'btn btn-primary']) !!} 
+          !!} {!! Form::submit('Dezaktywuj',['class'=>'btn btn-primary']) !!} 
           {{ Form::close() }} </a>
         </td>
         <td> {!! Form::open(['method'=>'POST','class'=>'form-horizontal','action'=>['AdminController@activatePart',$part->id]]) !!}
           {!! Form::hidden('_method','PATCH',['class'=>'form-control']) !!}
           {!! Form::hidden('id',$part->id,['class'=>'form-control']) !!}
-           {!! Form::submit('Activate',['class'=>'btn btn-primary']) !!} 
+           {!! Form::submit('Aktywuj',['class'=>'btn btn-primary']) !!} 
            {{ Form::close() }} </a>
         </td>
       </tr>
