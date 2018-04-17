@@ -8,7 +8,7 @@
     <div class='col-md-8 picture'>
         <div class='card'>
             <div class='panel-body'>
-                @include('pictures.error_form') {!! Form::open(['url'=>'edit_part','class'=>'form-horizontal']) !!} @include('parts.part_edit_form')
+                @include('pictures.error_form') {!! Form::open(['url'=>'edit_part','class'=>'form-horizontal',$part->id]) !!} @include('parts.part_edit_form')
                 <div class='form-group'>
                     <div class='col-md-6'>
                             {{ method_field('PATCH') }}

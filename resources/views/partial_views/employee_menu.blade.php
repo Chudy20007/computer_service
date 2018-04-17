@@ -36,9 +36,6 @@
                                   <li>
                                     <a href="{{URL::asset('show_tasks')}}">Lista</a>
                                   </li>
-                                  <li>
-                                    <a href="{{URL::asset('create_task')}}">Dodaj</a>
-                                  </li>
                                 </ul>
                             </ol>
                           </a>  <a class="menuOption">

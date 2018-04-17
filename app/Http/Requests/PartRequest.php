@@ -25,8 +25,10 @@ class PartRequest extends FormRequest
      */
     public function rules()
     {
-        $part = Part::find($this)->first();
-
+     $datas=$this->request->all();
+     $part_id=$datas['id'];   
+     $part = Part::where('id',$part_id)->first();
+      
         switch ($this->method()) {
             case 'GET':
             case 'DELETE':

@@ -10,8 +10,8 @@
                  @include('employees.register_employee')
 
 
-                <div class='form-group'>
-                    <div class='col-md-6'>
+                <div class='form-group text-center'>
+                    <div class='col-md-12'>
                         {!! Form::submit('Edytuj pracownika',['class'=>'btn btn-primary']) !!} {!! Form::close() !!}
                     </div>
                 </div>

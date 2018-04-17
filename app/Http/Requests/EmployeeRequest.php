@@ -36,7 +36,7 @@ class EmployeeRequest extends FormRequest
             case 'POST':
                 {
                     return [
-                        'name' => ['required', 'regex:/^([A-Z]{1}[a-z]{2,15}\s[A-Z]{1}[a-z]{2,15})$/'],
+                        'name' => ['required', 'regex:/^([A-ZĄĘĆŹŻŁŃ]{1}[a-ząęćńźżółu]{3,}\s[A-ZĄŃĘĆŹŁÓŻ]{1}[a-ząęńćźżół]{2,18})$/'],
                         'email' => ['required', 'email', Rule::unique('users', 'email')],
                         'password' => ['required'],
                         'phone' => ['required', 'regex:/^[0-9]{8,}$/', Rule::unique('users', 'phone')],
@@ -56,7 +56,7 @@ class EmployeeRequest extends FormRequest
             case 'PATCH':
                 {
                     return [
-                        'name' => ['required', 'regex:/^([A-Z]{1}[a-z]{2,15}\s[A-Z]{1}[a-z]{2,15})$/'],
+                        'name' => ['required', 'regex:/^([A-ZĄĘĆŹŁŻ]{1}[a-ząęćńźżół]{2,15}\s[A-ZĄĘŃĆŹŁÓŻ]{1}[a-ząńęćźżół]{2,15})$/'],
                         'email' => ['required', 'email', Rule::unique('users', 'name')->ignore($employee['id'])],
                         'password' => ['required'],
                         'phone' => ['required', 'regex:/^[0-9]{8,}$/', Rule::unique('users', 'phone')->ignore($employee['id'])],

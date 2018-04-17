@@ -10,10 +10,11 @@
 | contains the "web" middleware group. Now create something great!
 |
  */
+Route::post('register', '\App\Http\Controllers\Auth\RegisterController@register');
+Route::get('register', '\App\Http\Controllers\Auth\RegisterController@showRegistrationForm')->name('register');
 Route::post('/store_order', 'OrderController@storeOrder');
 Route::middleware('permissions')->group(function () {
-    Route::post('register', '\App\Http\Controllers\Auth\RegisterController@register');
-    Route::get('register', '\App\Http\Controllers\Auth\RegisterController@showRegistrationForm')->name('register');
+  
     Route::get('create_task/{id?}', 'TaskController@showTaskForm');
     Route::post('create_task', 'TaskController@storeTask');
     Route::get('create_service', 'ServiceController@showServiceForm');

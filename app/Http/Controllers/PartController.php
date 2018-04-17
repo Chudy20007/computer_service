@@ -101,7 +101,6 @@ $token=$data['token'];
             <td>".number_format($part->price,2)." PLN</td>
             <td>$part->created_at</td>
             <td>$part->updated_at</td>
-            <td>".($part->active ? 'tak' : 'nie')."</td>
             <td> <form method='GET' action='http://localhost/computer_service/public/edit_part/$part->id' 
                 accept-charset='UTF-8' class='form-horizontal'> 
                 <input class='form-control' name='id' type='hidden' value='$part->id'>
@@ -205,7 +204,10 @@ $token=$data['token'];
         $part = Part::with('category')->where('active', '=', true)->where('id', '=', $id)->get()->first();
 
         $categories = Category::where('active', '=', true)->pluck('name', 'id');
+        if($part!=null)
         return view('parts.edit_part')->with('part', $part)->with('categories', $categories);
+        else
+        return view('empty');
     }
 
     public function editPart(PartRequest $request)
@@ -223,13 +225,15 @@ $token=$data['token'];
 
         switch (Auth::user()->getRole()) {
             case "admin":
-                { $parts = Part::with('category')->get();
-                    return view('parts.parts_list_a')->with('parts', $parts);
+                { 
+                    Session::put('message', 'Cześć została pomyślnie zaktualizowana!');
+                    return redirect('show_parts');
                 }
 
             case "supervisor":
-                { $parts = Part::with('category')->where('active', '=', true)->get();
-                    return view('parts.parts_list_s')->with('parts', $parts);
+                { 
+                    Session::put('message', 'Część została pomyślnie zaktualizowana!');
+                    return redirect('show_parts');
                 }
         }
 

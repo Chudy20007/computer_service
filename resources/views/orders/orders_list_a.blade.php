@@ -35,7 +35,7 @@
         <td>{{$order->customer->email}}</td>
         <td> {{$order->customer->phone}}</td>
         <td> {{$order->status}}</td>
-        <td> {{$order->active == true ?'yes' : 'no'}}</td>
+        <td> {{$order->active == true ?'tak' : 'nie'}}</td>
         <td> {{$order->description}}</td>
         <td> {{$order->employee->name}}</td>
         <td> {!! Form::open(['method'=>'get','class'=>'form-horizontal','action'=>['TaskController@showTaskForm',$order->id]])

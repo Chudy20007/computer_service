@@ -21,7 +21,7 @@
         <td>{{$services->name}}</td>
         <td>{{number_format($services->price,2)}} PLN</td>
         <td> {{$services->created_at}}</td>
-        <td> {{$services->active == 1 ? 'yes' : 'no'}}</td>
+        <td> {{$services->active == 1 ? 'tak' : 'nie'}}</td>
         <td> {!! Form::open(['method'=>'get','class'=>'form-horizontal','action'=>['ServiceController@showServiceEditForm',$services->id]])
           !!} {!! Form::hidden('id',$services->id,['class'=>'form-control']) !!} {!! Form::submit('Edytuj',['class'=>'btn btn-primary'])
           !!} {{ Form::close() }} </a>

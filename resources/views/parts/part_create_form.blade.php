@@ -39,7 +39,7 @@
         </div>
        
         <div class='col-md-12 col-sm-12 form-select-control'>
-                {{ Form::select('category_id' ,$categories,null,['class'=>'form-select-control','required' =>true]) }}
+                {{ Form::select('category_id' ,$categories,null,['class'=>'form-select-control select-2','required' =>true]) }}
         </div>
 </div>
 

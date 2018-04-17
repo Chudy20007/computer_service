@@ -36,7 +36,7 @@ class RegisterController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('permissions');
+        
     }
 
     /**
@@ -48,14 +48,14 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => ['required','regex:/^([A-Z]{1}[a-z]{2,15}\s[A-Z]{1}[a-z]{2,15})$/'],
+            'name' => ['required', 'regex:/^([A-ZĄĘĆŹŻŁŃ]{1}[a-ząęćńźżółu]{3,})([\s\w-])([A-ZĄŃĘĆŹŁÓŻ]{1}[a-ząęńćźżół]{2,18})$/'],
             'email' => ['required','email','unique:users'],
             'password' => ['required'],
             'phone' => ['required','regex:/^[0-9]{8,}$/','unique:users'],
             'role' => ['required','regex:/^([a-z]{4,})$/'],
             'post-code' =>['required','regex:/^([0-9]{2})-([0-9]{3})$/'],
             'local-number' => ['required'],
-            'file' =>['required'],
+
             'street' =>['required']
 
         ]);
@@ -72,7 +72,7 @@ class RegisterController extends Controller
         $id = User::latest('id')->first();
         $id['id'] = $id['id'] + 1;
         $files = Input::file('file');
-
+if ($files!=null)
         $files->move('C:\xampp\htdocs\computer_service\public\css\img\avatars', $id['id'] . ".jpg");
         return User::create([
             'name' => $data['name'],

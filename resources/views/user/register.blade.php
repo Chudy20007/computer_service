@@ -1,6 +1,16 @@
 @extends('main') @section('content')
 <div class="container">
     <div class="row">
+        <!--  Error handle -->
+        @if($errors->any())
+        <div class="row collapse">
+            <ul class="alert-box warning radius">
+                @foreach($errors->all() as $error)
+                    <li> {{ $error }} </li>
+                @endforeach
+            </ul>
+        </div>
+        @endif
             <div class="col-md-1">
             </div>
         <div class="col-md-10 picture">
@@ -80,8 +90,8 @@
                         @endif
                         <div class="form-group">
                             <label for="file" class="col-md-4 control-label label">Avatar</label>
-                            <div class="col-md-6">
-                                {{ Form::file('file', array('multiple'=>false,'accept'=>'image/jpeg','class'=>'formOption')) }}
+                            <div class="col-md-12">
+                                {{ Form::file('file', array('multiple'=>false,'accept'=>'image/jpeg','class'=>'formOption form-control')) }}
                             </div>
                         </div>
                         </br>

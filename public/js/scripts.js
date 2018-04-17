@@ -13,47 +13,47 @@ $(function () {
         }
     }
 
-$('th').on('click',function(){
-    let token = $('meta[name="csrf_token"]').attr('content');
-    let url = window.location.href;
-var datas = {
-    token: token,
-    table_name:$(this).parent().attr('data-table'),
-    column_name:$(this).attr('data-name'),
-    data_sort:$(this).attr('data-sort')
-}
-$.ajax({
-    headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    },
-    url: (url+'/'+datas['table_name']),
-    type: "post", //typ połączenia
-    contentType: 'aplication/json', //gdy wysyłamy dane czasami chcemy ustawić ich typ
-    dataType: 'json', //typ danych jakich oczekujemy w odpowiedzi
-    beforeSend: function (xhr) {
-        var token = $('meta[name="csrf_token"]').attr('content');
-
-        if (token) {
-            return xhr.setRequestHeader('X-CSRF-TOKEN', token);
+    $('th').on('click', function () {
+        let token = $('meta[name="csrf_token"]').attr('content');
+        let url = window.location.href;
+        var datas = {
+            token: token,
+            table_name: $(this).parent().attr('data-table'),
+            column_name: $(this).attr('data-name'),
+            data_sort: $(this).attr('data-sort')
         }
-    },
-    data: JSON.stringify(datas),
-}).done(function (response) {
-  
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            url: (url + '/' + datas['table_name']),
+            type: "post", //typ połączenia
+            contentType: 'aplication/json', //gdy wysyłamy dane czasami chcemy ustawić ich typ
+            dataType: 'json', //typ danych jakich oczekujemy w odpowiedzi
+            beforeSend: function (xhr) {
+                var token = $('meta[name="csrf_token"]').attr('content');
 
-    $('tbody').children().remove();
-    $('tbody').append(response);
+                if (token) {
+                    return xhr.setRequestHeader('X-CSRF-TOKEN', token);
+                }
+            },
+            data: JSON.stringify(datas),
+        }).done(function (response) {
 
-    $('th').each(function( index ) {
-        console.log($(this).attr('data-name'));
-        if($(this).attr('data-sort')=='asc')
-        $(this).attr('data-sort','desc')
-        else
-        $(this).attr('data-sort','asc')
-      });
 
-});
-});
+            $('tbody').children().remove();
+            $('tbody').append(response);
+
+            $('th').each(function (index) {
+
+                if ($(this).attr('data-sort') == 'asc')
+                    $(this).attr('data-sort', 'desc')
+                else
+                    $(this).attr('data-sort', 'asc')
+            });
+
+        });
+    });
 
 
 
@@ -94,7 +94,7 @@ $.ajax({
             },
             data: JSON.stringify(task_message),
         }).done(function (response) {
-            console.log(response);
+
 
             $('tbody').children().remove();
             $('tbody').append(response);
@@ -126,7 +126,7 @@ $.ajax({
             employee_id: employee_id,
             message: t_message
         }
-        console.log(task_message);
+
         let url = window.location.href;
 
         $.ajax({
@@ -171,9 +171,9 @@ $.ajax({
             task_id: task_id,
 
         }
-        console.log("Refresh");
+
         let url = "http://localhost/computer_service/public/get_messages";
-        console.log(url);
+
         $.ajax({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -211,7 +211,7 @@ $.ajax({
     });
 
     $('.form_button').on('click', function () {
-        console.log("{{Auth::id()}}");
+
 
 
         let token = $('meta[name="csrf_token"]').attr('content');

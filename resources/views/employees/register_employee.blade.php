@@ -154,8 +154,8 @@
                         <div class="form-group">
                             <label for="file" class="col-md-4 control-label label">Avatar</label>
 
-                            <div class="col-md-6">
-                                {{ Form::file('file', array('multiple'=>false,'accept'=>'image/jpeg','class'=>'formOption')) }}
+                            <div class="col-md-12">
+                                {{ Form::file('file', array('multiple'=>false,'accept'=>'image/jpeg','class'=>'formOption form-control')) }}
                             </div>
                         </div>
 

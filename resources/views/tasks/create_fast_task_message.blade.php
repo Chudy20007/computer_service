@@ -2,7 +2,7 @@
     <div class='col-md-2'>
     </div>
 <div class='col-md-8 picture'>
-    <div class='card '>
+    <div class='card' style='margin-bottom:2rem'>
         <div class='panel-body '>
             @include('pictures.error_form') {!! Form::open(['url'=>'add_message','class'=>'form-horizontal']) !!} @include('tasks.task_message_form')
             <div class='form-group'>

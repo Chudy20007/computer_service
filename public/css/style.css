@@ -73,6 +73,18 @@ select {
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
+.select-2 {
+  transition: border-color 0.2s;
+  border: 1px solid #0069d9;
+  background-color: whitesmoke;
+  font-size: 14px;
+  height: 2rem;
+  padding-left: 3px;
+  width: 268px;
+  border-radius: 8px;
+  outline: none;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
 input:focus{
   outline:none;
  }
@@ -167,9 +179,18 @@ blockquote {
   border: 1px solid #E0ECF9;
   border: 3px solid #E0ECF9;
   color: #51799E;
+  border-radius: 25px;
   background: #F5F9FD !important;
 }
 
+.div-comments > blockquote {
+  padding: 5px 8px;
+  border: 1px solid #E0ECF9;
+  border: 3px solid #E0ECF9;
+  color: #51799E;
+  background: #F5F9FD !important;
+  border-radius: 0;
+}
 .author-link {
   text-decoration: none;
   color: black;
@@ -549,7 +570,7 @@ label {
 }
 
 #main-container {
-  background-color: #F2F2F2;
+  background-color: rgb(242, 242, 242);
 }
 
 .small-img-admin-panel {

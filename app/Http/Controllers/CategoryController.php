@@ -111,6 +111,7 @@ class CategoryController extends Controller
             <td>$category->name</td>
             <td> $category->created_at</td>
             <td> $category->updated_at</td>
+            <td>".($category->active==1 ?'tak':'nie')."</td>
             <td> <form method='GET' action='http://localhost/computer_service/public/edit_category/$category->id' 
                 accept-charset='UTF-8' class='form-horizontal'> 
                 <input class='form-control' name='id' type='hidden' value='$category->id'>

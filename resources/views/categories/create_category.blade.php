@@ -10,7 +10,7 @@
             <div class='panel-body'>
                 @include('pictures.error_form') {!! Form::open(['url'=>'create_category','class'=>'form-horizontal']) !!} @include('categories.category_create_form')
                 <div class='form-group'>
-                    <div class='col-md-6'>
+                    <div class='col-md-12 text-center'>
                         {!! Form::submit('Utwórz kategorię',['class'=>'btn btn-primary']) !!} {!! Form::close() !!}
                     </div>
                 </div>

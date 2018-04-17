@@ -10,7 +10,7 @@
             <div class='panel-body'>
                 @include('pictures.error_form') {!! Form::open(['url'=>'edit_service','class'=>'form-horizontal']) !!} @include('services.service_edit_form')
                 <div class='form-group'>
-                    <div class='col-md-6'>
+                    <div class='col-md-12 text-center'>
                         {!! Form::submit('Edytuj usługę',['class'=>'btn btn-primary']) !!} {!! Form::close() !!}
                     </div>
                 </div>

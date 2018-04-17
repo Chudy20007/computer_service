@@ -11,7 +11,7 @@
 
 
     <thead class="bg-primary text-center">
-      <tr data-table='tasks_s'>>
+      <tr data-table='tasks_s'>
         <th scope="col" data-name="order_id" data-sort="asc">Zamówienie</th>
         <th scope="col" data-name="title" data-sort="asc">Tytuł</th>
         <th scope="col" data-name="supervisor_id" data-sort="asc">Kierownik</th>

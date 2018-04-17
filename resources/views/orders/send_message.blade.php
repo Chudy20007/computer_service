@@ -22,7 +22,7 @@
                             </div>
                             <div class='col-md-12 text-center'>
                                 <br/>
-                                {{ Form::file('file[]', array('multiple'=>true,'class'=>'formOption')) }}
+                                {{ Form::file('file[]', array('multiple'=>true,'class'=>'formOption form-control')) }}
                         </div>
                          
                         </div>  

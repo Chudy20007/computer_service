@@ -39,7 +39,7 @@
         </div>
        
         <div class='col-md-12 col-sm-12 form-select-control'>
-                {!! Form::select('category_id' ,$categories,$part->category_id,['class'=>'form-select-control']) !!}
+                {!! Form::select('category_id' ,$categories,$part->category_id,['class'=>'form-select-control select-2']) !!}
                 {!! Form::hidden('id',$part->id,['class'=>'form-control']) !!}
         </div>
 </div>

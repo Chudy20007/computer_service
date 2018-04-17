@@ -94,7 +94,7 @@ class ServiceController extends Controller
             <td>$service->name</td>
             <td>".number_format($service->price,2)." PLN</td>
             <td> $service->created_at</td>
-            <td> $service->updated_at</td>
+            <td>".($service->active==1 ?'tak':'nie')."</td>
             <td> <form method='GET' action='http://localhost/computer_service/public/edit_service/$service->id' 
                 accept-charset='UTF-8' class='form-horizontal'> 
                 <input class='form-control' name='id' type='hidden' value='$service->id'>
@@ -186,6 +186,8 @@ public function findServices()
 
     public function showServicesList()
     {
+        if (Auth::user())
+        {
         switch (Auth::user()->getRole())
         {
             case "employee":
@@ -218,6 +220,14 @@ public function findServices()
             }
 
         }
+    }
+    else
+    {
+            $services = Service::where('active','=',true)->get();
+            return view ('services.services_list')->with('services',$services);   
+             
+        
+    }
  
     }
 }

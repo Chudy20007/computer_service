@@ -35,7 +35,7 @@ class CategoryRequest extends FormRequest
             case 'POST':
                 {
                     return [
-                        'name' => ['required', 'regex:/^([A-Z]{1}[a-z]{3,})$/', Rule::unique('categories', 'name')],
+                        'name' => ['required', 'regex:/^([A-Z]{1}[a-zĄĘĆŹŻąęćńźżółŁ]{3,})$/', Rule::unique('categories', 'name')],
                     ];
                 }
             case 'PUT':
@@ -46,7 +46,7 @@ class CategoryRequest extends FormRequest
                 {
                     return [
 
-                        'name' => ['required', 'regex:/^([A-Z]{1}[a-z]{3,})$/', Rule::unique('categories', 'name')->ignore($category['id'])],
+                        'name' => ['required', 'regex:/^([A-Z]{1}[a-ząęćńźżółŁ]{3,})$/', Rule::unique('categories', 'name')->ignore($category['id'])],
 
                     ];
                 }

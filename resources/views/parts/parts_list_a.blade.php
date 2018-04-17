@@ -27,7 +27,7 @@
         <td> {{number_format($part->price,2)}} PLN</td>
         <td> {{$part->created_at}}</td>
         <td> {{$part->updated_at}}</td>     
-        <td> {{$part->active==1 ? 'yes' : 'no'}}</td>     
+        <td> {{$part->active==1 ? 'tak' : 'nie'}}</td>     
         <td> {!! Form::open(['method'=>'GET','class'=>'form-horizontal','action'=>['PartController@showPartEditForm',$part->id]]) !!} {!!
           Form::hidden('id',$part->id,['class'=>'form-control']) !!} 
           {!! Form::submit('Edytuj',['class'=>'btn btn-primary']) !!}

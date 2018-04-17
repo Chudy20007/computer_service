@@ -107,7 +107,7 @@ public function sortOrders()
    $orders = Order::with('customer','employee')
    ->leftJoin('users','orders.customer_id','=','users.id')
    ->orderBy($sort.$data['column_name'], $data['data_sort'])
-   ->get(['status', 'employee_id', 'customer_id', 'description','email','phone', 'orders.updated_at', 'orders.created_at', 'orders.id']); 
+   ->get(['status', 'employee_id','orders.active', 'customer_id', 'description','email','phone', 'orders.updated_at', 'orders.created_at', 'orders.id']); 
 
 
     }
@@ -168,7 +168,7 @@ $content.=("
   <a href='http://localhost/computer_service/public/order/$order->id'>$order->id</a>
 </td>
 <td>
-  <a href='ttp://localhost/computer_service/public/user/$order->customer_id'>$customer_name</a>
+  <a href='http://localhost/computer_service/public/user/$order->customer_id'>$customer_name</a>
 </td>
 <td>$order->email</td>
 <td> $order->phone</td>
@@ -274,7 +274,7 @@ $content.=("
 <td>$order->email</td>
 <td> $order->phone</td>
 <td> $order->status</td>
-<td> $order->active</td>
+<td>".($order->active == 1 ? 'tak' : 'nie')."</td>
 <td> $order->description</td>
 <td> $employee_name</td>
 <td> <form method='GET' action='http://localhost/computer_service/public/create_task/$order->id' accept-charset='UTF-8' class='form-horizontal'> <input class='form-control' name='id' type='hidden' value='$order->id'> <input class='btn btn-primary' type='submit' value='Wyślij wiadomość'> </form> </a>
@@ -322,9 +322,14 @@ $content.=("
         } else {
             $user->id = $user[0]->id;
         }
+        if(Auth::user())
+    {
 if (Auth::user()->getRole()==="employee")
 $user_id = Auth::id();
 else $user_id=1;
+    }
+    else $user_id=1;
+
         foreach ($request['device'] as $device) {
             $orders[] =
                 [

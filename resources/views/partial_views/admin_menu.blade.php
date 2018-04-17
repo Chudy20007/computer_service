@@ -26,7 +26,7 @@
                                 <a href="{{URL::asset('show_services')}}">Lista</a>
                               </li>
                               <li>
-                                <a href="{{URL::asset('add_service')}}">Dodaj</a>
+                                <a href="{{URL::asset('create_service')}}">Dodaj</a>
                               </li>
                             </ul>
                         </ol>
@@ -37,9 +37,6 @@
                                 <ul class='menuOl'>
                                   <li>
                                     <a href="{{URL::asset('show_tasks')}}">Lista</a>
-                                  </li>
-                                  <li>
-                                    <a href="{{URL::asset('create_task')}}">Dodaj</a>
                                   </li>
                                 </ul>
                             </ol>
@@ -52,7 +49,7 @@
                                         <a href="{{URL::asset('show_categories')}}">Lista</a>
                                       </li>
                                       <li>
-                                        <a href="{{URL::asset('add_category')}}">Dodaj</a>
+                                        <a href="{{URL::asset('create_category')}}">Dodaj</a>
                                       </li>
                                     </ul>
                                 </ol>

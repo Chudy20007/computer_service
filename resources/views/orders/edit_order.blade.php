@@ -10,8 +10,8 @@
             <div class='panel-body'>
                 @include('pictures.error_form') {!! Form::open(['url'=>'edit_order
                 ','class'=>'form-horizontal']) !!} @include('orders.edit_order_form')
-                <div class='form-group'>
-                    <div class='col-md-6'>
+                <div class='form-group text-center'>
+                    <div class='col-md-12'>
                         {!! Form::submit('Edytuj zlecenie',['class'=>'btn btn-primary', ]) !!} {!! Form::close() !!}
                     </div>
                 </div>

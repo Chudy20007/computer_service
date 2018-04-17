@@ -100,7 +100,7 @@ class AdminController extends Controller
         User::where('id', '=', $id)->update([
             'active'=>true
         ]);  
-        Session::put('message', 'Pracownik został pomyślnie aktywowana!');
+        Session::put('message', 'Pracownik został pomyślnie aktywowany!');
         return redirect('show_employees');
     }
     public function deactivatePart(Request $request)
@@ -129,7 +129,7 @@ class AdminController extends Controller
         Task::where('id', '=', $id)->update([
             'active'=>false
         ]);  
-        Session::put('message', 'Wątek została pomyślnie zdezaktywowany!');
+        Session::put('message', 'Wątek został pomyślnie zdezaktywowany!');
         return redirect('show_tasks');
     }
 

@@ -10,7 +10,7 @@
             <div class='panel-body'>
                 @include('pictures.error_form') {!! Form::open(['url'=>'store_part','class'=>'form-horizontal']) !!} @include('parts.part_create_form')
                 <div class='form-group'>
-                    <div class='col-md-6'>
+                    <div class='col-md-12 text-center'>
                         {!! Form::submit('Dodaj część',['class'=>'btn btn-primary']) !!} {!! Form::close() !!}
                     </div>
                 </div>

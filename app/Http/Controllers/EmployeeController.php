@@ -58,13 +58,13 @@ $token=$data['token'];
             }
             case 'employee':
             {
-                $users = User::where('active',true)->orderBy($data['column_name'],$data['data_sort'])->get();
+                $users = User::where('active',true)->where('role','!=','customer')->where('role','!=','admin')->orderBy($data['column_name'],$data['data_sort'])->get();
                 $content=$this->getSearchingResultsEmployee($users);
                 break;
             }
             case 'supervisor':
             {
-                $users = User::orderBy($data['column_name'],$data['data_sort'])->get();
+                $users = User::where('active','=',true)->where('role','!=','customer')->where('role','!=','admin')->orderBy($data['column_name'],$data['data_sort'])->get();
                 $content=$this->getSearchingResultsSupervisor($users);
                 break;
             }
