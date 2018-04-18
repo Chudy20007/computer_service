@@ -19,6 +19,9 @@
         <th scope="col" data-name="description" data-sort="asc">Opis</th>
         <th scope="col" data-name="employee_id" data-sort="asc">Pracownik</th>
         <th scope="col" data-name="id" data-sort="asc">Utwórz wątek</th>
+        <th scope="col">Usługi do zlecenia</th>
+        <th scope="col">Części do zlecenia</th>
+        <th scope="col">Przedmioty w zleceniu</th>
 
         <th scope="col">Edytuj</th>
       </tr>
@@ -39,6 +42,18 @@
         <td> {{$order->employee->name}}</td>
         <td> {!! Form::open(['method'=>'get','class'=>'form-horizontal','action'=>['TaskController@showTaskForm',$order->id]])
           !!} {!! Form::hidden('id',$order->id,['class'=>'form-control']) !!} {!! Form::submit('Utwórz wątek',['class'=>'btn btn-primary'])
+          !!} {{ Form::close() }} </a>
+        </td>
+        <td> {!! Form::open(['method'=>'get','class'=>'form-horizontal','action'=>['OrderController@showOrderServicesList',$order->id]])
+          !!} {!! Form::hidden('id',$order->id,['class'=>'form-control']) !!} {!! Form::submit('Pokaż usługi',['class'=>'btn btn-primary'])
+          !!} {{ Form::close() }} </a>
+        </td>
+        <td> {!! Form::open(['method'=>'get','class'=>'form-horizontal','action'=>['OrderController@showOrderPartsList',$order->id]])
+          !!} {!! Form::hidden('id',$order->id,['class'=>'form-control']) !!} {!! Form::submit('Pokaż części',['class'=>'btn btn-primary'])
+          !!} {{ Form::close() }} </a>
+        </td>
+        <td> {!! Form::open(['method'=>'get','class'=>'form-horizontal','action'=>['OrderController@showOrderObjectsList',$order->id]])
+          !!} {!! Form::hidden('id',$order->id,['class'=>'form-control']) !!} {!! Form::submit('Pokaż przedmiot',['class'=>'btn btn-primary'])
           !!} {{ Form::close() }} </a>
         </td>
         <td> {!! Form::open(['method'=>'get','class'=>'form-horizontal','action'=>['OrderController@showOrderEditForm',$order->id]])

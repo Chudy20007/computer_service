@@ -11,7 +11,7 @@
                 @include('pictures.error_form') {!! Form::open(['url'=>'store_order_parts
                 ','class'=>'form-horizontal']) !!} @include('orders.add_parts_to_order_form')
                 <div class='form-group'>
-                    <div class='col-md-6'>
+                    <div class='col-md-12 text-center'>
                         {!! Form::button('Dodaj przedmioty do zlecenia',['class'=>'btn btn-primary form_button', ]) !!} {!! Form::close() !!}
                     </div>
                 </div>

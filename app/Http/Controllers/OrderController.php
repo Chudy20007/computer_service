@@ -393,6 +393,7 @@ else $user_id=1;
         }
 
         OrderService::insert($datas);
+        Session::put('message', 'Usługi zostały pomyślnie dodane do zlecenia!');
         return redirect("show_orders");
     }
 
@@ -417,24 +418,26 @@ else $user_id=1;
         $selected_part = Part::where('id', '=', $data['part_id'])->get(['count']);
 
         if ($data['count'] > $selected_part[0]->count && !$selected_part->isEmpty()) {
-            return json_encode("<div class='row alert alert-warning card text-center'><b>Too little parts! </b></div>");
+            return json_encode("<div class='row alert alert-warning card text-center'><b>Brak dostatecznej ilości sztuk! </b></div>");
         }
 
-        $order = OrderPart::where('part_id', '=', $data['part_id'])->get(['count']);
+        $order = OrderPart::where('part_id', '=', $data['part_id'])
+        ->where('order_id','=',$data['order_id'])->where('active','=',true)->get(['count']);
         if (!$order->isEmpty()) {
             Part::where('id', '=', $data['part_id'])->decrement('count', $data['count']);
             $count = $order[0]->count;
             $data['count'] += $count;
-            OrderPart::where('part_id', '=', $data['part_id'])->update([
+            OrderPart::where('part_id', '=', $data['part_id'])->where('order_id','=',$data['order_id'])->where('active','=',true)->update([
                 'count' => $data['count'],
             ]);
 
         } else {
             Part::where('id', '=', $data['part_id'])->decrement('count', $data['count']);
+           
             OrderPart::insert($data);
         }
 
-        return json_encode("<div class='row alert alert-success card text-center'><b>Parts has been added to the order!</b></div>");
+        return json_encode("<div class='row alert alert-success card text-center'><b>Części zostały dodane do zlecenia!</b></div>");
     }
 
     public function showOrdersList()
@@ -444,7 +447,7 @@ else $user_id=1;
             case "employee":
                 {
                     $orders = Order::with('customer', 'employee', 'order_object', 'order_part', 'order_service')
-                    /* ->where('orders.status', '!=', 'closed') */->where('orders.employee_id', '=', Auth::id())->get(['status', 'employee_id', 'customer_id', 'description', 'updated_at', 'created_at', 'id']);
+                     ->where('orders.status', '!=', 'closed') ->where('orders.employee_id', '=', Auth::id())->get(['status', 'employee_id', 'customer_id', 'description', 'updated_at', 'created_at', 'id']);
 
                     return view('orders.orders_list_e')->with('orders', $orders);
                 }
@@ -596,11 +599,9 @@ else $user_id=1;
             'description' => $data['description'],
             'status' => $data['status'],
         ]);
-        $orders = Order::with('customer', 'employee', 'order_object', 'order_part', 'order_service')
-            ->where('status', '=', 'active')
-            ->get(['status', 'employee_id', 'customer_id', 'description', 'updated_at', 'created_at', 'id']);
-        Session::put('message', 'Zlecenie zostało pomyślnie dodane!');
-        return view('orders.show_order')->with('orders', $orders);
+        
+        Session::put('message', 'Zlecenie zostało pomyślnie zaktualizowane!');
+        return redirect('show_orders');
     }
 
     public function showOrderObjectsEditForm($id)
@@ -762,8 +763,8 @@ else $user_id=1;
 
         $datas = $request->all();
         $email = User::where('id', $datas['user_id'])->get(['email']);
-        $content = "<h3>Dear Sir/Madam,</h3><br />";
-        $footer = "<br />If you have any questions, please contact with us. <br /><h3>With regards</h3><br />" . Auth::user()->getName();
+        $content = "<h3>Szanowny Panie/Szanowna Pani,</h3><br />";
+        $footer = "<br />Jeżeli są jakieś pytania to zachęcamy do kontaktu.<br /><h3>Z wyrazamu szacunku</h3><br />" . Auth::user()->getName();
         $files = Input::file('file');
 
         $datas['email'] = $email[0]->email;
@@ -777,11 +778,11 @@ else $user_id=1;
                     {
                         $em['path'] = $swiftAttachment = Swift_Attachment::fromPath($files[0]->getPathName())->setFilename($files[0]->getClientOriginalName());
 
-                        Mail::send('mail', ['title' => "Order status1 updated"], function ($m) use ($em) {
+                        Mail::send('mail', ['title' => "Wiadomość"], function ($m) use ($em) {
 
                             $m->to($em['email'])
                                 ->from('computer_service@gmail.com', 'Computer Service')
-                                ->subject('Order status updated')
+                                ->subject('Zlecenie')
                                 ->setBody($em['content'], 'text/html')
                                 ->attach($em['path'], array('mime' => 'image/jpeg'));
                             return view("main");
@@ -792,11 +793,11 @@ else $user_id=1;
                 case "pdf":
                     { $em['path'] = $swiftAttachment = Swift_Attachment::fromPath($files[0]->getPathName())->setFilename('Invoice ' . Carbon::now() . '.pdf');
 
-                        Mail::send('mail', ['title' => "Order status1 updated"], function ($m) use ($em) {
+                        Mail::send('mail', ['title' => "Aktualizacja zlecenia"], function ($m) use ($em) {
 
                             $m->to($em['email'])
                                 ->from('computer_service@gmail.com', 'Computer Service')
-                                ->subject('Order status updated')
+                                ->subject('Zlecenie zaktualizowane')
                                 ->setBody($em['content'], 'text/html')
                                 ->attach($em['path'], array('mime' => 'application/pdf'));
                             return view("main");
@@ -806,17 +807,18 @@ else $user_id=1;
 
                 default:
                     {
+                        Session::put('message',"Niewłaściwy format pliku! Obsługiwane typy: pdf oraz jpg.");
                         return view('orders.send_message')->with('user_id', $datas['user_id']);
                     }
 
             }
 
         } else {
-            Mail::send('mail', ['title' => "Order status1 updated"], function ($m) use ($em) {
+            Mail::send('mail', ['title' => "Zlecenie zaktualizowane"], function ($m) use ($em) {
 
                 $m->to($em['email'])
                     ->from('computer_service@gmail.com', 'Computer Service')
-                    ->subject('Order status updated')
+                    ->subject('Zlecenie zaktualizowane')
                     ->setBody($em['content'], 'text/html');
 
                 return view("main");

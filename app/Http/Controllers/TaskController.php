@@ -17,7 +17,7 @@ class TaskController extends Controller
 
     public function __construct()
     {
-        $this->middleware('permissions', ['except' => ['sortTasks','storeTaskMessage', 'refreshTaskMessages', 'showTasksList', 'showTaskDetails']]);
+        $this->middleware('permissions', ['except' => ['sortTasks','storeTaskMessage','showTaskForm','storeTask', 'refreshTaskMessages', 'showTasksList', 'showTaskDetails']]);
     }
 
     public function showTaskForm($id)
@@ -37,9 +37,10 @@ class TaskController extends Controller
 
     public function showTaskEditForm($id)
     {
-        $employees = User::where('role', '=', 'employee')->pluck('name', 'id');
+        $employees = User::where('role', '!=', 'customer')->where('role','!=','admin')->pluck('name', 'id');
         $orders = OrderObject::with('order')->get()->where('order.status', '=', 'active')->pluck('name', 'order_id');
         $task = Task::where('id', $id)->get()->first();
+       
         return view('tasks.edit_task')->with('orders', $orders)->with('employees', $employees)->with('id', $id)->with('task', $task);
     }
 

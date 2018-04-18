@@ -22,12 +22,13 @@
         <td>{{number_format($service->service->price,2)}} PLN</td>
         <td> {{$service->active==true ?'tak' :'nie'}}</td>
         <td> {!! Form::open(['method'=>'POST','class'=>'form-horizontal','action'=>['AdminController@deactivateOrderService',$service->id]])
-          !!} {!! Form::hidden('service_id',$service->id,['class'=>'form-control']) !!} {!! Form::hidden('_method','DELETE',['class'=>'form-control'])
-          !!} {!! Form::submit('Deactivate',['class'=>'btn btn-primary']) !!} {{ Form::close() }} </a>
+          !!} {!! Form::hidden('service_id',$service->id,['class'=>'form-control']) !!}
+           {!! Form::hidden('order_id',$service->order_id,['class'=>'form-control']) !!}  {!! Form::hidden('_method','DELETE',['class'=>'form-control'])
+          !!} {!! Form::submit('Dezaktywuj',['class'=>'btn btn-primary']) !!} {{ Form::close() }} </a>
         </td>
         <td> {!! Form::open(['method'=>'POST','class'=>'form-horizontal','action'=>['AdminController@activateOrderService',$service->id]])
-          !!} {!! Form::hidden('_method','PATCH',['class'=>'form-control']) !!} {!! Form::hidden('service_id',$service->id,['class'=>'form-control'])
-          !!} {!! Form::submit('Activate',['class'=>'btn btn-primary']) !!} {{ Form::close() }} </a>
+          !!}{!! Form::hidden('order_id',$service->order_id,['class'=>'form-control']) !!} {!! Form::hidden('_method','PATCH',['class'=>'form-control']) !!} {!! Form::hidden('service_id',$service->id,['class'=>'form-control'])
+          !!} {!! Form::submit('Aktywuj',['class'=>'btn btn-primary']) !!} {{ Form::close() }} </a>
         </td>  
 
       </tr>

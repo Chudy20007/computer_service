@@ -11,7 +11,7 @@
                 @include('pictures.error_form') {!! Form::open(['url'=>'edit_order_objects
                 ','class'=>'form-horizontal']) !!} @include('orders.edit_order_objects_form')
                 <div class='form-group'>
-                    <div class='col-md-6'>
+                    <div class='col-md-12 text-center'>
                         {!! Form::submit('Edytuj przedmioty',['class'=>'btn btn-primary', ]) !!} {!! Form::close() !!}
                     </div>
                 </div>

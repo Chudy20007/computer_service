@@ -22,14 +22,15 @@
         <td>{{$part->part->name}}</td>
         <td> {{$part->part->serial_number}}</td>
         <td> {{$part->count}}</td>  
-        <td> {{$part->active==true ?'yes' :'no'}}</td>
+        <td> {{$part->active==true ?'tak' :'nie'}}</td>
         <td> {!! Form::open(['method'=>'POST','class'=>'form-horizontal','action'=>['AdminController@deactivateOrderPart',$part->id]])
-          !!} {!! Form::hidden('part_id',$part->id,['class'=>'form-control']) !!} {!! Form::hidden('_method','DELETE',['class'=>'form-control'])
-          !!} {!! Form::submit('Deactivate',['class'=>'btn btn-primary']) !!} {{ Form::close() }} </a>
+          !!} {!! Form::hidden('part_id',$part->id,['class'=>'form-control']) !!}
+          {!! Form::hidden('order_id',$part->order_id,['class'=>'form-control']) !!} {!! Form::hidden('_method','DELETE',['class'=>'form-control'])
+          !!} {!! Form::submit('Dezaktywuj',['class'=>'btn btn-primary']) !!} {{ Form::close() }} </a>
         </td>
         <td> {!! Form::open(['method'=>'POST','class'=>'form-horizontal','action'=>['AdminController@activateOrderPart',$part->id]])
-          !!} {!! Form::hidden('_method','PATCH',['class'=>'form-control']) !!} {!! Form::hidden('part_id',$part->id,['class'=>'form-control'])
-          !!} {!! Form::submit('Activate',['class'=>'btn btn-primary']) !!} {{ Form::close() }} </a>
+          !!} {!! Form::hidden('order_id',$part->order_id,['class'=>'form-control']) !!}{!! Form::hidden('_method','PATCH',['class'=>'form-control']) !!} {!! Form::hidden('part_id',$part->id,['class'=>'form-control'])
+          !!} {!! Form::submit('Aktywuj',['class'=>'btn btn-primary']) !!} {{ Form::close() }} </a>
         </td>   
       </tr>
       @endforeach

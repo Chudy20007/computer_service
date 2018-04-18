@@ -7,7 +7,7 @@
             <div class='panel-body'>
                 @include('pictures.error_form') {!! Form::open(['url'=>'store_order_services','class'=>'form-horizontal']) !!} @include('orders.add_services_to_order_form')
                 <div class='form-group'>
-                    <div class='col-md-6'>
+                    <div class='col-md-12 text-center'>
                         {!! Form::submit('Dodaj usługę do zlecenia',['class'=>'btn btn-primary']) !!} {!! Form::close() !!}
                     </div>
                 </div>

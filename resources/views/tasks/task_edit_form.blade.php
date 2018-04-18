@@ -23,7 +23,7 @@
                 {!! Form::label('active','Aktywny:') !!}
         </div>
         <div class='col-md-12 col-sm-12'>
-                {{ Form::select('active', array('1'=>'tak','0'=>'nie'),['class'=>'formOption']) }}
+                {{ Form::select('active', array('1'=>'tak','0'=>'nie'),null,['class'=>'form-select-control select-2']) }}
         </div>
 </div>
 @endif
@@ -33,7 +33,7 @@
         </div>
        
         <div class='col-md-12 col-sm-12 form-select-control'>
-                {{ Form::select('employee_id' ,$employees,$task->employee_id,['class'=>'form-select-control']) }}
+                {{ Form::select('employee_id' ,$employees,$task->employee_id,['class'=>'form-select-control select-2']) }}
         </div>
 </div>
 
@@ -42,7 +42,7 @@
                 {!! Form::label('selected_order','Wybierz zlecenie:') !!}
         </div>
         <div class='col-md-12 col-sm-12 form-select-control'>
-                {{ Form::select('order_id' ,$orders,$task->order_id,['class'=>'form-select-control']) }}
+                {{ Form::select('order_id' ,$orders,$task->order_id,['class'=>'form-select-control select-2']) }}
         </div>
         {!! Form::hidden('supervisor_id',Auth::id()) !!}
         {!! Form::hidden('id',$task->id) !!}

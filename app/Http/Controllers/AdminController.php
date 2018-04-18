@@ -39,7 +39,7 @@ class AdminController extends Controller
             'active'=>true,
             'status'=>'active'
         ]);  
-
+        Session::put('message', 'Zlecenie zostało pomyślnie aktywowane!');
         return redirect('show_orders');
        
     }
@@ -155,12 +155,13 @@ class AdminController extends Controller
     {
   
         $id= $request->service_id;
+        
     
         OrderService::where('id', '=', $id)->update([
             'active'=>false
         ]);
         Session::put('message', 'Usługa dla zlecenia została pomyślnie zdezaktywowana!');
-        return redirect('show_services');
+        return redirect('show_order_services/'.$request->order_id);
     }
 
     public function activateOrderService(Request $request)
@@ -171,7 +172,7 @@ class AdminController extends Controller
             'active'=>true
         ]);  
         Session::put('message', 'Usługa dla zlecenia została pomyślnie aktywowana!');
-        return redirect('show_services');
+        return redirect('show_order_services/'.$request->order_id);
     }
 
     public function deactivateOrderPart(Request $request)
@@ -181,7 +182,7 @@ class AdminController extends Controller
             'active'=>false
         ]);  
         Session::put('message', 'Część dla została pomyślnie zdezaktywowana!');
-        return redirect('show_parts');
+        return redirect('show_order_parts/'.$request->order_id);
     }
 
     public function activateOrderPart(Request $request)
@@ -191,7 +192,7 @@ class AdminController extends Controller
             'active'=>true
         ]);  
         Session::put('message', 'Część dla zlecenia została pomyślnie aktywowana!');
-        return redirect('show_parts');
+        return redirect('show_order_parts/'.$request->order_id);
     }
 
     public function deactivateOrderObject(Request $request)
@@ -201,7 +202,7 @@ class AdminController extends Controller
             'active'=>false
         ]);  
         Session::put('message', 'Przedmiot dla zlecenia został pomyślnie zdezaktywowany!');
-        return redirect('show_objects');
+        return redirect('show_order_objects/'.$request->order_id);
     }
 
     public function activateOrderObject(Request $request)
@@ -211,7 +212,7 @@ class AdminController extends Controller
             'active'=>true
         ]);  
         Session::put('message', 'Przedmiot dla zlecenia został pomyślnie aktywowany!');
-        return redirect('show_objects');
+        return redirect('show_order_objects/'.$request->order_id);
     }
 
     

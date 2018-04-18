@@ -39,7 +39,7 @@
         <td> {{$order->description}}</td>
         <td> {{$order->employee->name}}</td>
         <td> {!! Form::open(['method'=>'get','class'=>'form-horizontal','action'=>['TaskController@showTaskForm',$order->id]])
-          !!} {!! Form::hidden('id',$order->id,['class'=>'form-control']) !!} {!! Form::submit('Wyślij wiadomość',['class'=>'btn btn-primary'])
+          !!} {!! Form::hidden('id',$order->id,['class'=>'form-control']) !!} {!! Form::submit('Utwórz wątek',['class'=>'btn btn-primary'])
           !!} {{ Form::close() }} </a>
         </td>
         <td> {!! Form::open(['method'=>'get','class'=>'form-horizontal','action'=>['OrderController@showOrderServicesList',$order->id]])

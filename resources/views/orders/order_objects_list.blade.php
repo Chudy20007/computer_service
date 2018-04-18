@@ -43,11 +43,13 @@
           {{ Form::close() }} </a>
         </td>
         <td> {!! Form::open(['method'=>'POST','class'=>'form-horizontal','action'=>['AdminController@deactivateOrderObject',$object->id]])
-          !!} {!! Form::hidden('object_id',$object->id,['class'=>'form-control']) !!} {!! Form::hidden('_method','DELETE',['class'=>'form-control'])
+          !!} {!! Form::hidden('object_id',$object->id,['class'=>'form-control']) !!}
+          {!! Form::hidden('order_id',$object->order_id,['class'=>'form-control']) !!} {!! Form::hidden('_method','DELETE',['class'=>'form-control'])
           !!} {!! Form::submit('Dezaktywuj',['class'=>'btn btn-primary']) !!} {{ Form::close() }} </a>
         </td>
         <td> {!! Form::open(['method'=>'POST','class'=>'form-horizontal','action'=>['AdminController@activateOrderObject',$object->id]])
-          !!} {!! Form::hidden('_method','PATCH',['class'=>'form-control']) !!} {!! Form::hidden('object_id',$object->id,['class'=>'form-control'])
+          !!} {!! Form::hidden('_method','PATCH',['class'=>'form-control']) !!}
+          {!! Form::hidden('order_id',$object->order_id,['class'=>'form-control']) !!} {!! Form::hidden('object_id',$object->id,['class'=>'form-control'])
           !!} {!! Form::submit('Aktywuj',['class'=>'btn btn-primary']) !!} {{ Form::close() }} </a>
         </td>  
       </tr>
