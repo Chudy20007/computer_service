@@ -11,7 +11,7 @@ class CategoryController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('permissions', ['except' => ['showCategoriesList', 'findCategories']]);
+        $this->middleware('permissions', ['except' => ['showCategoriesList', 'findCategories','sortCategories']]);
     }
 
     public function showCategoryEditForm($id)
@@ -43,21 +43,24 @@ class CategoryController extends Controller
         $data['data_sort'] = htmlentities($data['data_sort']);
         $data['data_sort'] = stripslashes($data['data_sort']);
 
-        $categories = Category::orderBy($data['column_name'],$data['data_sort'])->get();
+       
         switch(Auth::user()->getRole())
         {
             case 'admin':
             {
+                $categories = Category::orderBy($data['column_name'],$data['data_sort'])->get();
                 $content=$this->getSearchingResultsAdmin($categories);
                 break;
             }
             case 'employee':
             {
+                $categories = Category::where('active',true)->orderBy($data['column_name'],$data['data_sort'])->get();
                 $content=$this->getSearchingResultsEmployee($categories);
                 break;
             }
             case 'supervisor':
             {
+                $categories = Category::orderBy($data['column_name'],$data['data_sort'])->get();
                 $content=$this->getSearchingResultsSupervisor($categories);
                 break;
             }

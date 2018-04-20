@@ -11,7 +11,7 @@ class ServiceController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('permissions',['except' => ['showServicesList','findServices']]);
+        $this->middleware('permissions',['except' => ['showServicesList','findServices','sortServices']]);
     }
 
     public function showServiceForm ()

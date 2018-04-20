@@ -5,8 +5,8 @@
 
 
     <thead class="bg-primary text-center">
-      <tr>
-        <th scope="col">Nazwa</th>
+      <tr data-table='categories_e'>
+        <th scope="col" data-name="name" data-sort="asc">Nazwa</th>
       </tr>
     </thead>
     <tbody>
