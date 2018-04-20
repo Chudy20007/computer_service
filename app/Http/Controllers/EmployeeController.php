@@ -25,14 +25,33 @@ class EmployeeController extends Controller
        
 $token=$data['token'];
         $content = "";
-        foreach ($users as $user) {
-   
-            $content .= ("<tr class='table-light'><td>" . $user->name . "</td>");
-            $content.=("<td>".$user->email."</td><td>".$user->phone."</td>");
-            $content.=("<td><form class='form-horizontal' method='POST' action='http://localhost/computer_service/public/send_message/$user->id'>");
-            $content.=(csrf_field());
-            $content.=("<input class='btn btn-primary' type='submit' value='Wyślij wiadomość e-mail'></form></td></tr>");
+        switch (Auth::user()->getRole())
+        {
+            case "admin":
+            {
+                $content = $this->getSearchingResultsAdmin($users);
+                return json_encode($content);
+            }
+    
+            case "supervisor":
+            {
+                $content = $this->getSearchingResultsSupervisor($users);
+                return json_encode($content);
+            }
+    
+            case "employee":
+            {
+                $content = $this->getSearchingResultsEmployee($users);
+                return json_encode($content);
+            }
+            case "customer":
+            {
+                $content = $this->getSearchingResultsCustomer($users);
+                return json_encode($content);
+            }
         }
+    
+        
 
         return json_encode($content);
     }
@@ -197,6 +216,7 @@ $token=$data['token'];
 
     public function editEmployee(EmployeeRequest $request)
     {
+       
         $employee=[
             'name' => $request->name,
             'email' => $request->email,

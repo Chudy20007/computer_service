@@ -148,12 +148,39 @@ class CategoryController extends Controller
         $data['data'] = htmlentities($data['data']);
         $data['data'] = stripslashes($data['data']);
         $categories = Category::where('name', 'LIKE', '%' . $data['data'] . '%')->get();
-
-        $content = "";
-        foreach ($categories as $category) {
-            $content .= ("<tr class='table-light'><td>" . $category->name . "</td></tr>");
-
+      
+        switch(Auth::user()->getRole())
+        {
+            case 'admin':
+            {
+                $categories = Category::where('name', 'LIKE', '%' . $data['data'] . '%')->get();
+                $content=$this->getSearchingResultsAdmin($categories);
+                break;
+            }
+            case 'employee':
+            {
+                $categories = Category::where('name', 'LIKE', '%' . $data['data'] . '%')->where('active','=',true)->get();
+                $content=$this->getSearchingResultsEmployee($categories);
+                break;
+            }
+            case 'supervisor':
+            {
+                $categories = Category::where('name', 'LIKE', '%' . $data['data'] . '%')->get();
+                $content=$this->getSearchingResultsSupervisor($categories);
+                break;
+            }
+            case 'customer':
+            {
+                $categories = Category::where('name', 'LIKE', '%' . $data['data'] . '%')->where('active','=',true)->get();
+                $content=$this->getSearchingResultsCustomer($categories);
+                break;
+            }
+            default:
+            {
+                return;
+            }
         }
+
 
         return json_encode($content);
     }

@@ -6,7 +6,7 @@
   <a class='menuOption' href="{{URL::asset('add_order')}}">Utwórz zlecenie </a>
   <a class='menuOption' href="{{URL::asset('show_services')}}">Usługi</a>
   <a class='menuOption' href="{{URL::asset('contact')}}">Kontakt</a>
-  <a class='menuOption ' href="{{URL::asset('about')}}">O nas</a>
+  <a class='menuOption ' href="{{URL::asset('about')}}">Pomoc</a>
 
   @if (Auth::user()!=null && Auth::user()->isAdmin())
     @include('partial_views.admin_panel')

@@ -25,7 +25,7 @@ class EmployeeRequest extends FormRequest
      */
     public function rules()
     {
-        $employee = User::find($this)->first();
+        $employee = User::where('id',$this->id)->get()->first();
 
         switch ($this->method()) {
             case 'GET':
@@ -61,9 +61,9 @@ class EmployeeRequest extends FormRequest
                         'password' => ['required'],
                         'phone' => ['required', 'regex:/^[0-9]{8,}$/', Rule::unique('users', 'phone')->ignore($employee['id'])],
                         'role' => ['required', 'regex:/^([a-z]{4,})$/'],
-                        'post-code' => ['required', 'regex:/^([0-9]{2})-([0-9]{3})$/'],
-                        'local-number' => ['required'],
-                        'file' => ['required'],
+                        'post_code' => ['required', 'regex:/^([0-9]{2})-([0-9]{3})$/'],
+                        'local_number' => ['required'],
+                       // 'file' => ['required'],
                         'street' => ['required'],
 
                     ];

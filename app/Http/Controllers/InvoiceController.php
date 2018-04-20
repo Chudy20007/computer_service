@@ -17,7 +17,7 @@ class InvoiceController extends Controller
         $employee = $order->employee->pluck('name', 'id');
         $customer = $order->customer->pluck('name', 'id');
      
-        if ($order->status!="closed")
+        if ($order->status=="closed")
         return view("user.access_denied");
         return view('invoices.create_invoice')->with('order', $order)->with('employee', $employee)->with('customer', $customer);
     }

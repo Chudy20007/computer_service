@@ -109,7 +109,7 @@
                             <label for="post-code" class="col-md-4 control-label label">Kod pocztowy</label>
 
                             <div class="col-md-12">
-                                <input id="post-code" type="text" class="form-control" name="post-code"  placeholder="XX-XXX"  value="{{$user->post_code}}" required autofocus> @if ($errors->has('post-code'))
+                                <input id="post_code" type="text" class="form-control" name="post_code"  placeholder="XX-XXX"  value="{{$user->post_code}}" required autofocus> @if ($errors->has('post_code'))
                                 <span class="help-block">
                                     <strong>{{ $errors->first('post-code') }}</strong>
                                 </span>
@@ -143,9 +143,9 @@
                             <label for="local-number" class="col-md-4 control-label label">Numer lokalu</label>
 
                             <div class="col-md-12">
-                                <input id="local-number" type="text" class="form-control" name="local-number" placeholder="number"  value="{{$user->local_number}}" required autofocus> @if ($errors->has('local-number'))
+                                <input id="local_number" type="text" class="form-control" name="local_number" placeholder="number"  value="{{$user->local_number}}" required autofocus> @if ($errors->has('local_number'))
                                 <span class="help-block">
-                                    <strong>{{ $errors->first('local-number') }}</strong>
+                                    <strong>{{ $errors->first('local_number') }}</strong>
                                 </span>
                                 @endif
                             </div>

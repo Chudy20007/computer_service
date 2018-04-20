@@ -116,6 +116,7 @@ Route::post('show_parts/parts_s', 'PartController@sortParts');
 Route::post('show_parts/parts_e', 'PartController@sortParts');
 Route::post('show_parts/parts_a', 'PartController@sortParts');
 
+Route::post('show_tasks', 'TaskController@findTasks');
 
 Route::post('show_tasks/tasks_s', 'TaskController@sortTasks');
 Route::post('show_tasks/tasks_e', 'TaskController@sortTasks');

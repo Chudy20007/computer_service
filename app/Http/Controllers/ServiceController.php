@@ -145,16 +145,43 @@ public function findServices()
 
         $data['data'] = htmlentities($data['data']);
         $data['data'] = stripslashes($data['data']);
-        $categories = Service::where('name', 'LIKE', '%' . $data['data'] . '%')->get();
+      
 
-        $content = "";
-        foreach ($categories as $category) {
-            $content .= ("<tr class='table-light'><td>" . $category->name . "</td><td>" . $category->price . "</td></tr>");
-
+            
+        switch(Auth::user()->getRole())
+        {
+            case 'admin':
+            {
+                $services = Service::where('name', 'LIKE', '%' . $data['data'] . '%')->get();
+                $content=$this->getSearchingResultsAdmin($services);
+                break;
+            }
+            case 'employee':
+            {
+                $services = Service::where('name', 'LIKE', '%' . $data['data'] . '%')->where('active','=',true)->get();
+                $content=$this->getSearchingResultsEmployee($services);
+                break;
+            }
+            case 'supervisor':
+            {
+                $services = Service::where('name', 'LIKE', '%' . $data['data'] . '%')->where('active','=',true)->get();
+                $content=$this->getSearchingResultsSupervisor($services);
+                break;
+            }
+            case 'customer':
+            {
+                $services = Service::where('name', 'LIKE', '%' . $data['data'] . '%')->where('active','=',true)->get();
+                $content=$this->getSearchingResultsCustomer($services);
+                break;
+            }
+            default:
+            {
+                return;
+            }
         }
 
+
         return json_encode($content);
-    
 }
 
     public function showServiceEditForm ($id)

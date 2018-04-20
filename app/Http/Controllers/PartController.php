@@ -24,16 +24,34 @@ class PartController extends Controller
 
         $data['data'] = htmlentities($data['data']);
         $data['data'] = stripslashes($data['data']);
-        $parts = Part::with('category')->where('name', 'LIKE', '%' . $data['data'] . '%')->get();
        
-$token=$data['token'];
-        $content = "";
-        foreach ($parts as $part) {
-   
-            $content .= ("<tr class='table-light'><td>" . $part->category->name . "</td><td>" . $part->name . "</td>");
-            $content.=("<td>".$part->count."</td><td>".$part->price."</td><td>" . $part->updated_at . "</td></tr>");
-          
+        switch(Auth::user()->getRole())
+        {
+            case 'admin':
+            {
+                $parts = Part::with('category')->where('name', 'LIKE', '%' . $data['data'] . '%')->get();
+                $content=$this->getSearchingResultsAdmin($parts);
+                break;
+            }
+            case 'employee':
+            {
+                $parts = Part::with('category')->where('name', 'LIKE', '%' . $data['data'] . '%')->where('active',true)->get();
+                $content=$this->getSearchingResultsEmployee($parts);
+                break;
+            }
+            case 'supervisor':
+            {
+                $parts = Part::with('category')->where('name', 'LIKE', '%' . $data['data'] . '%')->get();
+                $content=$this->getSearchingResultsSupervisor($parts);
+                break;
+            }
+    
+            default:
+            {
+                return;
+            }
         }
+
 
         return json_encode($content);
     }

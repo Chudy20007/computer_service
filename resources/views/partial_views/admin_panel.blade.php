@@ -4,7 +4,7 @@
         <a class="menuOption admin-div" href="{{URL::asset('user/'.Auth::id())}}">panel admina</a>
         <ul class='menuOl'>
           <li>
-            <a href="{{URL::asset('show_employees')}}">pracownicy</a>
+            <a href="{{URL::asset('show_employees')}}">użytkownicy</a>
           </li>
           <li>
             <a href="{{URL::asset('show_services')}}">usługi</a>

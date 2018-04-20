@@ -17,7 +17,7 @@ class TaskController extends Controller
 
     public function __construct()
     {
-        $this->middleware('permissions', ['except' => ['sortTasks','storeTaskMessage','showTaskForm','storeTask', 'refreshTaskMessages', 'showTasksList', 'showTaskDetails']]);
+        $this->middleware('permissions', ['except' => ['findTasks','sortTasks','storeTaskMessage','showTaskForm','storeTask', 'refreshTaskMessages', 'showTasksList', 'showTaskDetails']]);
     }
 
     public function showTaskForm($id)
@@ -149,6 +149,57 @@ class TaskController extends Controller
         }
 
     }
+    public function findTasks()
+    {
+        $data = json_decode(file_get_contents('php://input'), true);
+
+        $data['data'] = htmlentities($data['data']);
+        $data['data'] = stripslashes($data['data']);
+       
+      
+        switch(Auth::user()->getRole())
+        {
+            case 'admin':
+            {   
+                $user = User::where('name', 'LIKE', '%' . $data['data'] . '%')->get()->first();
+                
+                $tasks = Task::with('employee','supervisor')->where('supervisor_id', 'LIKE', '%' . $user->id . '%')->orWhere('supervisor_id', 'LIKE', '%' . $user->id . '%')->get();
+                $content=$this->getSearchingResultsAdmin($tasks);
+                break;
+            }
+            case 'employee':
+            {
+                $tasks = Task::with('employee','supervisor')->where('name', 'LIKE', '%' . $data['data'] . '%')->where('active','=',true)->get();
+                $content=$this->getSearchingResultsEmployee($tasks);
+                break;
+            }
+            case 'supervisor':
+            {
+                $tasks = Task::with('employee','supervisor')->where('name', 'LIKE', '%' . $data['data'] . '%')->get();
+                $content=$this->getSearchingResultsSupervisor($tasks);
+                break;
+            }
+            case 'customer':
+            {
+
+                break;
+            }
+            default:
+            {
+                return;
+            }
+        }
+
+
+        return json_encode($content);
+    }
+
+
+
+
+
+
+
 
     public function storeTaskMessage(Request $request)
     {

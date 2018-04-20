@@ -269,7 +269,7 @@ $content.=("
   <a href='http://localhost/computer_service/public/order/$order->id'>$order->id</a>
 </td>
 <td>
-  <a href='ttp://localhost/computer_service/public/user/$order->customer_id'>$customer_name</a>
+  <a href='http://localhost/computer_service/public/user/$order->customer_id'>$customer_name</a>
 </td>
 <td>$order->email</td>
 <td> $order->phone</td>
@@ -277,7 +277,7 @@ $content.=("
 <td>".($order->active == 1 ? 'tak' : 'nie')."</td>
 <td> $order->description</td>
 <td> $employee_name</td>
-<td> <form method='GET' action='http://localhost/computer_service/public/create_task/$order->id' accept-charset='UTF-8' class='form-horizontal'> <input class='form-control' name='id' type='hidden' value='$order->id'> <input class='btn btn-primary' type='submit' value='Wyślij wiadomość'> </form> </a>
+<td> <form method='GET' action='http://localhost/computer_service/public/create_task/$order->id' accept-charset='UTF-8' class='form-horizontal'> <input class='form-control' name='id' type='hidden' value='$order->id'> <input class='btn btn-primary' type='submit' value='Utwórz wątek'> </form> </a>
     </td>
 
 <td> <form method='GET action='http://localhost/computer_service/public/show_order_services/$order->id' accept-charset='UTF-8' class='form-horizontal'> <input class='form-contro'' name='id' type='hidden' value='$order->id'> <input class='btn btn-primary' type='submit' value='Pokaż usługi'> </form> </a>
