@@ -13,9 +13,34 @@ class InvoiceController extends Controller
 {
     public function showInvoiceForm($id)
     {
-        $order = Order::with('order_service.service', 'order_part.part', 'order_object', 'customer', 'employee')->where('id', '=', $id)->get()->first();
-        $employee = $order->employee->pluck('name', 'id');
-        $customer = $order->customer->pluck('name', 'id');
+        switch (Auth::user()->getRole())
+        {
+            case "admin":
+            {
+                $order = Order::with('order_service.service', 'order_part.part', 'order_object', 'customer', 'employee')->where('id', '=', $id)->where('customer.id','=','orders.customer_id')->get()->first();
+                break;
+            }
+    
+            case "supervisor":
+            {
+                $order = Order::with('order_service.service', 'order_part.part', 'order_object', 'customer', 'employee')->where('id', '=', $id)->get()->first();
+                break;
+            }
+    
+            case "employee":
+            {
+                $order = Order::with('order_service.service', 'order_part.part', 'order_object', 'customer', 'employee')->where('id', '=', $id)->get()->first();
+                break;
+            }
+            case "customer":
+            {
+
+             return view('user.access_denied');
+            }
+        }
+
+        $employee = $order->employee->where('id','=',Auth::id())->pluck('name', 'id');
+        $customer = $order->customer->where('id','=',$order->customer_id)->pluck('name', 'id');
      
         if ($order->status=="closed")
         return view("user.access_denied");
@@ -31,7 +56,6 @@ class InvoiceController extends Controller
             'order_id' => $request->order_id,
             'employee_id' => $request->employee_id,
             'payment_method' => $request->payment_method,
-            'tax' => $request->tax,
         ];
 
         $total_part_price = 0;
@@ -39,16 +63,16 @@ class InvoiceController extends Controller
 
         foreach ($order->order_part as $part) {
             if ($part->active && $part->part->active) {
-                $one_part_tax = ($part->part->price * $invoice['tax']) / 100;
-                $price_for_one_part = $part->part->price - $one_part_tax;
+               
+                $price_for_one_part = $part->part->price;
                 $total_part_price += ($part->count * $price_for_one_part);
             }
         }
         $total_service_price = 0;
         foreach ($order->order_service as $service) {
             if ($service->active && $service->service->active) {
-                $one_service_tax = ($service->service->price * $invoice['tax']) / 100;
-                $total_service_price += ($service->service->price - $one_service_tax);
+              
+                $total_service_price += $service->service->price;
             }
         }
 

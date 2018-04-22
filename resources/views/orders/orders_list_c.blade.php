@@ -17,6 +17,8 @@
         <th scope="col" data-name="employee_id" data-sort="asc">Pracownik</th>
         <th scope="col" data-name="created_at" data-sort="asc">Utworzono</th>
         <th scope="col" data-name="updated_at" data-sort="asc">Edytowano</th>
+        <th scope="col" data-name="received" data-sort="asc">Przedmiot odebrano</th>
+        <th scope="col" data-name="execution_time" data-sort="asc">Termin realizacji</th>
         <th scope="col" data-name="services" data-sort="asc">Usługi</th>
         <th scope="col" data-name="parts" data-sort="asc">Części</th>
         <th scope="col" data-name="objects" data-sort="asc">Przedmioty</th>
@@ -35,6 +37,8 @@
         <td> {{$order->employee->name}}</td>
         <td> {{$order->created_at}}</td>
         <td> {{$order->updated_at}}</td>
+        <td> {{$order->received==true? 'tak':'nie'}}</td>
+        <td> {{$order->execution_time}}</td>
      {{--   <td> {!! Form::open(['method'=>'POST','class'=>'form-horizontal','action'=>['OrderController@showMessageForm',$order->id]]) !!} {!!
           Form::hidden('id',$order->id,['class'=>'form-control']) !!} {!! Form::submit('Wyślij wiadomość',['class'=>'btn btn-primary']) !!}
           {{ Form::close() }} </a>

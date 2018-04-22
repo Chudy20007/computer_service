@@ -56,6 +56,50 @@ $(function () {
     });
 
 
+    $('.menuOption2').on('click', function () {
+console.log($(this).val());
+        let token = $('meta[name="csrf_token"]').attr('content');
+        $order=$(this).val();
+
+
+
+
+        var task_message = {
+            token: token,
+            order_type:$order
+            
+        }
+
+        let url = window.location.href;
+
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            url: (url),
+            type: "post", //typ połączenia
+            contentType: 'aplication/json', //gdy wysyłamy dane czasami chcemy ustawić ich typ
+            dataType: 'json', //typ danych jakich oczekujemy w odpowiedzi
+            beforeSend: function (xhr) {
+                var token = $('meta[name="csrf_token"]').attr('content');
+
+                if (token) {
+                    return xhr.setRequestHeader('X-CSRF-TOKEN', token);
+                }
+            },
+            data: JSON.stringify(task_message),
+        }).done(function (response) {
+
+
+            $('tbody').children().remove();
+            $('tbody').append(response);
+
+
+        });
+
+
+    });
+
 
 
     $('#find-button').on('click', function () {

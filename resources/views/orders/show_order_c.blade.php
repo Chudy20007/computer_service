@@ -6,7 +6,7 @@
   </div>
 </div>
 @endif
-<div class="table-responsive">
+<div class="table-responsive2">
   <table class="table table- bordered table-hover">
 
 

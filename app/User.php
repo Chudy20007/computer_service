@@ -67,6 +67,11 @@ class User extends Authenticatable
         $this->hasMany('App\Order','order_id')->where ('customer_id','=',$this->id);
     }
 
+
+    public function order_employee_count()
+    {
+       return  $this->hasMany('App\Order','employee_id')->where ('employee_id','=',$this->id)->where('status','=','w toku')->count(); 
+    }
     public function invoice()
     {
         $this->hasMany('App\Invoice','invoice_id')->where ('customer_id','=',$this->id);

@@ -72,6 +72,42 @@ select {
   outline: none;
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
+.select-2-longest
+{
+  width:480px !important;
+}
+
+.order-sort >li
+{
+  color:black;
+  text-transform: uppercase;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-size: 14px;
+  margin-left:2rem;
+  display: inline;
+}
+.static-text
+{
+  font-size: 14px;
+}
+.order-sort >li > a
+{
+  letter-spacing: 1px;
+  opacity: 0.7;
+  transition: all 0.3s ease;
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  white-space: normal;
+  list-style-type: none;
+  text-decoration: none;
+  color:black;
+}
+
+.order-sort >li > a:hover
+{
+  font-weight: bold;
+  color:blue;
+}
 
 .select-2 {
   transition: border-color 0.2s;
@@ -123,6 +159,7 @@ input:focus{
 }
 
 .main-search {
+  margin-left:10rem;
   font-weight: 600;
   letter-spacing: 1px;
   opacity: 0.7;
@@ -130,7 +167,7 @@ input:focus{
   outline: none;
   outline-style: .1rem dashed gray;
   height: 31px;
-  min-width: 100%;
+  min-width: 89.3%;
   border: none;
 }
 
@@ -236,12 +273,14 @@ input[type='file'] {
 }
 
 #footer {
+  width:3500px;
   min-height: 100px;
   color: white;
   background-color: #0069d9;
 }
 
 .topNav {
+
   min-height: 5rem;
   overflow: hidden;
   background-color: #0069d9;
@@ -259,6 +298,32 @@ input[type='file'] {
   -webkit-transition: all 0.3s ease;
   -moz-transition: all 0.3s ease;
   white-space: normal;
+}
+
+.menuOption2{
+  border:none;
+  background-color: #0069d9;
+  color:white;
+}
+.btn-primary
+{
+  font-weight: bold;
+  color:black;
+  background-color: Transparent;
+  background-repeat:no-repeat;
+  border: none;
+  cursor:pointer;
+  overflow: hidden;
+  outline:none;
+  text-transform: uppercase;
+  font-size:14px; 
+  width:15rem;
+  height:2rem;
+}
+.menuOption2:hover
+{
+  background-color:gray;
+  color:black;
 }
 
 .topNav .menuOption {
@@ -528,7 +593,8 @@ label {
   }
 }
 
-.container-fluid {
+.container2{
+width:3500px;
   height: 5rem;
   padding: 0;
   margin: 0;
@@ -541,6 +607,7 @@ label {
 }
 
 #container {
+  margin-left:.5rem;
   margin-top: 1.5rem;
   min-height: 1000px;
 }

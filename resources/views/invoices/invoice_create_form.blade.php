@@ -1,28 +1,19 @@
 
 <div class='form-group'>
         <div class='col-md-4 control-label'>
-                {!! Form::label('price','Customer:') !!}
+                {!! Form::label('price','Klient:') !!}
         </div>
         <div class='col-md-12 col-sm-12 form-select-control'>
-                {!! Form::select('customer',$customer,$order->customer->id,['class'=>'form-select-control']) !!}
+                {!! Form::select('customer',$customer,$order->customer->id,['class'=>'select-2 form-select-control']) !!}
         </div>
 </div>
 
 <div class='form-group'>
         <div class='col-md-4 control-label'>
-                {!! Form::label('payment_method','Payment:') !!}
+                {!! Form::label('payment_method','Metoda płatności:') !!}
         </div>
         <div class='col-md-12 col-sm-12'>
-                {!! Form::select('payment_method',['cash'=>'cash','card'=>'card','checks'=>'checks'],['class'=>'form-control']) !!}
-        </div>
-</div>
-
-<div class='form-group'>
-        <div class='col-md-4 control-label'>
-                {!! Form::label('tax','Tax(%):') !!}
-        </div>
-        <div class='col-md-12 col-sm-12'>
-                {!! Form::select('tax',['23'=>'23%','8'=>'8%'],['class'=>'form-control']) !!}
+                {!! Form::select('payment_method',['cash'=>'gotówka','card'=>'karta kredytowa','czek'=>'czek'],null,['class'=>'select-2 form-select-control']) !!}
         </div>
 </div>
 
@@ -30,11 +21,11 @@
 
 <div class='form-group'>
         <div class='col-md-4 control-label'>
-                {!! Form::label('employee_id','Select employee:') !!}
+                {!! Form::label('employee_id','Pracownik:') !!}
         </div>
        
         <div class='col-md-12 col-sm-12 form-select-control'>
-                {{ Form::select('employee_id' ,$employee,$order->employee->id,['class'=>'form-select-control']) }}
+                {{ Form::select('employee_id' ,$employee,$order->employee->id,['class'=>'select-2 form-select-control']) }}
         </div>
 </div>
 

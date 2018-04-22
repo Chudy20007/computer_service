@@ -12,7 +12,9 @@ class Order extends Model
        'employee_id',
         'status',
         'created_at',
-        'updated_at'
+        'updated_at',
+        'execution_time',
+        'received'
     ];
 
     public function customer()

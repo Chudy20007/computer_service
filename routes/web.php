@@ -15,8 +15,7 @@ Route::get('register', '\App\Http\Controllers\Auth\RegisterController@showRegist
 Route::post('/store_order', 'OrderController@storeOrder');
 Route::middleware('permissions')->group(function () {
   
-    Route::get('create_task/{id?}', 'TaskController@showTaskForm');
-    Route::post('create_task', 'TaskController@storeTask');
+  
     Route::get('create_service', 'ServiceController@showServiceForm');
     Route::post('create_service', 'ServiceController@storeService');
     Route::get('create_category', 'CategoryController@showCategoryForm');
@@ -53,7 +52,8 @@ Route::get('/b', function () {
     return "this page BBB requires that you be logged in and an Admin";
 });
 
-
+Route::get('create_task/{id?}', 'TaskController@showTaskForm');
+Route::post('create_task', 'TaskController@storeTask');
 Route::get('create_complaint/{id}', 'ComplaintController@showComplaintForm')->middleware('auth');
 Route::post('store_complaint', 'ComplaintController@storeComplaint')->middleware('auth');
 Route::get('show_complaints', 'ComplaintController@showComplaintsList')->middleware('auth');

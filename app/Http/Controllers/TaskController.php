@@ -17,7 +17,7 @@ class TaskController extends Controller
 
     public function __construct()
     {
-        $this->middleware('permissions', ['except' => ['findTasks','sortTasks','storeTaskMessage','showTaskForm','storeTask', 'refreshTaskMessages', 'showTasksList', 'showTaskDetails']]);
+        $this->middleware('permissions', ['except' => ['storeTask','showTaskForm','findTasks','sortTasks','storeTaskMessage','showTaskForm','storeTask', 'refreshTaskMessages', 'showTasksList', 'showTaskDetails']]);
     }
 
     public function showTaskForm($id)
@@ -28,11 +28,44 @@ class TaskController extends Controller
         {
             return view ("user.order_closed");
         }
+        switch (Auth::user()->getRole())
+        {
+            case 'admin':
+            {
+                $employees = User::where('role', '=', 'employee')->pluck('name', 'id');
+                $orders = OrderObject::with('order')->get()->where('order.status', '=', 'active')->pluck('name', 'order_id');
+        
+                return view('tasks.create_task')->with('orders', $orders)->with('employees', $employees)->with('id', $id);
+                break;
+            }
+            case 'supervisor':
+            {
+                $employees = User::where('role', '=', 'employee')->pluck('name', 'id');
+                $orders = OrderObject::with('order')->get()->where('order.status', '=', 'active')->pluck('name', 'order_id');
+        
+                return view('tasks.create_task')->with('orders', $orders)->with('employees', $employees)->with('id', $id);
+                break;
+            }
 
-        $employees = User::where('role', '=', 'employee')->pluck('name', 'id');
-        $orders = OrderObject::with('order')->get()->where('order.status', '=', 'active')->pluck('name', 'order_id');
+            case 'employee':
+            {
+                
+                    $employees = User::where('role', '=', 'employee')->where('id','=',Auth::id())->pluck('name', 'id');
+                    $orders = OrderObject::with('order')->get()->where('order_id','=',$order->id)->where('order.active', '=', true)->pluck('name', 'order_id');
+            
+                    return view('tasks.create_task')->with('orders', $orders)->with('employees', $employees)->with('id', $id);
+                    break;
 
-        return view('tasks.create_task')->with('orders', $orders)->with('employees', $employees)->with('id', $id);
+            }
+
+            default:
+            {
+                return view('users.access_denied');
+            }
+
+
+        }
+
     }
 
     public function showTaskEditForm($id)
@@ -175,7 +208,10 @@ class TaskController extends Controller
             }
             case 'supervisor':
             {
-                $tasks = Task::with('employee','supervisor')->where('name', 'LIKE', '%' . $data['data'] . '%')->get();
+                $user = User::where('name', 'LIKE', '%' . $data['data'] . '%')->get()->first();
+                $tasks = Task::with('employee','supervisor')
+                ->where('name', 'LIKE', '%' . $data['data'] . '%')
+                ->orWhere('supervisor_id', 'LIKE', '%' . $user->id . '%')->get();
                 $content=$this->getSearchingResultsSupervisor($tasks);
                 break;
             }

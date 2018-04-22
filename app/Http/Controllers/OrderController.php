@@ -32,7 +32,8 @@ class OrderController extends Controller
 public function findOrders()
 {
     $data = json_decode(file_get_contents('php://input'), true);
-
+    if (isset($data['data']))
+    {
     $data['data'] = htmlentities($data['data']);
     $data['data'] = stripslashes($data['data']);
     if (Auth::user()->isCustomer())
@@ -52,7 +53,15 @@ public function findOrders()
     $token=$data['token'];
     $content = "";
 
-
+    }
+    if(isset($data['order_type']))
+    {
+        if (Auth::user()->isSupervisor() || Auth::user()->isAdmin() )
+        {
+            $orders = Order::with('customer','employee')->leftJoin('users','orders.customer_id','=','users.id')
+   ->where('orders.status','=',$data['order_type'])->get();    
+        }
+    }
     switch (Auth::user()->getRole())
     {
         case "admin":
@@ -95,7 +104,7 @@ public function sortOrders()
     {
         $orders = Order::with('customer', 'employee', 'order_object', 'order_part', 'order_service')->where('orders.customer_id','=',Auth::id())
         ->orderBy('orders.'.$data['column_name'], $data['data_sort'])
-        ->get(['status', 'employee_id', 'customer_id', 'description', 'updated_at', 'created_at', 'id']);
+        ->get(['status', 'employee_id','execution_time','customer_id', 'description', 'updated_at', 'created_at', 'id']);
     }
     if(Auth::user()->isSupervisor() || Auth::user()->isAdmin())
     {
@@ -107,7 +116,7 @@ public function sortOrders()
    $orders = Order::with('customer','employee')
    ->leftJoin('users','orders.customer_id','=','users.id')
    ->orderBy($sort.$data['column_name'], $data['data_sort'])
-   ->get(['status', 'employee_id','orders.active', 'customer_id', 'description','email','phone', 'orders.updated_at', 'orders.created_at', 'orders.id']); 
+   ->get(['status', 'employee_id','orders.active','execution_time','customer_id', 'description','email','phone', 'orders.updated_at', 'orders.created_at', 'orders.id']); 
 
 
     }
@@ -115,7 +124,7 @@ public function sortOrders()
     if(Auth::user()->isEmployee())
     {
        if($data['column_name']=='email' || $data['column_name']=='phone' 
-       || $data['column_name']=='employee_id' || $data['column_name']=='cusotomer_id')
+       || $data['column_name']=='employee_id' || $data['column_name']=='customer_id')
            $sort='users.';
         else
         $sort='orders.';
@@ -124,7 +133,7 @@ public function sortOrders()
    ->where('employee_id','=',Auth::id())
    ->where('status','!=','closed')
    ->orderBy($sort.$data['column_name'], $data['data_sort'])
-   ->get(['status', 'employee_id', 'customer_id', 'description','email','phone', 'orders.updated_at', 'orders.created_at', 'orders.id']); 
+   ->get(['status', 'employee_id', 'customer_id','execution_time', 'description','email','phone', 'orders.updated_at', 'orders.created_at', 'orders.id']); 
 
 
     }
@@ -174,12 +183,22 @@ $content.=("
 <td> $order->phone</td>
 <td> $order->status</td>
 <td> $order->description</td>
+<td> $order->execution_time</td>
+<td>" .($order->received==true? 'tak':'nie')."</td>
 <td> $employee_name</td>
-<td> <form method='GET' action='http://localhost/computer_service/public/create_task/$order->id' accept-charset='UTF-8' class='form-horizontal'> <input class='form-control' name='id' type='hidden' value='$order->id'> <input class='btn btn-primary' type='submit' value=Utwórz wątek> </form> </a>
+<td> <form method='GET' action='http://localhost/computer_service/public/create_task/$order->id' accept-charset='UTF-8' class='form-horizontal'> <input class='form-control' name='id' type='hidden' value='$order->id'> <input class='btn btn-primary' type='submit' value='Utwórz wątek'> </form> </a>
     </td>
-  <td> <form method='GET' action='http://localhost/computer_service/public/edit_order/$order->id' accept-charset='UTF-8' class='form-horizontal'> <input class='form-control' name='id' type='hidden' value='$order->id'> <input class='btn btn-primary' type='submit' value='Edytuj zlecenie'> </form> </a>
-   
+
+    
+<td> <form method='GET action='http://localhost/computer_service/public/show_order_services/$order->id' accept-charset='UTF-8' class='form-horizontal'> <input class='form-contro'' name='id' type='hidden' value='$order->id'> <input class='btn btn-primary' type='submit' value='Pokaż usługi'> </form> </a>
     </td>
+    <td> <form method='GET' action='http://localhost/computer_service/public/show_order_parts/$order->id' accept-charset='UTF-8' class='form-horizontal'> <input class='form-control' name='id' type='hidden' value='$order->id'> <input class='btn btn-primary' type='submit' value='Pokaż części'> </form> </a>
+    </td>
+    <td> <form method='GET' action='http://localhost/computer_service/public/show_order_objects/$order->id' accept-charset='UTF-8' class='form-horizontal'> <input class='form-control' name='id' type='hidden' value='$order->id'> <input class='btn btn-primary' type='submit' value='Pokaż przedmioty'> </form> </a>
+    </td>
+    <td> <form method='GET' action='http://localhost/computer_service/public/edit_order/$order->id' accept-charset='UTF-8' class='form-horizontal'> <input class='form-control' name='id' type='hidden' value='$order->id'> <input class='btn btn-primary' type='submit' value='Edytuj zlecenie'> </form> </a>
+     
+      </td>
 </tr>
 
 
@@ -206,7 +225,11 @@ $content.=("
 <td> $order->phone</td>
 <td> $order->status</td>
 <td> $order->description</td>
+<td> $order->execution_time</td>
+<td>".($order->received == 1 ? 'tak' : 'nie')."</td>
 <td> $employee_name</td>
+<td> <form method='GET' action='http://localhost/computer_service/public/create_task/$order->id' accept-charset='UTF-8' class='form-horizontal'> <input class='form-control' name='id' type='hidden' value='$order->id'> <input class='btn btn-primary' type='submit' value='Utwórz wątek'> </form> </a>
+    </td>
 <td> <form method='GET' action='http://localhost/computer_service/public/edit_order/$order->id' accept-charset='UTF-8' class='form-horizontal'> <input class='form-control' name='id' type='hidden' value='$order->id'> <input class='btn btn-primary' type='submit' value='Edytuj zlecenie'> </form> </a>
    
     </td>
@@ -242,6 +265,8 @@ $content.=("
 <td> $employee_name</td>
 <td> $order->created_at</td>
 <td> $order->updated_at</td>
+<td>".($order->received == 1 ? 'tak' : 'nie')."</td>
+<td> $order->execution_time</td>
 <td> <form method='GET' action='http://localhost/computer_service/public/show_order_services/$order->id' accept-charset='UTF-8' class='form-horizontal'> <input class='form-contro'' name='id' type='hidden' value='$order->id'> <input class='btn btn-primary' type='submit' value='Pokaż usługi'> </form> </a>
   </td>
   <td> <form method='GET' action='http://localhost/computer_service/public/show_order_parts/$order->id' accept-charset='UTF-8' class='form-horizontal'> <input class='form-control' name='id' type='hidden' value='$order->id'> <input class='btn btn-primary' type='submit' value='Pokaż części'> </form> </a>
@@ -276,6 +301,8 @@ $content.=("
 <td> $order->status</td>
 <td>".($order->active == 1 ? 'tak' : 'nie')."</td>
 <td> $order->description</td>
+<td> $order->execution_time</td>
+<td>".($order->received == 1 ? 'tak' : 'nie')."</td>
 <td> $employee_name</td>
 <td> <form method='GET' action='http://localhost/computer_service/public/create_task/$order->id' accept-charset='UTF-8' class='form-horizontal'> <input class='form-control' name='id' type='hidden' value='$order->id'> <input class='btn btn-primary' type='submit' value='Utwórz wątek'> </form> </a>
     </td>
@@ -447,7 +474,7 @@ else $user_id=1;
             case "employee":
                 {
                     $orders = Order::with('customer', 'employee', 'order_object', 'order_part', 'order_service')
-                     ->where('orders.status', '!=', 'closed') ->where('orders.employee_id', '=', Auth::id())->get(['status', 'employee_id', 'customer_id', 'description', 'updated_at', 'created_at', 'id']);
+                     ->where('orders.status', '!=', 'closed') ->where('orders.employee_id', '=', Auth::id())->get(['status','execution_time', 'employee_id','received', 'customer_id', 'description', 'updated_at', 'created_at', 'id']);
 
                     return view('orders.orders_list_e')->with('orders', $orders);
                 }
@@ -455,7 +482,7 @@ else $user_id=1;
             case "supervisor":
                 {
                     $orders = Order::with('customer', 'employee', 'order_object', 'order_part', 'order_service')
-                        ->get(['status', 'employee_id', 'customer_id', 'description', 'updated_at', 'created_at', 'id']);
+                        ->get(['status', 'employee_id','execution_time', 'customer_id','received', 'description', 'updated_at', 'created_at', 'id']);
 
                     return view('orders.orders_list_s')->with('orders', $orders);
                 }
@@ -463,14 +490,14 @@ else $user_id=1;
             case "admin":
                 {
                     $orders = Order::with('customer', 'employee', 'order_object', 'order_part', 'order_service')
-                        ->get(['status', 'employee_id', 'customer_id', 'description', 'updated_at', 'active', 'created_at', 'id']);
+                        ->get(['status', 'employee_id', 'received','execution_time','customer_id', 'description', 'updated_at', 'active', 'created_at', 'id']);
 
                     return view('orders.orders_list_a')->with('orders', $orders);
                 }
                 case "customer":
                 {
                     $orders = Order::with('customer', 'employee', 'order_object', 'order_part', 'order_service')->where('orders.customer_id','=',Auth::id())
-                        ->get(['status', 'employee_id', 'customer_id', 'description', 'updated_at', 'created_at', 'id']);
+                        ->get(['status', 'employee_id','received','execution_time', 'customer_id', 'description', 'updated_at', 'created_at', 'id']);
 
                     return view('orders.orders_list_c')->with('orders', $orders);
                 }
@@ -547,7 +574,7 @@ else $user_id=1;
     public function showOrderEditForm($id)
     {
         $orders = Order::where('id', '=', $id)->get();
-
+        
         switch (Auth::user()->getRole()) {
             case "employee":
                 {
@@ -563,8 +590,9 @@ else $user_id=1;
 
             case "supervisor":
                 {
-                    $employees = User::where('role', '=', 'supervisor')->orWhere('role', '=', 'employee')->pluck('name', 'id');
-
+                    $employees = User::where('role', '=', 'supervisor')->orWhere('role', '=', 'employee')->get();
+                    
+                   
                     $customers = User::pluck('name', 'id');
                     return view('orders.edit_order')
                         ->with('order', $orders)
@@ -591,13 +619,27 @@ else $user_id=1;
     public function editOrder(Request $request)
     {
         $data = $request->all();
-
+if (!isset($data['execution_time']))
         Order::where('id', '=', $data['order_id'])->update([
             'id' => $data['order_id'],
             'customer_id' => $data['customer_id'],
             'employee_id' => $data['employee_id'],
             'description' => $data['description'],
             'status' => $data['status'],
+            'received' =>$data['received'],
+           
+        ]);
+else
+        if (!isset($data['execution_time']))
+        Order::where('id', '=', $data['order_id'])->update([
+            'id' => $data['order_id'],
+            'customer_id' => $data['customer_id'],
+            'employee_id' => $data['employee_id'],
+            'description' => $data['description'],
+            'status' => $data['status'],
+            'received' =>$data['received'],
+            'execution_time' =>$data['execution_time']
+           
         ]);
         
         Session::put('message', 'Zlecenie zostało pomyślnie zaktualizowane!');

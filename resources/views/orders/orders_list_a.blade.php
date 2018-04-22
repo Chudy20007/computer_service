@@ -1,8 +1,14 @@
 @extends('main') @section('content')
 @include ("pictures.success_form")
-<div class="table-responsive">
-  <table class="table table- bordered table-hover">
-
+<div class="table-responsive2">
+  <table class="table table-hover">
+      <ul class='order-sort'>
+          <span class='main-search'>Wybierz, które zlecenia mają zostać wyświetlone</span><br/><br/>
+          <li><button class='menuOption2' value='w toku'>Zlecenia w toku</li>
+          <li><button class='menuOption2' value='aktywne'>Zlecenia aktywne</li>
+          <li><button class='menuOption2' value='wstrzymane'>Zlecenia wstrzymane</li>
+          <li><button class='menuOption2' value='zamkniete'>Zlecenia zamkniete</li>
+        </ul>
 
     <thead class="bg-primary text-center">
       <tr data-table='orders_a'>
@@ -13,6 +19,8 @@
         <th scope="col" data-name="status" data-sort="asc">Status zamówienia</th>
         <th scope="col" data-name="active" data-sort="asc">Aktywne</th>
         <th scope="col" data-name="description" data-sort="asc">Opis</th>
+        <th scope="col" data-name="execution_time" data-sort="asc">Termin realizacji</th>       
+        <th scope="col" data-name="received" data-sort="asc">Przedmiot odebrano</th>
         <th scope="col" data-name="employee_id" data-sort="asc">Pracownik</th>
         <th scope="col" >Utwórz wątek</th>
         <th scope="col">Usługi do zlecenia</th>
@@ -37,6 +45,8 @@
         <td> {{$order->status}}</td>
         <td> {{$order->active == true ?'tak' : 'nie'}}</td>
         <td> {{$order->description}}</td>
+        <td> {{$order->execution_time}}</td>
+        <td> {{$order->received==true? 'tak':'nie'}}</td>
         <td> {{$order->employee->name}}</td>
         <td> {!! Form::open(['method'=>'get','class'=>'form-horizontal','action'=>['TaskController@showTaskForm',$order->id]])
           !!} {!! Form::hidden('id',$order->id,['class'=>'form-control']) !!} {!! Form::submit('Utwórz wątek',['class'=>'btn btn-primary'])

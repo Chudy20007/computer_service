@@ -1,4 +1,4 @@
-<div class='container-fluid menu'>
+<div class='container2 menu'>
 <div class="topNav" id="mainNav">
         <a class="menuOption">
                 <ol>
@@ -76,6 +76,17 @@
                                           </li>
                                           <li>
                                             <a href="{{URL::asset('register')}}">Dodaj</a>
+                                          </li>
+                                        </ul>
+                                    </ol>
+                                  </a>
+                                  <a class="menuOption">
+                                    <ol>
+                                      <li>
+                                        <a class="menuOption supervisor-div" href="{{URL::asset('user/'.Auth::id())}}">Historia zleceń</a>
+                                        <ul class='menuOl'>
+                                          <li>
+                                            <a href="{{URL::asset('show_invoices')}}">Lista</a>
                                           </li>
                                         </ul>
                                     </ol>

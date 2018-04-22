@@ -14,7 +14,7 @@
       <tr data-table='tasks_a'>
         <th scope="col" data-name="order_id" data-sort="asc">Zamówienie </th>
         <th scope="col" data-name="title" data-sort="asc">Tytuł</th>
-        <th scope="col" data-name="supervisor_id" data-sort="asc">Kierownik</th>
+        <th scope="col" data-name="supervisor_id" data-sort="asc">Kierownik/Utworzył</th>
         <th scope="col" data-name="employee_id" data-sort="asc">Pracownik</th>
         <th scope="col" data-name="message" data-sort="asc">Wiadomość</th>
         <th scope="col" data-name="created_at" data-sort="asc">Utworzono</th>

@@ -1,6 +1,6 @@
 @extends('main') @section('content') 
 @include ("pictures.success_form")
-<div class="table-responsive">
+<div class="table-responsive2">
   <table class="table table- bordered table-hover">
 
 

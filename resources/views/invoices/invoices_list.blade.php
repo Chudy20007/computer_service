@@ -6,27 +6,26 @@
   </div>
 </div>
 @endif
-<div class="table-responsive">
+<div class="table-responsive2">
   <table class="table table- bordered table-hover">
 
 
     <thead class="bg-primary text-center">
       <tr>
-        <th scope="col">ID</th>
-        <th scope="col">Order ID</th>
-        <th scope="col">Customer</th>
-        <th scope="col">Employee</th>
-        <th scope="col">Total price</th>
-        <th scope="col">Payment</th>
-        <th scope="col">Tax</th>
-        <th scope="col">Updated</th>
-        <th scope="col">Active</th>
-        <th scope="col">Edit</th>
-        <th scope="col">Deactivate</th>
-        <th scope="col">Activate</th>
-        <th scope="col">Prepare HTML</th>
-        <th scope="col">Send HTML to Server PDF</th>
-        <th scope="col">Create complaint</th>
+        <th scope="col">Numer dokumentu</th>
+        <th scope="col">Numer zlecenia</th>
+        <th scope="col">Klient</th>
+        <th scope="col">Pracownik</th>
+        <th scope="col">Całkowity koszt</th>
+        <th scope="col">Metoda płatności</th>
+        <th scope="col">Zaktualizowano</th>
+        <th scope="col">Aktywne</th>
+        <th scope="col">Edytuj</th>
+        <th scope="col">Dezaktywuj</th>
+        <th scope="col">Aktywuj</th>
+        <th scope="col">Przygotuj HTML</th>
+        <th scope="col">Wyślij plik HTML na serwer</th>
+        <th scope="col">Utwórz dokument</th>
       </tr>
     </thead>
     <tbody>
@@ -37,9 +36,8 @@
         <td><a href="{{URL::asset('order/'.$invoice->order_id)}}"<td>{{$invoice->order_id}}</td>
         <td><a href="{{URL::asset('user/'.$invoice->order->customer->id)}}"> {{$invoice->order->customer->name}}</a></td>
         <td> {{$invoice->employee->name}}</td> 
-        <td> {{$invoice->total_price}}</td> 
+        <td>{{number_format($invoice->total_price,2)}} PLN</td>    
         <td> {{$invoice->payment_method}}</td> 
-        <td> {{$invoice->tax}}</td> 
         <td> {{$invoice->updated_at}}</td> 
         <td> {{$invoice->active == 1 ? 'yes' : 'no'}}</td> 
 

@@ -33,7 +33,7 @@
           <div style='margin-right:0; padding-right:0' class='col-md-11 col-lg-11'>
               <input class='main-search' type='text' placeholder='Szukaj po nazwach odpowiednich dla danych tabel...'>
           </div>
-          <div style='margin-left:0; padding-left:0' ;class='col-md-1 col-lg-1'>
+          <div style='margin-left:3rem; padding-left:0' ;class='col-md-1 col-lg-1'>
               <button id="find-button">
                   <img src="{{URL::asset('css/img/search-img.png')}}" width="30px" height="30px">
               </button>

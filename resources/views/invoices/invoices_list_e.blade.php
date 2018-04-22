@@ -5,24 +5,22 @@
   </div>
 </div>
 @endif
-<div class="table-responsive">
+<div class="table-responsive2">
   <table class="table table- bordered table-hover">
 
 
     <thead class="bg-primary text-center">
       <tr>
         <th scope="col">ID</th>
-        <th scope="col">Order ID</th>
-        <th scope="col">Customer</th>
-        <th scope="col">Employee</th>
-        <th scope="col">Total price</th>
-        <th scope="col">Payment</th>
-        <th scope="col">Tax</th>
-        <th scope="col">Updated</th>
-        <th scope="col">Edit</th>
-        <th scope="col">Prepare HTML</th>
-        <th scope="col">Send HTML to Server PDF</th>
-        <th scope="col">Create complaint</th>
+        <th scope="col">Numer zlecenia</th>
+        <th scope="col">Klient</th>
+        <th scope="col">Pracownik</th>
+        <th scope="col">Całkowity koszt</th>
+        <th scope="col">Metoda płatności</th>
+        <th scope="col">Zaktualizowano</th>
+        <th scope="col">Przygotuj HTML</th>
+        <th scope="col">Wyślij plik HTML na serwer</th>
+        <th scope="col">Utwórz dokument</th>
       </tr>
     </thead>
     <tbody>
@@ -36,26 +34,21 @@
           <a href="{{URL::asset('user/'.$invoice->order->customer->id)}}"> {{$invoice->order->customer->name}}</a>
         </td>
         <td> {{$invoice->employee->name}}</td>
-        <td> {{$invoice->total_price}}</td>
+        <td>{{number_format($invoice->total_price,2)}} PLN</td>
         <td> {{$invoice->payment_method}}</td>
-        <td> {{$invoice->tax}}</td>
         <td> {{$invoice->updated_at}}</td>
-        <td> {!! Form::open(['method'=>'get','class'=>'form-horizontal','action'=>['EmployeeController@showEmployeeEditForm',$invoice->id]])
-          !!} {!! Form::hidden('invoice_id',$invoice->id,['class'=>'form-control']) !!} {!! Form::submit('Create',['class'=>'btn
-          btn-primary']) !!} {{ Form::close() }}
-        </td>
 
         <td> {!! Form::open(['method'=>'POST','class'=>'form-horizontal','action'=>['InvoiceController@generateInvoice',$invoice->id]])
-          !!} {!! Form::hidden('invoice_id',$invoice->id,['class'=>'form-control']) !!} {!! Form::submit('Prepare',['class'=>'btn
+          !!} {!! Form::hidden('invoice_id',$invoice->id,['class'=>'form-control']) !!} {!! Form::submit('Przygotuj',['class'=>'btn
           btn-primary']) !!} {{ Form::close() }}
         </td>
 
         <td> {!! Form::open(['method'=>'GET','class'=>'form-horizontal','action'=>['InvoiceController@showHTMLInvoiceForm',$invoice->id]])
-          !!} {!! Form::hidden('invoice_id',$invoice->id,['class'=>'form-control']) !!} {!! Form::submit('Send',['class'=>'btn
+          !!} {!! Form::hidden('invoice_id',$invoice->id,['class'=>'form-control']) !!} {!! Form::submit('Wyślij',['class'=>'btn
           btn-primary']) !!} {{ Form::close() }}
         </td>
         <td> {!! Form::open(['method'=>'get','class'=>'form-horizontal','action'=>['ComplaintController@showComplaintForm',$invoice->id]])
-          !!} {!! Form::hidden('invoice_id',$invoice->id,['class'=>'form-control']) !!} {!! Form::submit('Create',['class'=>'btn
+          !!} {!! Form::hidden('invoice_id',$invoice->id,['class'=>'form-control']) !!} {!! Form::submit('Utwórz',['class'=>'btn
           btn-primary']) !!} {{ Form::close() }}
         </td>
       </tr>
