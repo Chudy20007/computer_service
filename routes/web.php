@@ -63,8 +63,6 @@ Route::post('send_complaints', 'ComplaintController@saveHTMLComplaintsInServer')
 Route::post('generate_complaint', 'ComplaintController@generateComplaint');
 Route::get('send_html_complaint/{complaint_id}', 'ComplaintController@showHTMLComplaintForm')->middleware('auth');
 
-
-
 Route::get('sendbasicemail', 'OrderController@sendMessage');
 Route::post('store_order_services', 'OrderController@storeOrderServices')->middleware('auth');
 Route::get('create_invoice/{id}', 'InvoiceController@showInvoiceForm')->middleware('auth');
