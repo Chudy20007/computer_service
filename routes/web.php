@@ -14,8 +14,7 @@ Route::post('register', '\App\Http\Controllers\Auth\RegisterController@register'
 Route::get('register', '\App\Http\Controllers\Auth\RegisterController@showRegistrationForm')->name('register');
 Route::post('/store_order', 'OrderController@storeOrder');
 Route::middleware('permissions')->group(function () {
-  
-  
+
     Route::get('create_service', 'ServiceController@showServiceForm');
     Route::post('create_service', 'ServiceController@storeService');
     Route::get('create_category', 'CategoryController@showCategoryForm');
