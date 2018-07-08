@@ -128,7 +128,7 @@ Route::get('edit_order/{id}', 'OrderController@showOrderEditForm')->middleware('
 Route::post('edit_order', 'OrderController@editOrder')->middleware('auth');
 Route::get('show_employees', 'EmployeeController@showEmployeesList')->middleware('auth');
 Route::get('show_parts', 'PartController@showPartsList')->middleware('auth');
-Route::get('show_services', 'ServiceController@showServicesList')->middleware('auth');
+Route::get('show_services', 'ServiceController@showServicesList');
 Route::post('show_services', 'ServiceController@findServices');
 Route::post('show_parts','PartController@findParts');
 Route::post('show_employees', 'EmployeeController@findEmployees');
@@ -176,7 +176,6 @@ return view("main");
 Route::get('password/email', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.email');
 Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail');
 
-// Password reset routes...
 Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.request');
 Route::post('password/reset', 'Auth\ResetPasswordController@postReset')->name('password.reset');
 Route::post('password/email', '\App\Http\Controllers\Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');

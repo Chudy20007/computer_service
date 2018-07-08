@@ -11,7 +11,8 @@ class ServiceController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('permissions',['except' => ['showServicesList','findServices','sortServices']]);
+        
+        $this->middleware('permissions',['except' => ['storeService','showServicesList','findServices','sortServices']]);
     }
 
     public function showServiceForm ()
@@ -213,6 +214,9 @@ public function findServices()
 
     public function showServicesList()
     {
+        
+        $services = Service::where('active','=',true)->get();
+        return json_encode($services);
         if (Auth::user())
         {
         switch (Auth::user()->getRole())
