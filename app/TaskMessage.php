@@ -13,7 +13,6 @@ class TaskMessage extends Model
         'name',
         'message',
         'active',
-
     ];
 
     public function task()
