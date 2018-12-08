@@ -6,22 +6,22 @@ use Illuminate\Database\Eloquent\Model;
 
 class Part extends Model
 {
-    protected $fillable=[
-    'category_id',
-    'name',
-    'serial_number',
-    'count',
-    'price' 
-   ];
+    protected $fillable = [
+        'category_id',
+        'name',
+        'serial_number',
+        'count',
+        'price',
+    ];
 
-   public function order()
-   {
-       return $this->hasOne('App\Category','category_id');
-   }
+    public function order()
+    {
+        return $this->hasOne('App\Category', 'category_id');
+    }
 
-   public function category()
-   {
-      return $this->hasOne('App\Category','id','category_id');
-   }
+    public function category()
+    {
+        return $this->hasOne('App\Category', 'id', 'category_id');
+    }
 
 }

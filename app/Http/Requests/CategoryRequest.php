@@ -1,9 +1,11 @@
 <?php
 
 namespace App\Http\Requests;
-use Illuminate\Validation\Rule;
-use Illuminate\Foundation\Http\FormRequest;
+
 use App\Category;
+use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
+
 class CategoryRequest extends FormRequest
 {
     /**
@@ -23,9 +25,8 @@ class CategoryRequest extends FormRequest
      */
     public function rules()
     {
-
         $category = Category::find($this)->first();
-
+        
         switch ($this->method()) {
             case 'GET':
             case 'DELETE':
@@ -45,26 +46,18 @@ class CategoryRequest extends FormRequest
             case 'PATCH':
                 {
                     return [
-
                         'name' => ['required', 'regex:/^([A-Z]{1}[a-ząęćńźżółŁ]{3,})$/', Rule::unique('categories', 'name')->ignore($category['id'])],
-
                     ];
                 }
-
             default:break;
         }
-
     }
 
     public function messages()
     {
-     
-            return [
-                'name.regex' => 'Podaj poprawną nazwę dla kategorii!',
-                'name.unique' => 'Dana kategoria już istnieje!'
-
-                
-            ];
-        
+        return [
+            'name.regex' => 'Podaj poprawną nazwę dla kategorii!',
+            'name.unique' => 'Dana kategoria już istnieje!',
+        ];
     }
 }

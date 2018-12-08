@@ -2,8 +2,9 @@
 
 namespace App\Http\Middleware;
 
-use Closure;
 use Auth;
+use Closure;
+
 class Supervisor
 {
     /**
@@ -14,16 +15,12 @@ class Supervisor
      * @return mixed
      */
 
-     
     public function handle($request, Closure $next)
-    {   
-     
-        if (Auth::check() && Auth::user()->isSupervisor() )
-        {
-           
+    {
+        if (Auth::check() && Auth::user()->isSupervisor()) {
+
             return $next($request);
         }
-
-        return response("401",401);
+        return response("401", 401);
     }
 }

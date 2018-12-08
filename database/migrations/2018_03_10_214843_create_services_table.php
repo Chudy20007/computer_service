@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateServicesTable extends Migration
 {
@@ -17,7 +17,7 @@ class CreateServicesTable extends Migration
             $table->increments('id');
             $table->string('name')->unique();
             $table->float('price');
-            $table->boolean('active')->default($value=true);
+            $table->boolean('active')->default($value = true);
             $table->timestamps();
         });
     }

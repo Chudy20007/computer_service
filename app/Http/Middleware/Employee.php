@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Middleware;
+
 use Auth;
 use Closure;
 
@@ -14,12 +15,11 @@ class Employee
      * @return mixed
      */
     public function handle($request, Closure $next)
-    {   
-        if ( Auth::user()->isEmployee())
-        {
+    {
+        if (Auth::user()->isEmployee()) {
             return $next($request);
         }
-        
-        return response("Error 404",404);
+
+        return response("Error 404", 404);
     }
 }

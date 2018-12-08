@@ -2,8 +2,9 @@
 
 namespace App\Http\Middleware;
 
-use Closure;
 use Auth;
+use Closure;
+
 class Admin
 {
     /**
@@ -15,12 +16,10 @@ class Admin
      */
     public function handle($request, Closure $next)
     {
-        if (Auth::check() && Auth::user()->isAdmin() || Auth::user()->isSupervisor())
-        {
+        if (Auth::check() && Auth::user()->isAdmin() || Auth::user()->isSupervisor()) {
             return $next($request);
-            
+
         }
-        
-        return response("Access denied!",401);
+        return response("Access denied!", 401);
     }
 }

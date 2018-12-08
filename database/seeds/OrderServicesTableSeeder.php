@@ -1,7 +1,8 @@
 <?php
 
-use Illuminate\Database\Seeder;
 use App\OrderService;
+use Illuminate\Database\Seeder;
+
 class OrderServicesTableSeeder extends Seeder
 {
     /**
@@ -11,21 +12,18 @@ class OrderServicesTableSeeder extends Seeder
      */
     public function run()
     {
-        for ($i=1; $i<3; $i++)
-        {
+        for ($i = 1; $i < 3; $i++) {
             $order_service = new OrderService();
-            $order_service->service_id =$i;
+            $order_service->service_id = $i;
             $order_service->order_id = 1;
-            $order_service->active=true;
+            $order_service->active = true;
             $order_service->save();
         }
-
-        for ($i=1; $i<4; $i++)
-        {
+        for ($i = 1; $i < 4; $i++) {
             $order_service = new OrderService();
-            $order_service->service_id =$i;
+            $order_service->service_id = $i;
             $order_service->order_id = 2;
-            $order_service->active=true;
+            $order_service->active = true;
             $order_service->save();
         }
     }

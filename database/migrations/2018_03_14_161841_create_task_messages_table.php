@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateTaskMessagesTable extends Migration
 {
@@ -18,8 +18,8 @@ class CreateTaskMessagesTable extends Migration
             $table->integer('order_id')->unsigned();
             $table->integer('task_id')->unsigned();
             $table->integer('employee_id')->unsigned();
-            $table->string('message')->default($value="empty");
-            $table->boolean('active')->default($value=true);
+            $table->string('message')->default($value = "empty");
+            $table->boolean('active')->default($value = true);
             $table->foreign('order_id')->references('id')->on('orders');
             $table->foreign('task_id')->references('id')->on('tasks');
             $table->foreign('employee_id')->references('id')->on('users');

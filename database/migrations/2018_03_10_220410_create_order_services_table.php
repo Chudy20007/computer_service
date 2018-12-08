@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateOrderServicesTable extends Migration
 {
@@ -17,7 +17,7 @@ class CreateOrderServicesTable extends Migration
             $table->increments('id');
             $table->integer('order_id')->unsigned();
             $table->integer('service_id')->unsigned();
-            $table->boolean('active')->default($value=true);
+            $table->boolean('active')->default($value = true);
             $table->foreign('order_id')->references('id')->on('orders');
             $table->foreign('service_id')->references('id')->on('services');
 

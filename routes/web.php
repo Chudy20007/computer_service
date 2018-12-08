@@ -183,4 +183,3 @@ Route::post('login', '\App\Http\Controllers\Auth\LoginController@login');
 Route::get('/services', function () {
     return view('services.show');
 });
-

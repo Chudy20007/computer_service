@@ -1,8 +1,9 @@
 <?php
 
 namespace App\Http\Requests;
-use Illuminate\Validation\Rule;
+
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class OrderRequest extends FormRequest
 {
@@ -24,27 +25,23 @@ class OrderRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required','regex:/^([A-Z]{1}[a-z]{2,15}\s[A-Z]{1}[a-z]{2,15})$/'],
-            'email' => ['required','email'],
-            'phone' => ['required','regex:/^[0-9]{8,}$/'],
+            'name' => ['required', 'regex:/^([A-Z]{1}[a-z]{2,15}\s[A-Z]{1}[a-z]{2,15})$/'],
+            'email' => ['required', 'email'],
+            'phone' => ['required', 'regex:/^[0-9]{8,}$/'],
             'device' => ['required'],
-            'post-code' =>['required','regex:/^([0-9]{2})-([0-9]{3})$/'],
+            'post-code' => ['required', 'regex:/^([0-9]{2})-([0-9]{3})$/'],
             'local-number' => ['required'],
-            'description' => ['required']
-                 
+            'description' => ['required'],
         ];
     }
 
     public function messages()
     {
-     
-            return [
-                'name.regex' => 'Podaj poprawne imię i nazwisko!',
-                'email.regex' => 'Podaj poprawny adres e-mail!',
-                'phone.regex' => 'Podaj poprawny numer telefonu!',
-                'post-code.regex' => 'Podaj poprawny kod pocztowy!'
-                
-            ];
-        
+        return [
+            'name.regex' => 'Podaj poprawne imię i nazwisko!',
+            'email.regex' => 'Podaj poprawny adres e-mail!',
+            'phone.regex' => 'Podaj poprawny numer telefonu!',
+            'post-code.regex' => 'Podaj poprawny kod pocztowy!',
+        ];
     }
 }

@@ -1,7 +1,8 @@
 <?php
 
-use Illuminate\Database\Seeder;
 use App\OrderObject;
+use Illuminate\Database\Seeder;
+
 class OrderObjectsTableSeeder extends Seeder
 {
     /**
@@ -19,7 +20,6 @@ class OrderObjectsTableSeeder extends Seeder
         $object->fixed = false;
         $object->active = true;
 
-
         $object->save();
 
         $object2 = new OrderObject();
@@ -29,7 +29,6 @@ class OrderObjectsTableSeeder extends Seeder
         $object2->diagnosis = "ob2";
         $object2->fixed = false;
         $object2->active = true;
-
 
         $object2->save();
 
@@ -41,7 +40,6 @@ class OrderObjectsTableSeeder extends Seeder
         $object3->fixed = false;
         $object3->active = true;
 
-
         $object3->save();
 
         $object4 = new OrderObject();
@@ -52,8 +50,6 @@ class OrderObjectsTableSeeder extends Seeder
         $object4->fixed = false;
         $object4->active = false;
 
-
         $object4->save();
-
     }
 }

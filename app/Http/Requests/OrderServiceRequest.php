@@ -1,10 +1,10 @@
 <?php
 
 namespace App\Http\Requests;
-use App\OrderService;
+
+use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
-use Illuminate\Foundation\Http\FormRequest;
 
 class OrderServiceRequest extends FormRequest
 {
@@ -25,36 +25,30 @@ class OrderServiceRequest extends FormRequest
      */
     public function rules()
     {
-       
-      
-      
-        switch($this->method())
-        {
+        switch ($this->method()) {
             case 'GET':
             case 'DELETE':
-            {
-                return [];
-            }
+                {
+                    return [];
+                }
             case 'POST':
-            {
-                return [
-                    'order_id' => ['required'],
-                    'service_id' => ['required',Rule::unique('order_services', 'service_id')->where('order_id',$this->order_id)]
-                ];
-            }
+                {
+                    return [
+                        'order_id' => ['required'],
+                        'service_id' => ['required', Rule::unique('order_services', 'service_id')->where('order_id', $this->order_id)],
+                    ];
+                }
             case 'PUT':
-            {
-                break;
-            }
+                {
+                    break;
+                }
             case 'PATCH':
-            {
-                return [
-                    'order_id' => ['required'],
-                    'service_id' => ['required',Rule::unique('services', 'service_id')->ignore($order_service['id'])],
-            
-                ];
-            }
-            
+                {
+                    return [
+                        'order_id' => ['required'],
+                        'service_id' => ['required', Rule::unique('services', 'service_id')->ignore($order_service['id'])],
+                    ];
+                }
             default:break;
         }
     }
@@ -62,8 +56,7 @@ class OrderServiceRequest extends FormRequest
     public function messages()
     {
         return [
-        'service_id.unique' => "Dana usługa jest już przypisana do zlecenia!"
-    ];
+            'service_id.unique' => "Dana usługa jest już przypisana do zlecenia!",
+        ];
     }
-    
 }

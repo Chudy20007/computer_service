@@ -1,10 +1,10 @@
 <?php
 
 namespace App\Http\Requests;
-use App\Service;
-use Illuminate\Validation\Rule;
 
+use App\Service;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class ServiceRequest extends FormRequest
 {
@@ -26,52 +26,41 @@ class ServiceRequest extends FormRequest
      */
     public function rules()
     {
-        
         $service = Service::find($this)->first();
-      
-    
 
-
-        switch($this->method())
-        {
+        switch ($this->method()) {
             case 'GET':
             case 'DELETE':
-            {
-                return [];
-            }
+                {
+                    return [];
+                }
             case 'POST':
-            {
-                return [
-                    'price' => ['required','regex:/(\d{1,}).(\d{2})/'],
-                    'name' => ['required',Rule::unique('services', 'name')]
-                ];
-            }
+                {
+                    return [
+                        'price' => ['required', 'regex:/(\d{1,}).(\d{2})/'],
+                        'name' => ['required', Rule::unique('services', 'name')],
+                    ];
+                }
             case 'PUT':
-            {
-                break;
-            }
+                {
+                    break;
+                }
             case 'PATCH':
-            {
-                return [
-                    'price' => ['required','regex:/(\d{1,}).(\d{2})/'],
-                    'name' => ['required',Rule::unique('services', 'name')->ignore($service['id'])],
-            
-                ];
-            }
-            
+                {
+                    return [
+                        'price' => ['required', 'regex:/(\d{1,}).(\d{2})/'],
+                        'name' => ['required', Rule::unique('services', 'name')->ignore($service['id'])],
+                    ];
+                }
             default:break;
         }
     }
 
     public function messages()
     {
-     
-            return [
-                'price.regex' => 'Podaj poprawną cenę!',   
-                'name.unique' => 'Dana usługa już istnieje!'             
-            ];
-        
+        return [
+            'price.regex' => 'Podaj poprawną cenę!',
+            'name.unique' => 'Dana usługa już istnieje!',
+        ];
     }
 }
- 
-

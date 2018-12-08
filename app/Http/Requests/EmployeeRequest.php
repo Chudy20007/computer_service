@@ -25,7 +25,7 @@ class EmployeeRequest extends FormRequest
      */
     public function rules()
     {
-        $employee = User::where('id',$this->id)->get()->first();
+        $employee = User::where('id', $this->id)->get()->first();
 
         switch ($this->method()) {
             case 'GET':
@@ -45,8 +45,6 @@ class EmployeeRequest extends FormRequest
                         'local-number' => ['required'],
                         'file' => ['required'],
                         'street' => ['required'],
-
-                        //
                     ];
                 }
             case 'PUT':
@@ -63,32 +61,23 @@ class EmployeeRequest extends FormRequest
                         'role' => ['required', 'regex:/^([a-z]{4,})$/'],
                         'post_code' => ['required', 'regex:/^([0-9]{2})-([0-9]{3})$/'],
                         'local_number' => ['required'],
-                       // 'file' => ['required'],
                         'street' => ['required'],
-
                     ];
                 }
-
             default:break;
         }
-
     }
 
     public function messages()
     {
-
         return [
             'name.regex' => 'Podaj poprawne imię i nazwisko!',
             'email.regex' => 'Podaj poprawny adres e-mail!',
             'phone.regex' => 'Podaj poprawny numer telefonu!',
             'post-code.regex' => 'Podaj poprawny kod pocztowy!',
             'role.regex' => "Podaj poprawną rolę!",
-
             'email.unique' => 'Podany e-mail jest już zajęty!',
             'phone.unique' => 'Numer telefonu jest już zajęty',
-            
-
         ];
-
     }
 }

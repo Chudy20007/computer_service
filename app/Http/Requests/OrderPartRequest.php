@@ -1,8 +1,9 @@
 <?php
 
 namespace App\Http\Requests;
-use Illuminate\Validation\Rule;
+
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class OrderPartRequest extends FormRequest
 {
@@ -23,45 +24,39 @@ class OrderPartRequest extends FormRequest
      */
     public function rules()
     {
- 
-        switch($this->method())
-        {
+        switch ($this->method()) {
             case 'GET':
             case 'DELETE':
-            {
-                return [];
-            }
+                {
+                    return [];
+                }
             case 'POST':
-            {
-                return [
-                    'order_id' => ['required'],
-                    'part_id' => ['required',Rule::unique('order_parts', 'part_id')->where('order_id',$this->order_id)]
-                ];
-            }
+                {
+                    return [
+                        'order_id' => ['required'],
+                        'part_id' => ['required', Rule::unique('order_parts', 'part_id')->where('order_id', $this->order_id)],
+                    ];
+                }
             case 'PUT':
-            {
-                break;
-            }
+                {
+                    break;
+                }
             case 'PATCH':
-            {
-                return [
-                    'order_id' => ['required'],
-                    'part_id' => ['required',Rule::unique('services', 'service_id')->ignore($order_service['id'])],
-            
-                ];
-            }
-            
+                {
+                    return [
+                        'order_id' => ['required'],
+                        'part_id' => ['required', Rule::unique('services', 'service_id')->ignore($order_service['id'])],
+
+                    ];
+                }
             default:break;
         }
-        
     }
     public function messages()
     {
-     
-            return [
-                'part_id.required' => 'Pole z częścią jest wymagane!',
-                'order_id.required' => 'Pole ze zleceniem jest wymagane!'             
-            ];
-        
+        return [
+            'part_id.required' => 'Pole z częścią jest wymagane!',
+            'order_id.required' => 'Pole ze zleceniem jest wymagane!',
+        ];
     }
 }

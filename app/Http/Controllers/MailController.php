@@ -1,9 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
-use Swift_Attachment;
+
 use Illuminate\Http\Request;
 use Mail;
+use Swift_Attachment;
+
 class MailController extends Controller
 {
     public function sendMessage(Request $request)
@@ -22,7 +24,6 @@ class MailController extends Controller
                 ->from('computer_service@gmail.com', 'Computer Service')
                 ->subject('Order status updated')
                 ->setBody($em['content'], 'text/html');
-            //  ->attach($em['path'], array('as' => 'invoice.pdf', 'mime' => 'LONGTEXT'));
             return "Send";
         });
     }
